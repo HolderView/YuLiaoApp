@@ -5,6 +5,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.example.dllo.yuliaoapp.R;
+import com.example.dllo.yuliaoapp.ui.activity.C_ECLoginActivity;
 import com.example.dllo.yuliaoapp.ui.activity.C_ECMainActivity;
 
 /**
