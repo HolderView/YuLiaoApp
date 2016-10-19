@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/btn_chat_login"
+                android:layout_margin="@dimen/ten_dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/eighteen_sp"
+                android:textColor="@android:color/white"
+                android:text="点击开启聊天之旅"
+                android:background="@drawable/c_shape_ecmain_btn"/>
+
+        </LinearLayout>
+    </ScrollView>
+
+
+</LinearLayout>
