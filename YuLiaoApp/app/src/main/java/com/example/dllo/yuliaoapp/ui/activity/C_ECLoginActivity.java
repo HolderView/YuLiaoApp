@@ -56,14 +56,11 @@ public class C_ECLoginActivity extends C_AbsBaseActivity {
         mTvRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                register();
+                goTo(C_ECLoginActivity.this,C_ECRegister.class);
             }
         });
     }
-    //注册
-    private void register() {
 
-    }
     //登录
     private void login() {
         mDialog=new ProgressDialog(this);
