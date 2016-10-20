@@ -1,11 +1,9 @@
 package com.example.dllo.yuliaoapp.ui.activity;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.dllo.yuliaoapp.R;
@@ -18,7 +16,7 @@ import com.hyphenate.exceptions.HyphenateException;
  * @author 陈思宇
  */
 
-public class C_ECRegister extends C_AbsBaseActivity {
+public class C_ECRegisterActivity extends C_AbsBaseActivity {
     private ProgressDialog mDialog;
     private Button mBtnRegister;
     private EditText mEtUserNum;
@@ -66,11 +64,11 @@ public class C_ECRegister extends C_AbsBaseActivity {
                     } catch (HyphenateException e) {
                         e.printStackTrace();
                         mDialog.dismiss();
-                        Toast.makeText(C_ECRegister.this, "注册失败", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(C_ECRegisterActivity.this, "注册失败", Toast.LENGTH_SHORT).show();
                     }
                 }else {
                     mDialog.dismiss();
-                    Toast.makeText(C_ECRegister.this, "两次输入的密码不一致,请重新输入", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(C_ECRegisterActivity.this, "两次输入的密码不一致,请重新输入", Toast.LENGTH_SHORT).show();
                 }
             }
         }).start();
