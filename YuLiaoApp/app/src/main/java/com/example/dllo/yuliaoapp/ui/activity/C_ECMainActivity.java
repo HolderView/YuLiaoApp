@@ -1,8 +1,10 @@
 package com.example.dllo.yuliaoapp.ui.activity;
 
 import android.content.Intent;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.dllo.yuliaoapp.R;
@@ -18,6 +20,8 @@ import com.hyphenate.util.NetUtils;
  */
 public class C_ECMainActivity extends C_AbsBaseActivity {
     private Button mBtnOutLogin;
+    private EditText mEtUserName;
+    private Button mBtnLaunchChat;
 
     @Override
     protected int setLayout() {
@@ -32,11 +36,58 @@ public class C_ECMainActivity extends C_AbsBaseActivity {
     @Override
     protected void initViews() {
         mBtnOutLogin = byView(R.id.btn_ecmain_out_login);
+        mEtUserName = byView(R.id.et_ecmain_username);
+        mBtnLaunchChat = byView(R.id.btn_ecmain_launch_chat);
     }
 
     @Override
     protected void initData() {
+        /**
+         * 实现实时监听服务器状态的接口
+         */
         EMClient.getInstance().addConnectionListener(new MyConnectionListener());
+        //退出登录
+        signOut();
+        //与某个id聊天
+        signChat();
+
+
+    }
+
+    /**
+     * 开始聊天
+     */
+    private void signChat() {
+        mBtnLaunchChat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //从Et中获取到想要聊天对象的id
+                String chatId = mEtUserName.getText().toString().trim();
+                //获取当前用户的username
+                String currUsername=EMClient.getInstance().getCurrentUser();
+                if (!TextUtils.isEmpty(chatId)){
+                    if (chatId.equals(currUsername)){
+                        Toast.makeText(C_ECMainActivity.this, "不能和自己聊天", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    //跳转到聊天界面 ,开始聊天
+                    Intent intent=new Intent(C_ECMainActivity.this,C_ECChatActivity.class);
+                    intent.putExtra("user_name",chatId);
+                    startActivity(intent);
+                }else {
+                    Toast.makeText(C_ECMainActivity.this, "Username不能为空", Toast.LENGTH_SHORT).show();
+                }
+
+
+
+            }
+        });
+    }
+
+    /**
+     * 退出登录
+     */
+    private void signOut() {
         mBtnOutLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -44,7 +95,7 @@ public class C_ECMainActivity extends C_AbsBaseActivity {
                 EMClient.getInstance().logout(true, new EMCallBack() {
                     @Override
                     public void onSuccess() {
-                        goTo(C_ECMainActivity.this,C_ECLoginActivity.class);
+                        goTo(C_ECMainActivity.this, C_ECLoginActivity.class);
                         finish();
                     }
 
@@ -60,7 +111,6 @@ public class C_ECMainActivity extends C_AbsBaseActivity {
                 });
             }
         });
-
     }
 
     //实现conncectionListener接口 注册连接状态监听

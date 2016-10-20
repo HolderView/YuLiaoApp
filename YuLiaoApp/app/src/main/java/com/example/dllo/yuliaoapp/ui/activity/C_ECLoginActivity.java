@@ -1,7 +1,6 @@
 package com.example.dllo.yuliaoapp.ui.activity;
 
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -56,7 +55,7 @@ public class C_ECLoginActivity extends C_AbsBaseActivity {
         mTvRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                goTo(C_ECLoginActivity.this,C_ECRegister.class);
+                goTo(C_ECLoginActivity.this,C_ECRegisterActivity.class);
             }
         });
     }
