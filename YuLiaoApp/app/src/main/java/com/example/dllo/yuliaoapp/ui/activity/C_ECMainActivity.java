@@ -5,6 +5,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.dllo.yuliaoapp.R;
@@ -22,6 +23,7 @@ public class C_ECMainActivity extends C_AbsBaseActivity {
     private Button mBtnOutLogin;
     private EditText mEtUserName;
     private Button mBtnLaunchChat;
+    private TextView mTvUserId;
 
     @Override
     protected int setLayout() {
@@ -38,6 +40,7 @@ public class C_ECMainActivity extends C_AbsBaseActivity {
         mBtnOutLogin = byView(R.id.btn_ecmain_out_login);
         mEtUserName = byView(R.id.et_ecmain_username);
         mBtnLaunchChat = byView(R.id.btn_ecmain_launch_chat);
+        mTvUserId=byView(R.id.tv_ecmain_user_id);
     }
 
     @Override
@@ -46,6 +49,7 @@ public class C_ECMainActivity extends C_AbsBaseActivity {
          * 实现实时监听服务器状态的接口
          */
         EMClient.getInstance().addConnectionListener(new MyConnectionListener());
+        mTvUserId.setText(EMClient.getInstance().getCurrentUser());
         //退出登录
         signOut();
         //与某个id聊天
@@ -134,7 +138,18 @@ public class C_ECMainActivity extends C_AbsBaseActivity {
                         goTo(C_ECMainActivity.this, C_ECLoginActivity.class);
                     } else {
                         if (NetUtils.hasNetwork(C_ECMainActivity.this)) {
-                            Toast.makeText(C_ECMainActivity.this, "连接不到聊天服务器", Toast.LENGTH_SHORT).show();
+                            new Thread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    try {
+                                        Thread.sleep(1000);
+                                        Toast.makeText(C_ECMainActivity.this, "连接不到聊天服务器", Toast.LENGTH_SHORT).show();
+                                    } catch (InterruptedException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+                            });
+
                         } else {
                             Toast.makeText(C_ECMainActivity.this, "当前网络不可用,请检查网络设置", Toast.LENGTH_SHORT).show();
                         }

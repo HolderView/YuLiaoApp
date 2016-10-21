@@ -18,6 +18,7 @@
             android:textSize="@dimen/thirty_sp" />
 
         <ImageView
+            android:id="@+id/iv_ecregister_finish"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
