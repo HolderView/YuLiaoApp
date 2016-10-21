@@ -28,7 +28,7 @@ public abstract class C_AbsBaseActivity extends AppCompatActivity {
 
         //Color.parseColor 将不是int类型的颜色转换为int类型
         //为状态栏添加新的颜色
-        window.setStatusBarColor(Color.parseColor("#00000000"));
+//        window.setStatusBarColor(Color.parseColor("#00000000"));
         setContentView(setLayout());
         initViews();
         initData();
