@@ -9,16 +9,35 @@
         android:id="@+id/et_ecmain_username"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="对方username"/>
+        android:hint="对方username" />
+
     <Button
         android:id="@+id/btn_ecmain_launch_chat"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="发起聊天"/>
+        android:text="发起聊天" />
 
     <Button
         android:id="@+id/btn_ecmain_out_login"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="退出登录" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="当前登录的id:" />
+
+        <TextView
+            android:id="@+id/tv_ecmain_user_id"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/ten_dp" />
+    </LinearLayout>
+
 </LinearLayout>

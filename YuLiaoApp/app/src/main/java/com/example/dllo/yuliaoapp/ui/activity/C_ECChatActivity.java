@@ -3,6 +3,7 @@ package com.example.dllo.yuliaoapp.ui.activity;
 import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
+import android.text.format.DateUtils;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.View;
@@ -19,6 +20,7 @@ import com.hyphenate.chat.EMConversation;
 import com.hyphenate.chat.EMMessage;
 import com.hyphenate.chat.EMTextMessageBody;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 /**
@@ -41,6 +43,7 @@ public class C_ECChatActivity extends C_AbsBaseActivity implements EMMessageList
     //当前会话对象
     private EMConversation mConversation;
 
+
     @Override
     protected int setLayout() {
         return R.layout.c_activity_ecchat;
@@ -51,6 +54,7 @@ public class C_ECChatActivity extends C_AbsBaseActivity implements EMMessageList
         mBtnSendMsg = byView(R.id.btn_ecchat_send_msg);
         mEtMsg = byView(R.id.et_ecchat_msg);
         mTvShow = byView(R.id.tv_ecchat_show);
+
         //设置textview可滚动 需要配合xml布局设置
         mTvShow.setMovementMethod(new ScrollingMovementMethod());
 
@@ -71,7 +75,11 @@ public class C_ECChatActivity extends C_AbsBaseActivity implements EMMessageList
                     //创建一条新消息 第一个参数为消息内容 第二个为接收者的id
                     EMMessage message = EMMessage.createTxtSendMessage(content, mChatId);
                     //将新的消息内容和时间加入到下边
-                    mTvShow.setText(mTvShow.getText() + "\n" + content + " ->" + message.getMsgTime());
+                    long time=message.getMsgTime();
+                    SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyy-MM-dd HH:mm:ss");
+                    //将转换后的时间放入text
+                    String t=simpleDateFormat.format(time);
+                    mTvShow.setText(mTvShow.getText() + "\n" + content + " ->" + t);
                     //调用发送信息的方法
                     EMClient.getInstance().chatManager().sendMessage(message);
                     //为消息设置回调
@@ -124,8 +132,12 @@ public class C_ECChatActivity extends C_AbsBaseActivity implements EMMessageList
         if (mConversation.getAllMessages().size()>0){
             EMMessage message=mConversation.getLastMessage();
             EMTextMessageBody body= (EMTextMessageBody) message.getBody();
+            long time=mConversation.getLastMessage().getMsgTime();
+            SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyy-MM-dd HH:mm:ss");
+            //将转换后的时间放入text
+            String t=simpleDateFormat.format(time);
             //将消息内容和时间显示出来
-            mTvShow.setText(body.getMessage()+ " - "+mConversation.getLastMessage().getMsgTime());
+            mTvShow.setText(body.getMessage()+ " - "+t);
         }
     }
     /**
@@ -140,8 +152,12 @@ public class C_ECChatActivity extends C_AbsBaseActivity implements EMMessageList
                     EMMessage message= (EMMessage) msg.obj;
                     //这里只是简单的demo  也只是测试文字消息的手法 所以直接将body转为EMTextMessageBody获取内容
                     EMTextMessageBody body= (EMTextMessageBody) message.getBody();
+                    long time=message.getMsgTime();
+                    SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyy-MM-dd HH:mm:ss");
+                    //将转换后的时间放入text
+                    String t=simpleDateFormat.format(time);
                     //将新的消息内容和时间加入到下边
-                    mTvShow.setText(mTvShow.getText()+"\n"+body.getMessage()+"<- "+message.getMsgTime());
+                    mTvShow.setText(mTvShow.getText()+"\n"+body.getMessage()+"<- "+t);
                     break;
             }
         }

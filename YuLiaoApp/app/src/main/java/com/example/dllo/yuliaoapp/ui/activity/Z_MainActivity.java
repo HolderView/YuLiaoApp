@@ -7,6 +7,8 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.Toast;
+
 import com.example.dllo.yuliaoapp.R;
 import com.example.dllo.yuliaoapp.ui.fragment.Z_ChatFragment;
 import com.example.dllo.yuliaoapp.ui.fragment.Z_MapFragment;
@@ -69,4 +71,25 @@ public class Z_MainActivity extends C_AbsBaseActivity {
             }
         });
     }
+    /**
+     * 最后按下的时间
+     */
+    private long lastTime ;
+
+    /**
+     * 按二次返回键退出应用
+     */
+    @Override
+    public void onBackPressed() {
+        long currentTime = System.currentTimeMillis();
+
+        if(currentTime-lastTime<2*1000){
+            super.onBackPressed();
+        }else {
+            Toast.makeText(this, "再按一次退出应用", Toast.LENGTH_SHORT).show();
+            lastTime=currentTime;
+        }
+
+    }
+
 }
