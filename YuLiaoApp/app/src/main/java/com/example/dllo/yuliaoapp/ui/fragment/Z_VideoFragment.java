@@ -114,6 +114,7 @@ public class Z_VideoFragment extends C_AbsBaseFragment implements AdapterView.On
         Z_VideoBean.视频Bean datas = (Z_VideoBean.视频Bean) parent.getItemAtPosition(position);
         Bundle bundle = new Bundle();
         bundle.putString("url",datas.getMp4_url());
+        bundle.putString("title",datas.getTitle());
         goToActivity(Z_VideoDetailsActivity.class,bundle);
     }
 }

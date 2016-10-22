@@ -3,20 +3,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <RelativeLayout
-        android:id="@+id/video_details_rl"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <ImageView
-            android:id="@+id/vide_details_back_img"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-           />
-        <ImageView
-            android:id="@+id/video_details_more_img"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-    </RelativeLayout>
 
     <io.vov.vitamio.widget.VideoView
         android:id="@+id/video_details_videoview"
@@ -26,6 +12,37 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"/>
+    <RelativeLayout
+        android:id="@+id/video_details_rl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/Cambridge_Blue">
+        <ImageView
+            android:id="@+id/vide_details_back_img"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:src="@mipmap/title_back"
+            />
+        <TextView
+            android:id="@+id/video_details_title_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="标题"
+            android:layout_alignTop="@id/vide_details_back_img"
+            android:layout_toRightOf="@id/vide_details_back_img"
+            android:textSize="20sp"
+            android:maxLength="20"
+            />
+        <ImageView
+            android:id="@+id/video_details_more_img"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_margin="20dp"
+            android:src="@mipmap/title_more"/>
+    </RelativeLayout>
+
 
     <TextView
         android:id="@+id/video_details_cache_tv"
@@ -40,6 +57,45 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="#04fa00"/>
+    <FrameLayout
+        android:id="@+id/video_details_fl"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:background="#00000000"
+        android:orientation="horizontal"
+        android:padding="0dip"
+        android:visibility="invisible">
+
+        <ImageView
+            android:id="@+id/video_details_progress_img"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:src="@mipmap/ic_launcher" />
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|center_horizontal"
+            android:paddingBottom="25dip">
+
+            <ImageView
+                android:id="@+id/video_details_volume_img"
+                android:layout_width="94dip"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:src="@mipmap/volume" />
+
+            <ImageView
+                android:id="@+id/video_details_light_img"
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:scaleType="matrix"
+                android:src="@mipmap/light" />
+        </FrameLayout>
+    </FrameLayout>
 
 
 </RelativeLayout>
