@@ -21,6 +21,8 @@ public abstract class C_AbsBaseActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (!io.vov.vitamio.LibsChecker.checkVitamioLibs(this))
+            return;
         //替换状态栏背景颜色的方法
         Window window=getWindow();
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);

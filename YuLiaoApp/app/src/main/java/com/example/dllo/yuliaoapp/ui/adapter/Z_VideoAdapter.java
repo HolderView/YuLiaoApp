@@ -28,81 +28,9 @@ import java.util.Set;
 
 /**
  * Created by dllo on 16/10/19.
+ * @author 赵玲琳
+ * 视频页适配器
  */
-//public class Z_VideoAdapter extends Z_AbsBaseAdapter<Z_VideoBean.视频Bean, Z_AbsBaseAdapter.BaseHolder> {
-//    public Z_VideoAdapter(Context context) {
-//        super(context);
-//    }
-//
-//    @Override
-//    protected int setItemLayout() {
-////        Vitamio.isInitialized(C_MyApp.getContext());
-//        return R.layout.z_item_video_listview;
-//    }
-//
-//    @Override
-//    protected BaseHolder onCreateViewHolder(View convertView) {
-//        return new VideoViewHolder(convertView);
-//    }
-//
-//    @Override
-//    protected void onBindViewHolder(BaseHolder baseHolder, final Z_VideoBean.视频Bean itemData, int position) {
-//        final VideoViewHolder videoViewHolder = (VideoViewHolder) baseHolder;
-//
-//        final Z_VideoBean.视频Bean videoBean = itemData;
-//        videoViewHolder.videoTitleTv.setText(itemData.getTitle());
-//
-////        Picasso.with(context).load(datas.getCover()).
-////                resize(C_ScreenSizeUtil.getScreenSize(context, C_ScreenSizeUtil.ScreenState.WIDTH),
-////                        C_ScreenSizeUtil.getScreenSize(context, C_ScreenSizeUtil.ScreenState.HEIGHT) / 4)
-////                .into(videoViewHolder.videoImg);
-//
-////        videoViewHolder.videoView.pause();
-//
-////        videoViewHolder.videoView.setVisibility(View.GONE);
-////        videoViewHolder.videoView.stopPlayback();
-////        videoViewHolder.videoView.setMinimumHeight(200);
-//
-////                videoViewHolder.videoImg.setVisibility(View.GONE);
-////                videoViewHolder.videoView.setVisibility(View.VISIBLE);
-//
-//
-//        // 控制器
-//        MediaController mediaController = new MediaController(context);
-//        videoViewHolder.videoView.setMediaController(mediaController);
-//
-//        videoViewHolder.videoView.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-//            @Override
-//            public void onCompletion(MediaPlayer mp) {
-//                Toast.makeText(context, "播放完成", Toast.LENGTH_SHORT).show();
-//            }
-//        });
-//        videoViewHolder.videoView.setVideoURI(Uri.parse(videoBean.getMp4_url()));
-//        Log.d("eee", videoBean.getMp4_url());
-//        // 获得焦点
-////        videoViewHolder.videoView.requestFocus();
-//        // 开始播放
-//        videoViewHolder.videoView.start();
-//        // 是否播放
-//        Log.d("eee", "videoViewHolder.videoView.isPlaying():" + videoViewHolder.videoView.isPlaying());
-//        // 是否缓冲完毕
-//        Log.d("eee", "videoViewHolder.videoView.isBuffering():" + videoViewHolder.videoView.isBuffering());
-//    }
-//
-//
-//    class VideoViewHolder extends Z_AbsBaseAdapter.BaseHolder {
-//        io.vov.vitamio.widget.VideoView videoView;
-//        TextView videoTitleTv;
-//
-//        public VideoViewHolder(View itemView) {
-//            super(itemView);
-//            videoView = (io.vov.vitamio.widget.VideoView) itemView.findViewById(R.id.item_video_view);
-//            videoTitleTv = (TextView) itemView.findViewById(R.id.item_video_title_tv);
-//        }
-//
-//    }
-//
-//}
 public class Z_VideoAdapter extends BaseAdapter {
 
     private Context context;
@@ -152,22 +80,29 @@ public class Z_VideoAdapter extends BaseAdapter {
         }
         videoBean = datas.get(position);
 
+        videoViewHolder.videoTopicNameTv.setText(videoBean.getTopicName());
         videoViewHolder.videoTitleTv.setText(videoBean.getTitle());
         // 加载图片
         Picasso.with(context).load(videoBean.getCover())
                 .resize(C_ScreenSizeUtil.getScreenSize(context, C_ScreenSizeUtil.ScreenState.WIDTH)
-                        , C_ScreenSizeUtil.getScreenSize(context, C_ScreenSizeUtil.ScreenState.HEIGHT) / 4)
+                        , C_ScreenSizeUtil.getScreenSize(context, C_ScreenSizeUtil.ScreenState.HEIGHT) / 3)
                 .into(videoViewHolder.videoImg);
+        Picasso.with(context).load(videoBean.getTopicImg())
+                .resize(C_ScreenSizeUtil.getScreenSize(context, C_ScreenSizeUtil.ScreenState.WIDTH)/12
+                        , C_ScreenSizeUtil.getScreenSize(context, C_ScreenSizeUtil.ScreenState.HEIGHT) / 20)
+                .into(videoViewHolder.videoTopicImg);
         return convertView;
     }
 
     class VideoViewHolder {
-        TextView videoTitleTv;
-        ImageView videoImg;
+        TextView videoTitleTv,videoTopicNameTv;
+        ImageView videoImg,videoTopicImg;
 
         public VideoViewHolder(View itemView) {
             videoTitleTv = (TextView) itemView.findViewById(R.id.item_video_title_tv);
             videoImg = (ImageView) itemView.findViewById(R.id.item_video_img);
+            videoTopicNameTv = (TextView) itemView.findViewById(R.id.item_video_topic_name_tv);
+            videoTopicImg = (ImageView) itemView.findViewById(R.id.item_video_topic_img);
         }
     }
 }

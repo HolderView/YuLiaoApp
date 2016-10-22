@@ -11,6 +11,8 @@ import java.util.List;
 
 /**
  * Created by dllo on 16/10/19.
+ * @author 赵玲琳
+ * Adapter基类
  */
 public abstract class Z_AbsBaseAdapter<Z,VH extends Z_AbsBaseAdapter.BaseHolder> extends BaseAdapter {
 

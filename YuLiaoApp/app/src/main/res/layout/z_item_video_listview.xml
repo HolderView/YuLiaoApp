@@ -10,8 +10,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="标题"
-        android:layout_margin="20dp"
-        android:textSize="20sp"/>
+        android:layout_margin="10dp"
+        android:textSize="16sp"/>
 
 
     <ImageView
@@ -19,8 +19,30 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:src="@mipmap/ic_launcher"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"/>
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <ImageView
+            android:id="@+id/item_video_topic_img"
+            android:src="@mipmap/ic_launcher"
+            android:layout_margin="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/item_video_topic_name_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/item_video_topic_img"
+            android:layout_alignTop="@id/item_video_topic_img"
+            android:textSize="14sp"/>
+    </RelativeLayout>
+
+
+
 
 
 </LinearLayout>

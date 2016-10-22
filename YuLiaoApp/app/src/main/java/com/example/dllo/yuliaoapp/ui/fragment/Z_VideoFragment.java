@@ -25,6 +25,8 @@ import okhttp3.Response;
 
 /**
  * Created by dllo on 16/10/19.
+ * @author 赵玲琳
+ * 视频页
  */
 public class Z_VideoFragment extends C_AbsBaseFragment implements AdapterView.OnItemClickListener {
 
@@ -44,7 +46,6 @@ public class Z_VideoFragment extends C_AbsBaseFragment implements AdapterView.On
                 Log.d("www", "datas:" + datas);
                 z_videoAdapter.setDatas(datas);
             }
-
             return false;
         }
     });
@@ -83,10 +84,12 @@ public class Z_VideoFragment extends C_AbsBaseFragment implements AdapterView.On
             }
         }).start();
 
-
         videoListView.setOnItemClickListener(this);
     }
 
+    /**
+     * okHttp同步请求网络数据
+     */
     private void doSyncGet() throws IOException {
         Request.Builder builder = new Request.Builder();
         Request request = builder.url(UrlValues.VIDEO_URL).build();
@@ -103,7 +106,9 @@ public class Z_VideoFragment extends C_AbsBaseFragment implements AdapterView.On
         }
     }
 
-
+    /**
+     * 行布局点击跳转详情
+     */
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Z_VideoBean.视频Bean datas = (Z_VideoBean.视频Bean) parent.getItemAtPosition(position);

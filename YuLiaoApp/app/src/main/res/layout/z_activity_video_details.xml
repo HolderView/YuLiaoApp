@@ -3,22 +3,43 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/video_details_title_tv"
+    <RelativeLayout
+        android:id="@+id/video_details_rl"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:layout_margin="10dp"
-        android:text="视频详情"
-        android:textSize="30sp" />
+        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/vide_details_back_img"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+           />
+        <ImageView
+            android:id="@+id/video_details_more_img"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
 
-    <VideoView
-        android:layout_below="@id/video_details_title_tv"
+    <io.vov.vitamio.widget.VideoView
         android:id="@+id/video_details_videoview"
         android:layout_width="match_parent"
         android:layout_alignParentRight="true"
         android:layout_alignParentLeft="true"
-        android:layout_height="200dp" />
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"/>
+
+    <TextView
+        android:id="@+id/video_details_cache_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/video_details_videoview"
+        android:textColor="#e6ff01"/>
+    <TextView
+        android:id="@+id/video_details_net_tv"
+        android:layout_toRightOf="@id/video_details_cache_tv"
+        android:layout_alignTop="@id/video_details_videoview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#04fa00"/>
 
 
 </RelativeLayout>

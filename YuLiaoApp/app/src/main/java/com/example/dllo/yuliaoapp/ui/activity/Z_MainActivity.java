@@ -23,10 +23,10 @@ import java.util.List;
  * @author 赵玲琳
  */
 public class Z_MainActivity extends C_AbsBaseActivity {
+
     private ViewPager mainVp;
     private TabLayout mainTl;
     private List<Fragment> fragments;
-
 
     @Override
     protected int setLayout() {
