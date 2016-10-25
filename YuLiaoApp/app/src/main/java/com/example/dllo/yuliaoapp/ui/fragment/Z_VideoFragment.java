@@ -34,7 +34,7 @@ public class Z_VideoFragment extends C_AbsBaseFragment implements AdapterView.On
     private Z_VideoAdapter z_videoAdapter;
     private OkHttpClient okHttpClient;
 
-    // 在主线程中刷新UI界面
+    // 在主线程中刷新UI界面   解析数据
     private Handler handler=new Handler(new Handler.Callback() {
         @Override
         public boolean handleMessage(Message msg) {
@@ -73,6 +73,7 @@ public class Z_VideoFragment extends C_AbsBaseFragment implements AdapterView.On
 
         okHttpClient = new OkHttpClient();
 
+        // OkHttp同步请求网络数据
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -113,8 +114,8 @@ public class Z_VideoFragment extends C_AbsBaseFragment implements AdapterView.On
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Z_VideoBean.视频Bean datas = (Z_VideoBean.视频Bean) parent.getItemAtPosition(position);
         Bundle bundle = new Bundle();
-        bundle.putString("url",datas.getMp4_url());
-        bundle.putString("title",datas.getTitle());
+        bundle.putString(Z_VideoDetailsActivity.KEY_URL,datas.getMp4_url());
+        bundle.putString(Z_VideoDetailsActivity.KEY_TITLE,datas.getTitle());
         goToActivity(Z_VideoDetailsActivity.class,bundle);
     }
 }
