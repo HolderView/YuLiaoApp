@@ -1,4 +1,4 @@
-package com.example.dllo.yuliaoapp.ui.activity;
+package com.example.dllo.yuliaoapp.ui.activity.ec;
 
 import android.content.Intent;
 import android.text.TextUtils;
@@ -9,6 +9,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.dllo.yuliaoapp.R;
+import com.example.dllo.yuliaoapp.ui.activity.C_AbsBaseActivity;
 import com.hyphenate.EMCallBack;
 import com.hyphenate.EMConnectionListener;
 import com.hyphenate.EMError;
@@ -20,16 +21,18 @@ import com.hyphenate.util.NetUtils;
  * 环信聊天主页面
  */
 public class C_ECMainActivity extends C_AbsBaseActivity {
+
     private Button mBtnOutLogin;
     private EditText mEtUserName;
     private Button mBtnLaunchChat;
     private TextView mTvUserId;
+    private Button mBtnFriends;
 
     @Override
     protected int setLayout() {
         //判断sdk是否登录成功过 并没有退出和被踢 否则跳转到登录界面
         if (!EMClient.getInstance().isLoggedInBefore()) {
-            goTo(C_ECMainActivity.this, C_ECLoginActivity.class);
+            goTo(C_ECMainActivity.this, C_ECLoginActivityN.class);
             finish();
         }
         return R.layout.c_activity_ecmain;
@@ -41,6 +44,7 @@ public class C_ECMainActivity extends C_AbsBaseActivity {
         mEtUserName = byView(R.id.et_ecmain_username);
         mBtnLaunchChat = byView(R.id.btn_ecmain_launch_chat);
         mTvUserId=byView(R.id.tv_ecmain_user_id);
+        mBtnFriends=byView(R.id.btn_ecmain_friends);
     }
 
     @Override
@@ -54,6 +58,13 @@ public class C_ECMainActivity extends C_AbsBaseActivity {
         signOut();
         //与某个id聊天
         signChat();
+        //跳转到好友列表页面
+        mBtnFriends.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(C_ECMainActivity.this,C_ECFriendListActivity.class));
+            }
+        });
 
 
     }
@@ -75,7 +86,7 @@ public class C_ECMainActivity extends C_AbsBaseActivity {
                         return;
                     }
                     //跳转到聊天界面 ,开始聊天
-                    Intent intent=new Intent(C_ECMainActivity.this,C_ECChatActivity.class);
+                    Intent intent=new Intent(C_ECMainActivity.this,C_ECLoginActivityN.class);
                     intent.putExtra("user_name",chatId);
                     startActivity(intent);
                 }else {
@@ -99,7 +110,7 @@ public class C_ECMainActivity extends C_AbsBaseActivity {
                 EMClient.getInstance().logout(true, new EMCallBack() {
                     @Override
                     public void onSuccess() {
-                        goTo(C_ECMainActivity.this, C_ECLoginActivity.class);
+                        goTo(C_ECMainActivity.this, C_ECLoginActivityN.class);
                         finish();
                     }
 
@@ -132,10 +143,10 @@ public class C_ECMainActivity extends C_AbsBaseActivity {
                 public void run() {
                     if (i == EMError.USER_REMOVED) {
                         Toast.makeText(C_ECMainActivity.this, "账号已经被移除", Toast.LENGTH_SHORT).show();
-                        goTo(C_ECMainActivity.this, C_ECLoginActivity.class);
+                        goTo(C_ECMainActivity.this, C_ECLoginActivityN.class);
                     } else if (i == EMError.USER_LOGIN_ANOTHER_DEVICE) {
                         Toast.makeText(C_ECMainActivity.this, "账号已经在其它设备登录", Toast.LENGTH_SHORT).show();
-                        goTo(C_ECMainActivity.this, C_ECLoginActivity.class);
+                        goTo(C_ECMainActivity.this, C_ECLoginActivityN.class);
                     } else {
                         if (NetUtils.hasNetwork(C_ECMainActivity.this)) {
                             new Thread(new Runnable() {

@@ -63,10 +63,22 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.activity.C_ECLoginActivity"/>
-        <activity android:name=".ui.activity.C_ECMainActivity"/>
-        <activity android:name=".ui.activity.C_ECRegisterActivity"/>
-        <activity android:name=".ui.activity.C_ECChatActivity"/>
+        <!--登录-->
+        <activity android:name=".ui.activity.ec.C_ECLoginActivity"/>
+        <!--环信主页面-->
+        <activity android:name=".ui.activity.ec.C_ECMainActivity"/>
+        <!--注册-->
+        <activity android:name=".ui.activity.ec.C_ECRegisterActivity"/>
+        <!--聊天-->
+        <activity android:name=".ui.activity.ec.C_ECChatActivity"/>
+        <!--好友列表-->
+        <activity android:name=".ui.activity.ec.C_ECFriendListActivity"/>
+        <!--新版Activity-->
+        <activity android:name=".ui.activity.ec.C_ECMainActivityN"/>
+        <!--申请好友-->
+        <activity android:name=".ui.activity.ec.C_ECAddContactActivity"/>
+        <activity android:name=".ui.activity.ec.C_ECLoginActivityN"/>
+        <activity android:name=".ui.activity.ec.C_ECChatActivityN"/>
         <!-- 设置环信应用的AppKey -->
         <meta-data
             android:name="EASEMOB_APPKEY"

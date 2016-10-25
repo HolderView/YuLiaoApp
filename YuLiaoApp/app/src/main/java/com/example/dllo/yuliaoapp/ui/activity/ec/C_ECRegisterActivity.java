@@ -1,4 +1,4 @@
-package com.example.dllo.yuliaoapp.ui.activity;
+package com.example.dllo.yuliaoapp.ui.activity.ec;
 
 import android.app.ProgressDialog;
 import android.os.Handler;
@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.dllo.yuliaoapp.R;
+import com.example.dllo.yuliaoapp.ui.activity.C_AbsBaseActivity;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.exceptions.HyphenateException;
 
