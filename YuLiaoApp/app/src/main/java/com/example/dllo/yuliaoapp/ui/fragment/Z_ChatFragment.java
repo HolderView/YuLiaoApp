@@ -1,12 +1,14 @@
 package com.example.dllo.yuliaoapp.ui.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
 import com.example.dllo.yuliaoapp.R;
-import com.example.dllo.yuliaoapp.ui.activity.C_ECLoginActivity;
-import com.example.dllo.yuliaoapp.ui.activity.C_ECMainActivity;
+import com.example.dllo.yuliaoapp.ui.activity.ec.C_ECLoginActivityN;
+import com.example.dllo.yuliaoapp.ui.activity.ec.C_ECMainActivity;
+import com.example.dllo.yuliaoapp.ui.activity.ec.C_ECMainActivityN;
 
 /**
  * Created by dllo on 16/10/19.
@@ -36,7 +38,7 @@ public class Z_ChatFragment extends C_AbsBaseFragment {
         mBtnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                goToActivity(C_ECMainActivity.class);
+                startActivity(new Intent(context,C_ECLoginActivityN.class));
             }
         });
     }

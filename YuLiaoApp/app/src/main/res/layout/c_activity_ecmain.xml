@@ -16,7 +16,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="发起聊天" />
-
+    <Button
+        android:id="@+id/btn_ecmain_friends"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="查看好友"/>
     <Button
         android:id="@+id/btn_ecmain_out_login"
         android:layout_width="match_parent"
