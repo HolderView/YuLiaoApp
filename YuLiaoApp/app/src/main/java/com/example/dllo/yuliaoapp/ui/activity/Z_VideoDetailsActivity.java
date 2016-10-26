@@ -8,6 +8,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.Display;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
@@ -15,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -22,6 +24,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.dllo.yuliaoapp.R;
+import com.example.dllo.yuliaoapp.tools.z_pay.NormalActivity;
 
 import io.vov.vitamio.MediaPlayer;
 import io.vov.vitamio.widget.MediaController;
@@ -42,7 +45,7 @@ public class Z_VideoDetailsActivity extends C_AbsBaseActivity implements View.On
     private GestureDetector gestureDetector;
     private ImageView longImg,shortImg,typeBgImg,backImg,moreImg;
     private RelativeLayout relativeLayout;
-    private RelativeLayout frameLayout;
+    private RelativeLayout controllerRl;
     private Boolean isShow = false;
     private AudioManager audioManager;
     public static final String KEY_URL = "url";
@@ -63,18 +66,14 @@ public class Z_VideoDetailsActivity extends C_AbsBaseActivity implements View.On
      * 当前缩放模式
      */
     private int mLayout = VideoView.VIDEO_LAYOUT_ZOOM;
+    private int vWidth;
+    private int vHeight;
+
+    private Button payBtn;
 
     @Override
     protected int setLayout() {
-
-        //隐藏状态栏
-        //定义全屏参数  去掉电量栏
-        int flag=WindowManager.LayoutParams.FLAG_FULLSCREEN;
-        //获得当前窗体对象
-        Window window=Z_VideoDetailsActivity.this.getWindow();
-        //设置当前窗体为全屏显示
-        window.setFlags(flag, flag);
-
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         return R.layout.z_activity_video_details;
     }
 
@@ -88,14 +87,10 @@ public class Z_VideoDetailsActivity extends C_AbsBaseActivity implements View.On
         shortImg = byView(R.id.video_details_short_img);
         typeBgImg =byView(R.id.video_details_type_img);
         relativeLayout = byView(R.id.video_details_rl);
-        frameLayout = byView(R.id.video_details_fl);
+        controllerRl = byView(R.id.video_details_controller_rl);
         backImg =byView(R.id.vide_details_back_img);
         moreImg = byView(R.id.video_details_more_img);
-
-        // 强制横屏
-        if (this.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
-            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-        }
+        payBtn = byView(R.id.video_details_btn);
     }
 
     @Override
@@ -126,8 +121,11 @@ public class Z_VideoDetailsActivity extends C_AbsBaseActivity implements View.On
 
         // 显示缓存进度和网速
         showCacheAndNet();
+
         // 手势监听
         gestureDetector = new GestureDetector(this, new MyGestureListener() );
+
+        payBtn.setOnClickListener(this);
     }
 
     /**
@@ -165,8 +163,6 @@ public class Z_VideoDetailsActivity extends C_AbsBaseActivity implements View.On
             }
         });
     }
-
-
 
 
     @Override
@@ -209,35 +205,47 @@ public class Z_VideoDetailsActivity extends C_AbsBaseActivity implements View.On
             case R.id.video_details_more_img:
                 Toast.makeText(this, "该功能尚待优化", Toast.LENGTH_SHORT).show();
                 break;
+            case  R.id.video_details_btn:
+                Intent intent=new Intent(this,NormalActivity.class);
+                startActivity(intent);
+                finish();
+                Log.d("qwe", "支付");
+                break;
         }
-
     }
 
     /**
-     * 手势监听
+     * 横屏手势处理
      */
-    private class MyGestureListener extends GestureDetector.SimpleOnGestureListener {
-
-        /**
-         * 双击
-         */
+    private class ShowOrHideGestureListener extends GestureDetector.SimpleOnGestureListener{
+        // 点击 标题栏显示/隐藏
         @Override
-        public boolean onDoubleTap(MotionEvent e) {
-            if (mLayout == VideoView.VIDEO_LAYOUT_ZOOM)
-                mLayout = VideoView.VIDEO_LAYOUT_ORIGIN;
-            else
-                mLayout++;
-            if (videoView != null)
-                videoView.setVideoLayout(mLayout, 0);
-            return true;
+        public boolean onDown(MotionEvent e) {
+            if (isShow == false){
+                relativeLayout.setVisibility(View.GONE);
+
+                isShow = true;
+            }else {
+                relativeLayout.setVisibility(View.VISIBLE);
+//                // 定时3s隐藏
+//                Handler handler = new Handler();
+//                handler.postDelayed(new Runnable() {
+//
+//                    @Override
+//                    public void run() {
+//                        relativeLayout.setVisibility(View.GONE); //view是要隐藏的控件
+//                    }
+//                }, 3000);  //3000毫秒后执行
+                isShow = false;
+            }
+            return super.onDown(e);
         }
 
         /**
          * 滑动
          */
         @Override
-        public boolean onScroll(MotionEvent e1, MotionEvent e2,
-                                float distanceX, float distanceY) {
+        public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
             float mOldX = e1.getX(), mOldY = e1.getY();
             int y = (int) e2.getRawY();
             Display disp = getWindowManager().getDefaultDisplay();
@@ -252,28 +260,65 @@ public class Z_VideoDetailsActivity extends C_AbsBaseActivity implements View.On
             return super.onScroll(e1, e2, distanceX, distanceY);
         }
 
-        // 点击 标题栏显示/隐藏
+        /**
+         * 双击
+         */
         @Override
-        public boolean onDown(MotionEvent e) {
-            if (isShow == false){
-                relativeLayout.setVisibility(View.GONE);
+        public boolean onDoubleTap(MotionEvent e) {
+//            if (mLayout == VideoView.VIDEO_LAYOUT_ZOOM)
+//                mLayout = VideoView.VIDEO_LAYOUT_ORIGIN;
+//            else
+//                mLayout++;
+//            if (videoView != null)
+//                videoView.setVideoLayout(mLayout, 0);
+            int screenOri = getRequestedOrientation();
 
-                isShow = true;
-            }else {
-                relativeLayout.setVisibility(View.VISIBLE);
-                // 定时3s隐藏
-                Handler handler = new Handler();
-                handler.postDelayed(new Runnable() {
-
-                    @Override
-                    public void run() {
-                        relativeLayout.setVisibility(View.GONE); //view是要隐藏的控件
-                    }
-                }, 3000);  //3000毫秒后执行
-                isShow = false;
+            if (screenOri == ActivityInfo.SCREEN_ORIENTATION_PORTRAIT){
+                // 当前为竖屏
+                vWidth = videoView.getMeasuredWidth();
+                vHeight = videoView.getMeasuredHeight();
+                setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+            } else if (screenOri == ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE) {
+                // 当前是横屏  设置方向为竖屏
+                setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
             }
-            return super.onDown(e);
+
+            return true;
         }
+
+    }
+
+    /**
+     * 手势监听
+     */
+    private class MyGestureListener extends GestureDetector.SimpleOnGestureListener {
+
+        /**
+         * 双击
+         */
+        @Override
+        public boolean onDoubleTap(MotionEvent e) {
+//            if (mLayout == VideoView.VIDEO_LAYOUT_ZOOM)
+//                mLayout = VideoView.VIDEO_LAYOUT_ORIGIN;
+//            else
+//                mLayout++;
+//            if (videoView != null)
+//                videoView.setVideoLayout(mLayout, 0);
+            int screenOri = getRequestedOrientation();
+
+            if (screenOri == ActivityInfo.SCREEN_ORIENTATION_PORTRAIT){
+                // 当前为竖屏
+                vWidth = videoView.getMeasuredWidth();
+                vHeight = videoView.getMeasuredHeight();
+                setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+            } else if (screenOri == ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE) {
+                // 当前是横屏  设置方向为竖屏
+                setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+            }
+
+            return true;
+        }
+
     }
 
     /**
@@ -282,7 +327,7 @@ public class Z_VideoDetailsActivity extends C_AbsBaseActivity implements View.On
     private Handler mDismissHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
-            frameLayout.setVisibility(View.GONE);
+            controllerRl.setVisibility(View.GONE);
 //            relativeLayout.setVisibility(View.GONE);
         }
     };
@@ -300,7 +345,7 @@ public class Z_VideoDetailsActivity extends C_AbsBaseActivity implements View.On
 
             // 显示
             typeBgImg.setImageResource(R.mipmap.volume);
-            frameLayout.setVisibility(View.VISIBLE);
+            controllerRl.setVisibility(View.VISIBLE);
         }
 
         int index = (int) (percent * maxVolume) + volume;
@@ -334,7 +379,7 @@ public class Z_VideoDetailsActivity extends C_AbsBaseActivity implements View.On
 
             // 显示
             typeBgImg.setImageResource(R.mipmap.light);
-            frameLayout.setVisibility(View.VISIBLE);
+            controllerRl.setVisibility(View.VISIBLE);
         }
         WindowManager.LayoutParams lpa = getWindow().getAttributes();
         lpa.screenBrightness = brightness + percent;
@@ -349,18 +394,50 @@ public class Z_VideoDetailsActivity extends C_AbsBaseActivity implements View.On
         shortImg.setLayoutParams(lp);
     }
 
+    /**
+     * 横竖屏监听
+     * @param newConfig
+     */
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         if (videoView != null)
             videoView.setVideoLayout(mLayout, 0);
         super.onConfigurationChanged(newConfig);
-//        //切换为竖屏
-//        if (newConfig.orientation == this.getResources().getConfiguration().ORIENTATION_PORTRAIT) {
-//
-//        }
-//        //切换为横屏
-//        else if (newConfig.orientation == this.getResources().getConfiguration().ORIENTATION_LANDSCAPE) {
-//
-//        }
+        // 获取屏幕方向
+        int ori = newConfig.orientation;
+        if (ori == Configuration.ORIENTATION_PORTRAIT) {
+            ViewGroup.LayoutParams lp = videoView.getLayoutParams();
+            lp.height = vHeight;
+            lp.width = vWidth;
+            videoView.setLayoutParams(lp);
+
+            titleTv.setVisibility(View.VISIBLE);
+            relativeLayout.setVisibility(View.VISIBLE);
+
+            // 竖屏手势处理
+            gestureDetector = new GestureDetector(this, new MyGestureListener() );
+        }
+        if (ori == Configuration.ORIENTATION_LANDSCAPE){
+            // 横屏手势处理
+            gestureDetector = new GestureDetector(this, new ShowOrHideGestureListener() );
+            // 横屏时隐藏状态栏
+            //定义全屏参数  去掉电量栏
+            int flag=WindowManager.LayoutParams.FLAG_FULLSCREEN;
+            //获得当前窗体对象
+            Window window=Z_VideoDetailsActivity.this.getWindow();
+            //设置当前窗体为全屏显示
+            window.setFlags(flag, flag);
+            titleTv.setVisibility(View.GONE);
+
+            // 横屏设置宽高为屏幕的宽高
+            WindowManager windowManager = (WindowManager) this.getSystemService(this.WINDOW_SERVICE);
+            int width = windowManager.getDefaultDisplay().getWidth();
+            int height = windowManager.getDefaultDisplay().getHeight();
+
+            ViewGroup.LayoutParams lp = videoView.getLayoutParams();
+            lp.width = width;
+            lp.height = height;
+            videoView.setLayoutParams(lp);
+        }
     }
 }

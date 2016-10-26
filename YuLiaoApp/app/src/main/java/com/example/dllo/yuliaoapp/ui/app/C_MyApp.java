@@ -10,6 +10,7 @@ import android.util.Log;
 import com.example.dllo.yuliaoapp.model.db.EaseUser;
 import com.example.dllo.yuliaoapp.model.db.UserDao;
 import com.example.dllo.yuliaoapp.tools.C_Constant;
+import com.fuqianla.paysdk.FuQianLa;
 import com.hyphenate.EMCallBack;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMOptions;
@@ -198,6 +199,7 @@ public static Context applicationContext;
     @Override
     public void onCreate() {
         super.onCreate();
+        FuQianLa.getInstance().init(getApplicationContext());
         applicationContext = this;
         instance = this;
         // 初始化环信sdk
