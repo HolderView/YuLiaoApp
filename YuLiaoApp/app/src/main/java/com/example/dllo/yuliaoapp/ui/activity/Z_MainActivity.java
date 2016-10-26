@@ -1,12 +1,12 @@
 package com.example.dllo.yuliaoapp.ui.activity;
 
+
+
 import android.graphics.Color;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.widget.Toast;
 
 import com.example.dllo.yuliaoapp.R;
@@ -42,8 +42,8 @@ public class Z_MainActivity extends C_AbsBaseActivity {
     @Override
     protected void initData() {
         fragments = new ArrayList<>();
-        fragments.add(Z_ChatFragment.newInstance());
         fragments.add(Z_MapFragment.newInstance());
+        fragments.add(Z_ChatFragment.newInstance());
         fragments.add(Z_VideoFragment.newInstance());
         fragments.add(Z_PersonFragment.newInstance());
 
