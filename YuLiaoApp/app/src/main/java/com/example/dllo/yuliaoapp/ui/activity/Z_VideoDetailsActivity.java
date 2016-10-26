@@ -13,11 +13,13 @@ import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.dllo.yuliaoapp.R;
 
@@ -31,30 +33,32 @@ import io.vov.vitamio.widget.VideoView;
  * @author 赵玲琳
  * 视频详情页
  */
-public class Z_VideoDetailsActivity extends C_AbsBaseActivity {
+public class Z_VideoDetailsActivity extends C_AbsBaseActivity implements View.OnClickListener {
 
     private TextView titleTv,netTv,cacheTv;
     private VideoView videoView;
     private MediaController mediaController;
     private String url,title;
     private GestureDetector gestureDetector;
-    private ImageView volumeImg,lightImg,progressImg;
+    private ImageView longImg,shortImg,typeBgImg,backImg,moreImg;
     private RelativeLayout relativeLayout;
-    private FrameLayout frameLayout;
+    private RelativeLayout frameLayout;
     private Boolean isShow = false;
-    private AudioManager mAudioManager;
+    private AudioManager audioManager;
+    public static final String KEY_URL = "url";
+    public static final String KEY_TITLE = "title";
     /**
      * 最大声音
      */
-    private int mMaxVolume;
+    private int maxVolume;
     /**
      * 当前声音
      */
-    private int mVolume = -1;
+    private int volume = -1;
     /**
      * 当前亮度
      */
-    private float mBrightness = -1f;
+    private float brightness = -1f;
     /**
      * 当前缩放模式
      */
@@ -62,6 +66,15 @@ public class Z_VideoDetailsActivity extends C_AbsBaseActivity {
 
     @Override
     protected int setLayout() {
+
+        //隐藏状态栏
+        //定义全屏参数  去掉电量栏
+        int flag=WindowManager.LayoutParams.FLAG_FULLSCREEN;
+        //获得当前窗体对象
+        Window window=Z_VideoDetailsActivity.this.getWindow();
+        //设置当前窗体为全屏显示
+        window.setFlags(flag, flag);
+
         return R.layout.z_activity_video_details;
     }
 
@@ -71,11 +84,13 @@ public class Z_VideoDetailsActivity extends C_AbsBaseActivity {
         titleTv = byView(R.id.video_details_title_tv);
         netTv = byView(R.id.video_details_net_tv);
         cacheTv = byView(R.id.video_details_cache_tv);
-        volumeImg = byView(R.id.video_details_volume_img);
-        lightImg = byView(R.id.video_details_light_img);
-        progressImg =byView(R.id.video_details_progress_img);
+        longImg = byView(R.id.video_details_long_img);
+        shortImg = byView(R.id.video_details_short_img);
+        typeBgImg =byView(R.id.video_details_type_img);
         relativeLayout = byView(R.id.video_details_rl);
         frameLayout = byView(R.id.video_details_fl);
+        backImg =byView(R.id.vide_details_back_img);
+        moreImg = byView(R.id.video_details_more_img);
 
         // 强制横屏
         if (this.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
@@ -86,28 +101,38 @@ public class Z_VideoDetailsActivity extends C_AbsBaseActivity {
     @Override
     protected void initData() {
 
-        mAudioManager = (AudioManager) getSystemService(this.AUDIO_SERVICE);
-        mMaxVolume = mAudioManager
-                .getStreamMaxVolume(AudioManager.STREAM_MUSIC);
-
-        mediaController = new MediaController(this);
-        videoView.setMediaController(mediaController);
-
+        // 接收跳转传的 url 和 标题
         Intent intent = getIntent();
         if (intent != null){
             Bundle bundle = intent.getExtras();
-            url = bundle.getString("url");
-            title = bundle.getString("title");
+            url = bundle.getString(KEY_URL);
+            title = bundle.getString(KEY_TITLE);
         }
+
+        // 视频控制器
+        mediaController = new MediaController(this);
+        videoView.setMediaController(mediaController);
         titleTv.setText(title);
         videoView.setVideoURI(Uri.parse(url));
+        videoView.setFocusable(true);
         videoView.start();
 
-        showCacheAndNet();
+        backImg.setOnClickListener(this);
+        moreImg.setOnClickListener(this);
 
+        // AudioManager音量管理类
+        audioManager = (AudioManager) getSystemService(this.AUDIO_SERVICE);
+        maxVolume = audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
+
+        // 显示缓存进度和网速
+        showCacheAndNet();
+        // 手势监听
         gestureDetector = new GestureDetector(this, new MyGestureListener() );
     }
 
+    /**
+     * 显示缓存进度和网速
+     */
     private void showCacheAndNet() {
         videoView.setOnBufferingUpdateListener(new MediaPlayer.OnBufferingUpdateListener() {
             @Override
@@ -141,20 +166,7 @@ public class Z_VideoDetailsActivity extends C_AbsBaseActivity {
         });
     }
 
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        if (videoView != null)
-            videoView.setVideoLayout(mLayout, 0);
-        super.onConfigurationChanged(newConfig);
-//        //切换为竖屏
-//        if (newConfig.orientation == this.getResources().getConfiguration().ORIENTATION_PORTRAIT) {
-//
-//        }
-//        //切换为横屏
-//        else if (newConfig.orientation == this.getResources().getConfiguration().ORIENTATION_LANDSCAPE) {
-//
-//        }
-    }
+
 
 
     @Override
@@ -176,14 +188,34 @@ public class Z_VideoDetailsActivity extends C_AbsBaseActivity {
      * 手势结束
      */
     private void endGesture() {
-        mVolume = -1;
-        mBrightness = -1f;
+        volume = -1;
+        brightness = -1f;
 
         // 隐藏
         mDismissHandler.removeMessages(0);
         mDismissHandler.sendEmptyMessageDelayed(0, 500);
     }
 
+    /**
+     * 点击事件
+     * @param v
+     */
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.vide_details_back_img:
+                finish();
+                break;
+            case R.id.video_details_more_img:
+                Toast.makeText(this, "该功能尚待优化", Toast.LENGTH_SHORT).show();
+                break;
+        }
+
+    }
+
+    /**
+     * 手势监听
+     */
     private class MyGestureListener extends GestureDetector.SimpleOnGestureListener {
 
         /**
@@ -220,13 +252,24 @@ public class Z_VideoDetailsActivity extends C_AbsBaseActivity {
             return super.onScroll(e1, e2, distanceX, distanceY);
         }
 
+        // 点击 标题栏显示/隐藏
         @Override
         public boolean onDown(MotionEvent e) {
             if (isShow == false){
                 relativeLayout.setVisibility(View.GONE);
+
                 isShow = true;
             }else {
                 relativeLayout.setVisibility(View.VISIBLE);
+                // 定时3s隐藏
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+
+                    @Override
+                    public void run() {
+                        relativeLayout.setVisibility(View.GONE); //view是要隐藏的控件
+                    }
+                }, 3000);  //3000毫秒后执行
                 isShow = false;
             }
             return super.onDown(e);
@@ -240,7 +283,7 @@ public class Z_VideoDetailsActivity extends C_AbsBaseActivity {
         @Override
         public void handleMessage(Message msg) {
             frameLayout.setVisibility(View.GONE);
-            relativeLayout.setVisibility(View.GONE);
+//            relativeLayout.setVisibility(View.GONE);
         }
     };
 
@@ -250,30 +293,30 @@ public class Z_VideoDetailsActivity extends C_AbsBaseActivity {
      * @param percent
      */
     private void onVolumeSlide(float percent) {
-        if (mVolume == -1) {
-            mVolume = mAudioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
-            if (mVolume < 0)
-                mVolume = 0;
+        if (volume == -1) {
+            volume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
+            if (volume < 0)
+                volume = 0;
 
             // 显示
-            volumeImg.setImageResource(R.mipmap.ic_launcher);
+            typeBgImg.setImageResource(R.mipmap.volume);
             frameLayout.setVisibility(View.VISIBLE);
         }
 
-        int index = (int) (percent * mMaxVolume) + mVolume;
-        if (index > mMaxVolume)
-            index = mMaxVolume;
+        int index = (int) (percent * maxVolume) + volume;
+        if (index > maxVolume)
+            index = maxVolume;
         else if (index < 0)
             index = 0;
 
         // 变更声音
-        mAudioManager.setStreamVolume(AudioManager.STREAM_MUSIC, index, 0);
+        audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, index, 0);
 
         // 变更进度条
-        ViewGroup.LayoutParams lp = volumeImg.getLayoutParams();
-        lp.width = findViewById(R.id.video_details_light_img).getLayoutParams().width
-                * index / mMaxVolume;
-        volumeImg.setLayoutParams(lp);
+        ViewGroup.LayoutParams lp = shortImg.getLayoutParams();
+        lp.width = findViewById(R.id.video_details_long_img).getLayoutParams().width
+                * index / maxVolume;
+        shortImg.setLayoutParams(lp);
     }
 
     /**
@@ -282,29 +325,42 @@ public class Z_VideoDetailsActivity extends C_AbsBaseActivity {
      * @param percent
      */
     private void onBrightnessSlide(float percent) {
-        if (mBrightness < 0) {
-            mBrightness = getWindow().getAttributes().screenBrightness;
-            if (mBrightness <= 0.00f)
-                mBrightness = 0.50f;
-            if (mBrightness < 0.01f)
-                mBrightness = 0.01f;
+        if (brightness < 0) {
+            brightness = getWindow().getAttributes().screenBrightness;
+            if (brightness <= 0.00f)
+                brightness = 0.50f;
+            if (brightness < 0.01f)
+                brightness = 0.01f;
 
             // 显示
-            lightImg.setImageResource(R.mipmap.ic_launcher);
+            typeBgImg.setImageResource(R.mipmap.light);
             frameLayout.setVisibility(View.VISIBLE);
         }
         WindowManager.LayoutParams lpa = getWindow().getAttributes();
-        lpa.screenBrightness = mBrightness + percent;
+        lpa.screenBrightness = brightness + percent;
         if (lpa.screenBrightness > 1.0f)
             lpa.screenBrightness = 1.0f;
         else if (lpa.screenBrightness < 0.01f)
             lpa.screenBrightness = 0.01f;
         getWindow().setAttributes(lpa);
 
-        ViewGroup.LayoutParams lp = lightImg.getLayoutParams();
-        lp.width = (int) (findViewById(R.id.video_details_light_img).getLayoutParams().width * lpa.screenBrightness);
-        lightImg.setLayoutParams(lp);
+        ViewGroup.LayoutParams lp = shortImg.getLayoutParams();
+        lp.width = (int) (findViewById(R.id.video_details_long_img).getLayoutParams().width * lpa.screenBrightness);
+        shortImg.setLayoutParams(lp);
     }
 
-
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        if (videoView != null)
+            videoView.setVideoLayout(mLayout, 0);
+        super.onConfigurationChanged(newConfig);
+//        //切换为竖屏
+//        if (newConfig.orientation == this.getResources().getConfiguration().ORIENTATION_PORTRAIT) {
+//
+//        }
+//        //切换为横屏
+//        else if (newConfig.orientation == this.getResources().getConfiguration().ORIENTATION_LANDSCAPE) {
+//
+//        }
+    }
 }
