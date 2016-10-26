@@ -3,6 +3,7 @@ package com.example.dllo.yuliaoapp.ui.fragment.ec;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -59,7 +60,10 @@ public class C_ECConversationFragment extends C_AbsBaseFragment {
 
     @Override
     protected void initDatas() {
+        Log.d("ppp", "initDatas");
         adapter = new EaseConversationAdapter(context, 1, mConversations);
+
+        mConversations.addAll(loadConversationList());
         mLvConversation.setAdapter(adapter);
         final String st2 = getResources().getString(R.string.Cant_chat_with_yourself);
         mLvConversation.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -75,9 +79,16 @@ public class C_ECConversationFragment extends C_AbsBaseFragment {
                     Intent intent = new Intent(context, C_ECChatActivityN.class);
                     intent.putExtra("username", username);
                     startActivity(intent);
+                    getActivity().finish();
                 }
             }
         });
+    }
+
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
     }
 
     /**
@@ -276,5 +287,31 @@ public class C_ECConversationFragment extends C_AbsBaseFragment {
         View msgState;
         /** 整个list中每一行总布局 */
 
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Log.d("ppp", "onResume");
+
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Log.d("ppp", "onDestroy");
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        Log.d("ppp", "onPause");
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        Log.d("ppp", "onStop");
+        mConversations.clear();
     }
 }

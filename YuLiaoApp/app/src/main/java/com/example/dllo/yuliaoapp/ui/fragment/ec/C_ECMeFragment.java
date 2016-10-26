@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.example.dllo.yuliaoapp.R;
 import com.example.dllo.yuliaoapp.ui.activity.ec.C_ECLoginActivityN;
@@ -24,6 +25,7 @@ public class C_ECMeFragment extends C_AbsBaseFragment{
         return fragment;
     }
     private Button mBtnMeOutLogin;
+    private TextView mTvUser;
     @Override
     protected int setLayout() {
         return R.layout.c_fragment_ec_me;
@@ -32,6 +34,7 @@ public class C_ECMeFragment extends C_AbsBaseFragment{
     @Override
     protected void  initViews() {
         mBtnMeOutLogin=byView(R.id.btn_ec_me_out_login);
+        mTvUser=byView(R.id.tv_ec_me_user);
     }
 
     @Override
@@ -40,6 +43,7 @@ public class C_ECMeFragment extends C_AbsBaseFragment{
          * 退出登录
          */
         outLogin();
+        mTvUser.setText(EMClient.getInstance().getCurrentUser().toString().trim());
     }
 
     /**

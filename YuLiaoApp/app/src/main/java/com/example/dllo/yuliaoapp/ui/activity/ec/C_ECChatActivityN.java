@@ -2,7 +2,10 @@ package com.example.dllo.yuliaoapp.ui.activity.ec;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.text.TextUtils;
+import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,6 +29,9 @@ import java.util.List;
 
 /**
  * Created by dllo on 16/10/25.
+ *
+ * @author 陈思宇
+ *         聊天页面
  */
 public class C_ECChatActivityN extends C_AbsBaseActivity {
     private ListView listView;
@@ -37,6 +43,18 @@ public class C_ECChatActivityN extends C_AbsBaseActivity {
     MessageAdapter adapter;
     private EMConversation conversation;
     protected int pagesize = 20;
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        return super.onKeyDown(keyCode, event);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        startActivity(new Intent(this, C_ECMainActivityN.class));
+        finish();
+    }
 
     @Override
     protected int setLayout() {
@@ -75,6 +93,7 @@ public class C_ECChatActivityN extends C_AbsBaseActivity {
         });
         EMClient.getInstance().chatManager().addMessageListener(msgListener);
     }
+
     protected void getAllMessage() {
         // 获取当前conversation对象
 
@@ -95,6 +114,7 @@ public class C_ECChatActivityN extends C_AbsBaseActivity {
         }
 
     }
+
     private void setMesaage(String content) {
 
         // 创建一条文本消息，content为消息文字内容，toChatUsername为对方用户或者群聊的id，后文皆是如此
@@ -109,10 +129,12 @@ public class C_ECChatActivityN extends C_AbsBaseActivity {
         adapter.notifyDataSetChanged();
         if (msgList.size() > 0) {
             listView.setSelection(listView.getCount() - 1);
+            listView.smoothScrollToPosition(listView.getCount() - 1);
         }
         et_content.setText("");
         et_content.clearFocus();
     }
+
     EMMessageListener msgListener = new EMMessageListener() {
 
         @Override
@@ -133,7 +155,7 @@ public class C_ECChatActivityN extends C_AbsBaseActivity {
                     adapter.notifyDataSetChanged();
                     if (msgList.size() > 0) {
                         et_content.setSelection(listView.getCount() - 1);
-
+                        listView.smoothScrollToPosition(listView.getCount() - 1);
                     }
 
                 }
@@ -162,6 +184,7 @@ public class C_ECChatActivityN extends C_AbsBaseActivity {
             // 消息状态变动
         }
     };
+
     @SuppressLint("InflateParams")
     class MessageAdapter extends BaseAdapter {
         private List<EMMessage> msgs;

@@ -3,6 +3,7 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="64dp"
     android:background="#f0f0f0"
+    android:padding="@dimen/ten_dp"
     >
     <ImageView
         android:id="@+id/iv_avatar"

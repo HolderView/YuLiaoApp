@@ -7,7 +7,7 @@
         android:id="@+id/title"
         android:layout_width="match_parent"
         android:layout_height="@dimen/height_top_bar"
-        android:background="@color/top_bar_normal_bg"
+        android:background="@color/Cambridge_Blue"
         android:gravity="center_vertical">
 
         <TextView
@@ -31,21 +31,23 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:layout_marginRight="10dp"
-            android:background="#000"
+            android:layout_marginRight="@dimen/ten_dp"
+            android:background="@color/Cambridge_Blue"
             android:padding="8dp"
             android:text="发送"
             android:textColor="#fff"
             android:textSize="16sp" />
 
+
         <EditText
+            android:drawableLeft="@mipmap/pen_black"
             android:id="@+id/et_content"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_centerVertical="true"
             android:layout_margin="10dp"
             android:layout_toLeftOf="@id/btn_send"
-            android:background="#f0f0f0"
+            android:background="@drawable/c_shape_ecmain"
             android:hint="请输入内容"
             android:paddingLeft="10dp"
             android:textSize="14sp" />

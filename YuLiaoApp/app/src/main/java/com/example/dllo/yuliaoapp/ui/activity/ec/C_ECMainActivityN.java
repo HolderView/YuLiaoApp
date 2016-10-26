@@ -81,7 +81,7 @@ public class C_ECMainActivityN extends C_AbsBaseActivity {
         fragments.add(C_ECAddressFragment.newInstance());
         fragments.add(C_ECNewsFriendsMsgFragment.newInstance());
         fragments.add(C_ECMeFragment.newInstance());
-        mVpMain.setOffscreenPageLimit(0);
+
         mVpMain.setAdapter(adapter);
 
         mTlMain.setupWithViewPager(mVpMain);
@@ -91,6 +91,8 @@ public class C_ECMainActivityN extends C_AbsBaseActivity {
         mTlMain.getTabAt(1).setIcon(R.drawable.c_selector_ec_address);
         mTlMain.getTabAt(2).setIcon(R.drawable.c_selector_ec_new_friends);
         mTlMain.getTabAt(3).setIcon(R.drawable.c_selector_ec_me);
+
+        mVpMain.setOffscreenPageLimit(5);
     }
 
     public class ECMainVpAdapter extends FragmentPagerAdapter {

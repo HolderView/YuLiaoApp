@@ -63,6 +63,7 @@ public class C_ECAddressFragment extends C_AbsBaseFragment {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(context, C_ECAddContactActivity.class));
+                getActivity().finish();
             }
 
         });

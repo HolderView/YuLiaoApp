@@ -6,7 +6,7 @@
     android:id="@+id/title"
     android:layout_width="match_parent"
     android:layout_height="@dimen/height_top_bar"
-    android:background="@color/top_bar_normal_bg"
+    android:background="@color/Cambridge_Blue"
     android:gravity="center_vertical" >
 
 
@@ -18,6 +18,20 @@
         android:textColor="#fff"
         android:textSize="18sp" />
 </RelativeLayout>
+    <LinearLayout
+        android:layout_margin="@dimen/ten_dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="当前登录账号:"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_ec_me_user"/>
+    </LinearLayout>
     <Button
         android:id="@+id/btn_ec_me_out_login"
         android:layout_width="match_parent"

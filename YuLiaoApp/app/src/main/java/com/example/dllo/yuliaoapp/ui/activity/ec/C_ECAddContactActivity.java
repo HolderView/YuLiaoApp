@@ -1,6 +1,7 @@
 package com.example.dllo.yuliaoapp.ui.activity.ec;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -13,6 +14,8 @@ import com.hyphenate.chat.EMClient;
 
 /**
  * Created by dllo on 16/10/24.
+ * @author 陈思宇
+ * 添加好友页面
  */
 public class C_ECAddContactActivity extends C_AbsBaseActivity {
     private ProgressDialog progressDialog;
@@ -25,7 +28,12 @@ public class C_ECAddContactActivity extends C_AbsBaseActivity {
     protected void initViews() {
 
     }
-
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        startActivity(new Intent(this, C_ECMainActivityN.class));
+        finish();
+    }
     @Override
     protected void initData() {
         final EditText et_username = (EditText) this.findViewById(R.id.et_username);

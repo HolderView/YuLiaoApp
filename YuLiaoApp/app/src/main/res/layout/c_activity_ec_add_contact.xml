@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/height_top_bar"
         android:layout_marginBottom="40dp"
-        android:background="@color/top_bar_normal_bg"
+        android:background="@color/Cambridge_Blue"
         android:gravity="center_vertical">
 
         <TextView
@@ -36,7 +36,7 @@
         android:layout_width="match_parent"
         android:layout_height="54dp"
         android:layout_margin="20dp"
-        android:background="#000"
+        android:background="@color/Cambridge_Blue"
         android:text="发出申请"
         android:textColor="#fff"
         android:textSize="16sp" />
