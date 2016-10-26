@@ -24,26 +24,26 @@ import okhttp3.Response;
  * Created by Yu on 16/10/26.
  * OkHttp封装单例类
  */
-public class OkHttpInstanceUtil {
+public class L_OkHttpInstanceUtil {
 
-    private static OkHttpInstanceUtil mInstance;
+    private static L_OkHttpInstanceUtil mInstance;
     private OkHttpClient mOkHttpClient;
     private Handler mDelivery;
     private Gson mGson;
 
 
-    private OkHttpInstanceUtil() {
+    private L_OkHttpInstanceUtil() {
         mOkHttpClient = new OkHttpClient();
         //cookie enabled
         mDelivery = new Handler(Looper.getMainLooper());
         mGson = new Gson();
     }
 
-    public static OkHttpInstanceUtil getInstance() {
+    public static L_OkHttpInstanceUtil getInstance() {
         if (mInstance == null) {
-            synchronized (OkHttpInstanceUtil.class) {
+            synchronized (L_OkHttpInstanceUtil.class) {
                 if (mInstance == null) {
-                    mInstance = new OkHttpInstanceUtil();
+                    mInstance = new L_OkHttpInstanceUtil();
                 }
             }
         }
