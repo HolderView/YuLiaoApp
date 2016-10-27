@@ -154,6 +154,11 @@
         <uses-library
             android:name="org.simalliance.openmobileapi"
             android:required="false" />
+
+
+
+
+
     </application>
 
 </manifest>

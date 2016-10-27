@@ -52,6 +52,12 @@ public class Z_MapFragment extends C_AbsBaseFragment{
     private TextView fourCalendar;
     private TextView fourDetail;
     private TextView fourTemper;
+    private TextView fiveCalendar;
+    private TextView fiveDetail;
+    private TextView fiveTemper;
+    private TextView sixCalendar;
+    private TextView sixDetail;
+    private TextView sixTemper;
 
     public static Z_MapFragment newInstance() {
 
@@ -88,14 +94,14 @@ public class Z_MapFragment extends C_AbsBaseFragment{
         fourCalendar = byView(R.id.z_fragment_map_weather_four_calendar_tv);
         fourDetail = byView(R.id.z_fragment_map_weather_fourdetail_tv);
         fourTemper = byView(R.id.z_fragment_map_weather_four_temper_tv);
-        TextView fiveCalendar = byView(R.id.z_fragment_map_weather_five_calendar_tv);
-        TextView fiveDetail = byView(R.id.z_fragment_map_weather_fivedetail_tv);
-        TextView fiveTemper = byView(R.id.z_fragment_map_weather_five_temper_tv);
-        TextView sixCalendar = byView(R.id.z_fragment_map_weather_six_calendar_tv);
-        TextView sixDetail = byView(R.id.z_fragment_map_weather_sixdetail_tv);
-        TextView sixTemper = byView(R.id.z_fragment_map_weather_six_temper_tv);
+        fiveCalendar = byView(R.id.z_fragment_map_weather_five_calendar_tv);
+        fiveDetail = byView(R.id.z_fragment_map_weather_fivedetail_tv);
+        fiveTemper = byView(R.id.z_fragment_map_weather_five_temper_tv);
+        sixCalendar = byView(R.id.z_fragment_map_weather_six_calendar_tv);
+        sixDetail = byView(R.id.z_fragment_map_weather_sixdetail_tv);
+        sixTemper = byView(R.id.z_fragment_map_weather_six_temper_tv);
 
-
+        Log.d("Z_MapFragment", WEATHERURLSTART + strUrl + appKey);
     }
 
     @Override
@@ -138,12 +144,12 @@ public class Z_MapFragment extends C_AbsBaseFragment{
                 threeDetail.setText(bean.getResult().getData().getWeather().get(2).getInfo().getDay().get(1));
                 threeCalendar.setText(bean.getResult().getData().getWeather().get(2).getDate());
                 threeTemper.setText(bean.getResult().getData().getWeather().get(2).getInfo().getNight().get(2)+"~"+bean.getResult().getData().getWeather().get(2).getInfo().getDay().get(2));
-                fourDetail.setText(bean.getResult().getData().getWeather().get(0).getInfo().getDay().get(1));
-                todayCalendarTv.setText(bean.getResult().getData().getWeather().get(0).getDate());
-                todayTemperTv.setText(bean.getResult().getData().getWeather().get(0).getInfo().getNight().get(2)+"~"+bean.getResult().getData().getWeather().get(0).getInfo().getDay().get(2));
-                todayDetailTv.setText(bean.getResult().getData().getWeather().get(0).getInfo().getDay().get(1));
-                todayCalendarTv.setText(bean.getResult().getData().getWeather().get(0).getDate());
-                todayTemperTv.setText(bean.getResult().getData().getWeather().get(0).getInfo().getNight().get(2)+"~"+bean.getResult().getData().getWeather().get(0).getInfo().getDay().get(2));
+                fourDetail.setText(bean.getResult().getData().getWeather().get(3).getInfo().getDay().get(1));
+                fourCalendar.setText(bean.getResult().getData().getWeather().get(3).getDate());
+                fourTemper.setText(bean.getResult().getData().getWeather().get(3).getInfo().getNight().get(2)+"~"+bean.getResult().getData().getWeather().get(3).getInfo().getDay().get(2));
+                fiveDetail.setText(bean.getResult().getData().getWeather().get(4).getInfo().getDay().get(1));
+                fiveCalendar.setText(bean.getResult().getData().getWeather().get(4).getDate());
+                fiveTemper.setText(bean.getResult().getData().getWeather().get(4).getInfo().getNight().get(2)+"~"+bean.getResult().getData().getWeather().get(4).getInfo().getDay().get(2));
 
 
             }
