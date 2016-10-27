@@ -2,7 +2,7 @@
     <string name="app_name">YuLiaoApp</string>
     <!--TabLayoutTitle-->
     <string name="chat">聊天</string>
-    <string name="map">地图</string>
+    <string name="map">天气</string>
     <string name="video">视频</string>
     <string name="person">个人</string>
     <string name="c_activity_ecmain_yuliao">与聊</string>

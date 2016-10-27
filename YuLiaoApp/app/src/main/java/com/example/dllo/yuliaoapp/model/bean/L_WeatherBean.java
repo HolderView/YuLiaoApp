@@ -7,16 +7,15 @@ import java.util.List;
  */
 public class L_WeatherBean {
 
-
     /**
-     * reason : 查询成功
-     * result : {"data":{"realtime":{"city_code":"101210701","city_name":"温州","date":"2014-10-15","time":"09:00:00","week":3,"moon":"九月廿二","dataUptime":1413337811,"weather":{"temperature":"19","humidity":"54","info":"雾","img":"18"},"wind":{"direct":"北风","power":"1级","offset":null,"windspeed":null}},"life":{"date":"2014-10-15","info":{"chuanyi":["较舒适","建议着薄外套或牛仔衫裤等服装。年老体弱者宜着夹克衫、薄毛衣等。昼夜温差较大，注意适当增减衣服。"],"ganmao":["较易发","昼夜温差较大，较易发生感冒，请适当增减衣服。体质较弱的朋友请注意防护。"],"kongtiao":["较少开启","您将感到很舒适，一般不需要开启空调。"],"wuran":["良","气象条件有利于空气污染物稀释、扩散和清除，可在室外正常活动。"],"xiche":["较适宜","较适宜洗车，未来一天无雨，风力较小，擦洗一新的汽车至少能保持一天。"],"yundong":["较适宜","天气较好，但风力较大，推荐您进行室内运动，若在户外运动请注意防风。"],"ziwaixian":["中等","属中等强度紫外线辐射天气，外出时建议涂擦SPF高于15、PA+的防晒护肤品，戴帽子、太阳镜。"]}},"weather":[{"date":"2014-10-15","info":{"day":["0","晴","24","东北风","3-4 级"],"night":["0","晴","13","东北风","3-4 级"]},"week":"三","nongli":"九月廿二"},{"date":"2014-10-16","info":{"dawn":["0","晴","13","东北风","3-4 级"],"day":["0","晴","25","东北风","3-4 级"],"night":["1","多云","15","东北风","3-4 级"]},"week":"四","nongli":"九月廿三"},{"date":"2014-10-17","info":{"dawn":["1","多云","15","东北风","3-4 级"],"day":["1","多云","26","东北风","3-4 级"],"night":["1","多云","16","东北风","3-4 级"]},"week":"五","nongli":"九月廿四"},{"date":"2014-10-18","info":{"dawn":["1","多云","16","东北风","3-4 级"],"day":["1","多云","26","东风","3-4 级"],"night":["1","多云","18","东风","3-4 级"]},"week":"六","nongli":"九月廿五"},{"date":"2014-10-19","info":{"dawn":["1","多云","18","东风","3-4 级"],"day":["1","多云","27","东风","3-4 级"],"night":["1","多云","19","东南风","3-4 级"]},"week":"日","nongli":"九月廿六"},{"date":"2014-10-20","info":{"dawn":["1","多云","19","东南风","3-4 级"],"day":["1","多云","27","东南风","3-4 级"],"night":["2","阴","18","南风","3-4 级"]},"week":"一","nongli":"九月廿七"},{"date":"2014-10-21","info":{"dawn":["2","阴","18","南风","3-4 级"],"day":["1","多云","26","东北风","3-4 级"],"night":["2","阴","17","","微风"]},"week":"二","nongli":"九月廿八"}],"pm25":{"key":"Wenzhou","show_desc":0,"pm25":{"curPm":"97","pm25":"72","pm10":"97","level":2,"quality":"良","des":"可以接受的，除极少数对某种污染物特别敏感的人以外，对公众健康没有危害。"},"dateTime":"2014年10月15日09时","cityName":"温州"},"date":null,"isForeign":0}}
+     * reason : successed!
+     * result : {"data":{"realtime":{"city_code":"101210701","city_name":"温州","date":"2016-10-26","time":"16:00:00","week":3,"moon":"九月廿六","dataUptime":1477470965,"weather":{"temperature":"29","humidity":"75","info":"多云","img":"1"},"wind":{"direct":"西风","power":"1级","offset":null,"windspeed":null}},"life":{"date":"2016-10-26","info":{"chuanyi":["热","天气热，建议着短裙、短裤、短薄外套、T恤等夏季服装。"],"ganmao":["少发","各项气象条件适宜，无明显降温过程，发生感冒机率较低。"],"kongtiao":["较少开启","您将感到很舒适，一般不需要开启空调。"],"xiche":["较适宜","较适宜洗车，未来一天无雨，风力较小，擦洗一新的汽车至少能保持一天。"],"yundong":["较适宜","天气较好，户外运动请注意防晒。推荐您进行室内运动。"],"ziwaixian":["弱","紫外线强度较弱，建议出门前涂擦SPF在12-15之间、PA+的防晒护肤品。"]}},"weather":[{"date":"2016-10-26","info":{"day":["1","多云","29","东北风","微风","06:04"],"night":["1","多云","23","东北风","微风","17:17"]},"week":"三","nongli":"九月廿六"},{"date":"2016-10-27","info":{"dawn":["1","多云","23","东北风","微风","17:17"],"day":["1","多云","29","东北风","微风","06:05"],"night":["1","多云","23","东北风","微风","17:17"]},"week":"四","nongli":"九月廿七"},{"date":"2016-10-28","info":{"dawn":["1","多云","23","东北风","微风","17:17"],"day":["3","阵雨","31","东北风","微风","06:06"],"night":["3","阵雨","21","东北风","微风","17:16"]},"week":"五","nongli":"九月廿八"},{"date":"2016-10-29","info":{"dawn":["3","阵雨","21","东北风","微风","17:16"],"day":["3","阵雨","25","东北风","微风","06:06"],"night":["2","阴","20","东北风","微风","17:15"]},"week":"六","nongli":"九月廿九"},{"date":"2016-10-30","info":{"dawn":["2","阴","20","东北风","微风","17:15"],"day":["1","多云","23","东北风","微风","06:07"],"night":["1","多云","18","东北风","微风","17:14"]},"week":"日","nongli":"九月三十"}],"f3h":{"temperature":[{"jg":"20161026170000","jb":"29"},{"jg":"20161026200000","jb":"25"},{"jg":"20161026230000","jb":"24"},{"jg":"20161027020000","jb":"24"},{"jg":"20161027050000","jb":"23"},{"jg":"20161027080000","jb":"24"},{"jg":"20161027110000","jb":"28"},{"jg":"20161027140000","jb":"29"},{"jg":"20161027170000","jb":"26"}],"precipitation":[{"jg":"20161026170000","jf":"0"},{"jg":"20161026200000","jf":"0"},{"jg":"20161026230000","jf":"0"},{"jg":"20161027020000","jf":"0"},{"jg":"20161027050000","jf":"0"},{"jg":"20161027080000","jf":"0"},{"jg":"20161027110000","jf":"0"},{"jg":"20161027140000","jf":"0"},{"jg":"20161027170000","jf":"0"}]},"pm25":{"key":"Wenzhou","show_desc":0,"pm25":{"curPm":"63","pm25":"34","pm10":"70","level":2,"quality":"良","des":"可以接受的，除极少数对某种污染物特别敏感的人以外，对公众健康没有危害。"},"dateTime":"2016年10月26日16时","cityName":"温州"},"jingqu":"","jingqutq":"","date":"","isForeign":"0"}}
      * error_code : 0
      */
 
     private String reason;
     /**
-     * data : {"realtime":{"city_code":"101210701","city_name":"温州","date":"2014-10-15","time":"09:00:00","week":3,"moon":"九月廿二","dataUptime":1413337811,"weather":{"temperature":"19","humidity":"54","info":"雾","img":"18"},"wind":{"direct":"北风","power":"1级","offset":null,"windspeed":null}},"life":{"date":"2014-10-15","info":{"chuanyi":["较舒适","建议着薄外套或牛仔衫裤等服装。年老体弱者宜着夹克衫、薄毛衣等。昼夜温差较大，注意适当增减衣服。"],"ganmao":["较易发","昼夜温差较大，较易发生感冒，请适当增减衣服。体质较弱的朋友请注意防护。"],"kongtiao":["较少开启","您将感到很舒适，一般不需要开启空调。"],"wuran":["良","气象条件有利于空气污染物稀释、扩散和清除，可在室外正常活动。"],"xiche":["较适宜","较适宜洗车，未来一天无雨，风力较小，擦洗一新的汽车至少能保持一天。"],"yundong":["较适宜","天气较好，但风力较大，推荐您进行室内运动，若在户外运动请注意防风。"],"ziwaixian":["中等","属中等强度紫外线辐射天气，外出时建议涂擦SPF高于15、PA+的防晒护肤品，戴帽子、太阳镜。"]}},"weather":[{"date":"2014-10-15","info":{"day":["0","晴","24","东北风","3-4 级"],"night":["0","晴","13","东北风","3-4 级"]},"week":"三","nongli":"九月廿二"},{"date":"2014-10-16","info":{"dawn":["0","晴","13","东北风","3-4 级"],"day":["0","晴","25","东北风","3-4 级"],"night":["1","多云","15","东北风","3-4 级"]},"week":"四","nongli":"九月廿三"},{"date":"2014-10-17","info":{"dawn":["1","多云","15","东北风","3-4 级"],"day":["1","多云","26","东北风","3-4 级"],"night":["1","多云","16","东北风","3-4 级"]},"week":"五","nongli":"九月廿四"},{"date":"2014-10-18","info":{"dawn":["1","多云","16","东北风","3-4 级"],"day":["1","多云","26","东风","3-4 级"],"night":["1","多云","18","东风","3-4 级"]},"week":"六","nongli":"九月廿五"},{"date":"2014-10-19","info":{"dawn":["1","多云","18","东风","3-4 级"],"day":["1","多云","27","东风","3-4 级"],"night":["1","多云","19","东南风","3-4 级"]},"week":"日","nongli":"九月廿六"},{"date":"2014-10-20","info":{"dawn":["1","多云","19","东南风","3-4 级"],"day":["1","多云","27","东南风","3-4 级"],"night":["2","阴","18","南风","3-4 级"]},"week":"一","nongli":"九月廿七"},{"date":"2014-10-21","info":{"dawn":["2","阴","18","南风","3-4 级"],"day":["1","多云","26","东北风","3-4 级"],"night":["2","阴","17","","微风"]},"week":"二","nongli":"九月廿八"}],"pm25":{"key":"Wenzhou","show_desc":0,"pm25":{"curPm":"97","pm25":"72","pm10":"97","level":2,"quality":"良","des":"可以接受的，除极少数对某种污染物特别敏感的人以外，对公众健康没有危害。"},"dateTime":"2014年10月15日09时","cityName":"温州"},"date":null,"isForeign":0}
+     * data : {"realtime":{"city_code":"101210701","city_name":"温州","date":"2016-10-26","time":"16:00:00","week":3,"moon":"九月廿六","dataUptime":1477470965,"weather":{"temperature":"29","humidity":"75","info":"多云","img":"1"},"wind":{"direct":"西风","power":"1级","offset":null,"windspeed":null}},"life":{"date":"2016-10-26","info":{"chuanyi":["热","天气热，建议着短裙、短裤、短薄外套、T恤等夏季服装。"],"ganmao":["少发","各项气象条件适宜，无明显降温过程，发生感冒机率较低。"],"kongtiao":["较少开启","您将感到很舒适，一般不需要开启空调。"],"xiche":["较适宜","较适宜洗车，未来一天无雨，风力较小，擦洗一新的汽车至少能保持一天。"],"yundong":["较适宜","天气较好，户外运动请注意防晒。推荐您进行室内运动。"],"ziwaixian":["弱","紫外线强度较弱，建议出门前涂擦SPF在12-15之间、PA+的防晒护肤品。"]}},"weather":[{"date":"2016-10-26","info":{"day":["1","多云","29","东北风","微风","06:04"],"night":["1","多云","23","东北风","微风","17:17"]},"week":"三","nongli":"九月廿六"},{"date":"2016-10-27","info":{"dawn":["1","多云","23","东北风","微风","17:17"],"day":["1","多云","29","东北风","微风","06:05"],"night":["1","多云","23","东北风","微风","17:17"]},"week":"四","nongli":"九月廿七"},{"date":"2016-10-28","info":{"dawn":["1","多云","23","东北风","微风","17:17"],"day":["3","阵雨","31","东北风","微风","06:06"],"night":["3","阵雨","21","东北风","微风","17:16"]},"week":"五","nongli":"九月廿八"},{"date":"2016-10-29","info":{"dawn":["3","阵雨","21","东北风","微风","17:16"],"day":["3","阵雨","25","东北风","微风","06:06"],"night":["2","阴","20","东北风","微风","17:15"]},"week":"六","nongli":"九月廿九"},{"date":"2016-10-30","info":{"dawn":["2","阴","20","东北风","微风","17:15"],"day":["1","多云","23","东北风","微风","06:07"],"night":["1","多云","18","东北风","微风","17:14"]},"week":"日","nongli":"九月三十"}],"f3h":{"temperature":[{"jg":"20161026170000","jb":"29"},{"jg":"20161026200000","jb":"25"},{"jg":"20161026230000","jb":"24"},{"jg":"20161027020000","jb":"24"},{"jg":"20161027050000","jb":"23"},{"jg":"20161027080000","jb":"24"},{"jg":"20161027110000","jb":"28"},{"jg":"20161027140000","jb":"29"},{"jg":"20161027170000","jb":"26"}],"precipitation":[{"jg":"20161026170000","jf":"0"},{"jg":"20161026200000","jf":"0"},{"jg":"20161026230000","jf":"0"},{"jg":"20161027020000","jf":"0"},{"jg":"20161027050000","jf":"0"},{"jg":"20161027080000","jf":"0"},{"jg":"20161027110000","jf":"0"},{"jg":"20161027140000","jf":"0"},{"jg":"20161027170000","jf":"0"}]},"pm25":{"key":"Wenzhou","show_desc":0,"pm25":{"curPm":"63","pm25":"34","pm10":"70","level":2,"quality":"良","des":"可以接受的，除极少数对某种污染物特别敏感的人以外，对公众健康没有危害。"},"dateTime":"2016年10月26日16时","cityName":"温州"},"jingqu":"","jingqutq":"","date":"","isForeign":"0"}
      */
 
     private ResultBean result;
@@ -48,11 +47,14 @@ public class L_WeatherBean {
 
     public static class ResultBean {
         /**
-         * realtime : {"city_code":"101210701","city_name":"温州","date":"2014-10-15","time":"09:00:00","week":3,"moon":"九月廿二","dataUptime":1413337811,"weather":{"temperature":"19","humidity":"54","info":"雾","img":"18"},"wind":{"direct":"北风","power":"1级","offset":null,"windspeed":null}}
-         * life : {"date":"2014-10-15","info":{"chuanyi":["较舒适","建议着薄外套或牛仔衫裤等服装。年老体弱者宜着夹克衫、薄毛衣等。昼夜温差较大，注意适当增减衣服。"],"ganmao":["较易发","昼夜温差较大，较易发生感冒，请适当增减衣服。体质较弱的朋友请注意防护。"],"kongtiao":["较少开启","您将感到很舒适，一般不需要开启空调。"],"wuran":["良","气象条件有利于空气污染物稀释、扩散和清除，可在室外正常活动。"],"xiche":["较适宜","较适宜洗车，未来一天无雨，风力较小，擦洗一新的汽车至少能保持一天。"],"yundong":["较适宜","天气较好，但风力较大，推荐您进行室内运动，若在户外运动请注意防风。"],"ziwaixian":["中等","属中等强度紫外线辐射天气，外出时建议涂擦SPF高于15、PA+的防晒护肤品，戴帽子、太阳镜。"]}}
-         * weather : [{"date":"2014-10-15","info":{"day":["0","晴","24","东北风","3-4 级"],"night":["0","晴","13","东北风","3-4 级"]},"week":"三","nongli":"九月廿二"},{"date":"2014-10-16","info":{"dawn":["0","晴","13","东北风","3-4 级"],"day":["0","晴","25","东北风","3-4 级"],"night":["1","多云","15","东北风","3-4 级"]},"week":"四","nongli":"九月廿三"},{"date":"2014-10-17","info":{"dawn":["1","多云","15","东北风","3-4 级"],"day":["1","多云","26","东北风","3-4 级"],"night":["1","多云","16","东北风","3-4 级"]},"week":"五","nongli":"九月廿四"},{"date":"2014-10-18","info":{"dawn":["1","多云","16","东北风","3-4 级"],"day":["1","多云","26","东风","3-4 级"],"night":["1","多云","18","东风","3-4 级"]},"week":"六","nongli":"九月廿五"},{"date":"2014-10-19","info":{"dawn":["1","多云","18","东风","3-4 级"],"day":["1","多云","27","东风","3-4 级"],"night":["1","多云","19","东南风","3-4 级"]},"week":"日","nongli":"九月廿六"},{"date":"2014-10-20","info":{"dawn":["1","多云","19","东南风","3-4 级"],"day":["1","多云","27","东南风","3-4 级"],"night":["2","阴","18","南风","3-4 级"]},"week":"一","nongli":"九月廿七"},{"date":"2014-10-21","info":{"dawn":["2","阴","18","南风","3-4 级"],"day":["1","多云","26","东北风","3-4 级"],"night":["2","阴","17","","微风"]},"week":"二","nongli":"九月廿八"}]
-         * pm25 : {"key":"Wenzhou","show_desc":0,"pm25":{"curPm":"97","pm25":"72","pm10":"97","level":2,"quality":"良","des":"可以接受的，除极少数对某种污染物特别敏感的人以外，对公众健康没有危害。"},"dateTime":"2014年10月15日09时","cityName":"温州"}
-         * date : null
+         * realtime : {"city_code":"101210701","city_name":"温州","date":"2016-10-26","time":"16:00:00","week":3,"moon":"九月廿六","dataUptime":1477470965,"weather":{"temperature":"29","humidity":"75","info":"多云","img":"1"},"wind":{"direct":"西风","power":"1级","offset":null,"windspeed":null}}
+         * life : {"date":"2016-10-26","info":{"chuanyi":["热","天气热，建议着短裙、短裤、短薄外套、T恤等夏季服装。"],"ganmao":["少发","各项气象条件适宜，无明显降温过程，发生感冒机率较低。"],"kongtiao":["较少开启","您将感到很舒适，一般不需要开启空调。"],"xiche":["较适宜","较适宜洗车，未来一天无雨，风力较小，擦洗一新的汽车至少能保持一天。"],"yundong":["较适宜","天气较好，户外运动请注意防晒。推荐您进行室内运动。"],"ziwaixian":["弱","紫外线强度较弱，建议出门前涂擦SPF在12-15之间、PA+的防晒护肤品。"]}}
+         * weather : [{"date":"2016-10-26","info":{"day":["1","多云","29","东北风","微风","06:04"],"night":["1","多云","23","东北风","微风","17:17"]},"week":"三","nongli":"九月廿六"},{"date":"2016-10-27","info":{"dawn":["1","多云","23","东北风","微风","17:17"],"day":["1","多云","29","东北风","微风","06:05"],"night":["1","多云","23","东北风","微风","17:17"]},"week":"四","nongli":"九月廿七"},{"date":"2016-10-28","info":{"dawn":["1","多云","23","东北风","微风","17:17"],"day":["3","阵雨","31","东北风","微风","06:06"],"night":["3","阵雨","21","东北风","微风","17:16"]},"week":"五","nongli":"九月廿八"},{"date":"2016-10-29","info":{"dawn":["3","阵雨","21","东北风","微风","17:16"],"day":["3","阵雨","25","东北风","微风","06:06"],"night":["2","阴","20","东北风","微风","17:15"]},"week":"六","nongli":"九月廿九"},{"date":"2016-10-30","info":{"dawn":["2","阴","20","东北风","微风","17:15"],"day":["1","多云","23","东北风","微风","06:07"],"night":["1","多云","18","东北风","微风","17:14"]},"week":"日","nongli":"九月三十"}]
+         * f3h : {"temperature":[{"jg":"20161026170000","jb":"29"},{"jg":"20161026200000","jb":"25"},{"jg":"20161026230000","jb":"24"},{"jg":"20161027020000","jb":"24"},{"jg":"20161027050000","jb":"23"},{"jg":"20161027080000","jb":"24"},{"jg":"20161027110000","jb":"28"},{"jg":"20161027140000","jb":"29"},{"jg":"20161027170000","jb":"26"}],"precipitation":[{"jg":"20161026170000","jf":"0"},{"jg":"20161026200000","jf":"0"},{"jg":"20161026230000","jf":"0"},{"jg":"20161027020000","jf":"0"},{"jg":"20161027050000","jf":"0"},{"jg":"20161027080000","jf":"0"},{"jg":"20161027110000","jf":"0"},{"jg":"20161027140000","jf":"0"},{"jg":"20161027170000","jf":"0"}]}
+         * pm25 : {"key":"Wenzhou","show_desc":0,"pm25":{"curPm":"63","pm25":"34","pm10":"70","level":2,"quality":"良","des":"可以接受的，除极少数对某种污染物特别敏感的人以外，对公众健康没有危害。"},"dateTime":"2016年10月26日16时","cityName":"温州"}
+         * jingqu :
+         * jingqutq :
+         * date :
          * isForeign : 0
          */
 
@@ -70,38 +72,41 @@ public class L_WeatherBean {
             /**
              * city_code : 101210701
              * city_name : 温州
-             * date : 2014-10-15
-             * time : 09:00:00
+             * date : 2016-10-26
+             * time : 16:00:00
              * week : 3
-             * moon : 九月廿二
-             * dataUptime : 1413337811
-             * weather : {"temperature":"19","humidity":"54","info":"雾","img":"18"}
-             * wind : {"direct":"北风","power":"1级","offset":null,"windspeed":null}
+             * moon : 九月廿六
+             * dataUptime : 1477470965
+             * weather : {"temperature":"29","humidity":"75","info":"多云","img":"1"}
+             * wind : {"direct":"西风","power":"1级","offset":null,"windspeed":null}
              */
 
             private RealtimeBean realtime;
             /**
-             * date : 2014-10-15
-             * info : {"chuanyi":["较舒适","建议着薄外套或牛仔衫裤等服装。年老体弱者宜着夹克衫、薄毛衣等。昼夜温差较大，注意适当增减衣服。"],"ganmao":["较易发","昼夜温差较大，较易发生感冒，请适当增减衣服。体质较弱的朋友请注意防护。"],"kongtiao":["较少开启","您将感到很舒适，一般不需要开启空调。"],"wuran":["良","气象条件有利于空气污染物稀释、扩散和清除，可在室外正常活动。"],"xiche":["较适宜","较适宜洗车，未来一天无雨，风力较小，擦洗一新的汽车至少能保持一天。"],"yundong":["较适宜","天气较好，但风力较大，推荐您进行室内运动，若在户外运动请注意防风。"],"ziwaixian":["中等","属中等强度紫外线辐射天气，外出时建议涂擦SPF高于15、PA+的防晒护肤品，戴帽子、太阳镜。"]}
+             * date : 2016-10-26
+             * info : {"chuanyi":["热","天气热，建议着短裙、短裤、短薄外套、T恤等夏季服装。"],"ganmao":["少发","各项气象条件适宜，无明显降温过程，发生感冒机率较低。"],"kongtiao":["较少开启","您将感到很舒适，一般不需要开启空调。"],"xiche":["较适宜","较适宜洗车，未来一天无雨，风力较小，擦洗一新的汽车至少能保持一天。"],"yundong":["较适宜","天气较好，户外运动请注意防晒。推荐您进行室内运动。"],"ziwaixian":["弱","紫外线强度较弱，建议出门前涂擦SPF在12-15之间、PA+的防晒护肤品。"]}
              */
 
             private LifeBean life;
+            private F3hBean f3h;
             /**
              * key : Wenzhou
              * show_desc : 0
-             * pm25 : {"curPm":"97","pm25":"72","pm10":"97","level":2,"quality":"良","des":"可以接受的，除极少数对某种污染物特别敏感的人以外，对公众健康没有危害。"}
-             * dateTime : 2014年10月15日09时
+             * pm25 : {"curPm":"63","pm25":"34","pm10":"70","level":2,"quality":"良","des":"可以接受的，除极少数对某种污染物特别敏感的人以外，对公众健康没有危害。"}
+             * dateTime : 2016年10月26日16时
              * cityName : 温州
              */
 
             private Pm25Bean pm25;
-            private Object date;
-            private int isForeign;
+            private String jingqu;
+            private String jingqutq;
+            private String date;
+            private String isForeign;
             /**
-             * date : 2014-10-15
-             * info : {"day":["0","晴","24","东北风","3-4 级"],"night":["0","晴","13","东北风","3-4 级"]}
+             * date : 2016-10-26
+             * info : {"day":["1","多云","29","东北风","微风","06:04"],"night":["1","多云","23","东北风","微风","17:17"]}
              * week : 三
-             * nongli : 九月廿二
+             * nongli : 九月廿六
              */
 
             private List<WeatherBean> weather;
@@ -122,6 +127,14 @@ public class L_WeatherBean {
                 this.life = life;
             }
 
+            public F3hBean getF3h() {
+                return f3h;
+            }
+
+            public void setF3h(F3hBean f3h) {
+                this.f3h = f3h;
+            }
+
             public Pm25Bean getPm25() {
                 return pm25;
             }
@@ -130,19 +143,35 @@ public class L_WeatherBean {
                 this.pm25 = pm25;
             }
 
-            public Object getDate() {
+            public String getJingqu() {
+                return jingqu;
+            }
+
+            public void setJingqu(String jingqu) {
+                this.jingqu = jingqu;
+            }
+
+            public String getJingqutq() {
+                return jingqutq;
+            }
+
+            public void setJingqutq(String jingqutq) {
+                this.jingqutq = jingqutq;
+            }
+
+            public String getDate() {
                 return date;
             }
 
-            public void setDate(Object date) {
+            public void setDate(String date) {
                 this.date = date;
             }
 
-            public int getIsForeign() {
+            public String getIsForeign() {
                 return isForeign;
             }
 
-            public void setIsForeign(int isForeign) {
+            public void setIsForeign(String isForeign) {
                 this.isForeign = isForeign;
             }
 
@@ -163,15 +192,15 @@ public class L_WeatherBean {
                 private String moon;
                 private int dataUptime;
                 /**
-                 * temperature : 19
-                 * humidity : 54
-                 * info : 雾
-                 * img : 18
+                 * temperature : 29
+                 * humidity : 75
+                 * info : 多云
+                 * img : 1
                  */
 
                 private WeatherBean weather;
                 /**
-                 * direct : 北风
+                 * direct : 西风
                  * power : 1级
                  * offset : null
                  * windspeed : null
@@ -354,7 +383,6 @@ public class L_WeatherBean {
                     private List<String> chuanyi;
                     private List<String> ganmao;
                     private List<String> kongtiao;
-                    private List<String> wuran;
                     private List<String> xiche;
                     private List<String> yundong;
                     private List<String> ziwaixian;
@@ -383,14 +411,6 @@ public class L_WeatherBean {
                         this.kongtiao = kongtiao;
                     }
 
-                    public List<String> getWuran() {
-                        return wuran;
-                    }
-
-                    public void setWuran(List<String> wuran) {
-                        this.wuran = wuran;
-                    }
-
                     public List<String> getXiche() {
                         return xiche;
                     }
@@ -417,13 +437,86 @@ public class L_WeatherBean {
                 }
             }
 
+            public static class F3hBean {
+                /**
+                 * jg : 20161026170000
+                 * jb : 29
+                 */
+
+                private List<TemperatureBean> temperature;
+                /**
+                 * jg : 20161026170000
+                 * jf : 0
+                 */
+
+                private List<PrecipitationBean> precipitation;
+
+                public List<TemperatureBean> getTemperature() {
+                    return temperature;
+                }
+
+                public void setTemperature(List<TemperatureBean> temperature) {
+                    this.temperature = temperature;
+                }
+
+                public List<PrecipitationBean> getPrecipitation() {
+                    return precipitation;
+                }
+
+                public void setPrecipitation(List<PrecipitationBean> precipitation) {
+                    this.precipitation = precipitation;
+                }
+
+                public static class TemperatureBean {
+                    private String jg;
+                    private String jb;
+
+                    public String getJg() {
+                        return jg;
+                    }
+
+                    public void setJg(String jg) {
+                        this.jg = jg;
+                    }
+
+                    public String getJb() {
+                        return jb;
+                    }
+
+                    public void setJb(String jb) {
+                        this.jb = jb;
+                    }
+                }
+
+                public static class PrecipitationBean {
+                    private String jg;
+                    private String jf;
+
+                    public String getJg() {
+                        return jg;
+                    }
+
+                    public void setJg(String jg) {
+                        this.jg = jg;
+                    }
+
+                    public String getJf() {
+                        return jf;
+                    }
+
+                    public void setJf(String jf) {
+                        this.jf = jf;
+                    }
+                }
+            }
+
             public static class Pm25Bean {
                 private String key;
                 private int show_desc;
                 /**
-                 * curPm : 97
-                 * pm25 : 72
-                 * pm10 : 97
+                 * curPm : 63
+                 * pm25 : 34
+                 * pm10 : 70
                  * level : 2
                  * quality : 良
                  * des : 可以接受的，除极少数对某种污染物特别敏感的人以外，对公众健康没有危害。
