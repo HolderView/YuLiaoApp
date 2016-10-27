@@ -6,9 +6,7 @@ import java.util.Locale;
 import java.util.Random;
 
 /**
- * Created by siqi on 16/3/30.
- *
- * @author siqi
+ * @author 赵玲琳
  */
 public class OrderUtils {
 

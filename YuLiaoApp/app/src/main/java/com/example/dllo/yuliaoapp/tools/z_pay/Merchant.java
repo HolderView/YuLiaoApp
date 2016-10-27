@@ -1,9 +1,7 @@
 package com.example.dllo.yuliaoapp.tools.z_pay;
 
 /**
- * Created by siqi on 16/3/31.
- *
- * @author siqi
+ * @author 赵玲琳
  */
 public class Merchant {
 

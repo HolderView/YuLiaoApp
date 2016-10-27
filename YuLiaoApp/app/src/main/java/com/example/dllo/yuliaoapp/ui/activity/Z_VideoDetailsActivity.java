@@ -1,13 +1,19 @@
 package com.example.dllo.yuliaoapp.ui.activity;
 
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.media.AudioManager;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v7.widget.PopupMenu;
+import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.Display;
 import android.view.GestureDetector;
@@ -17,7 +23,6 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -43,13 +48,14 @@ public class Z_VideoDetailsActivity extends C_AbsBaseActivity implements View.On
     private MediaController mediaController;
     private String url,title;
     private GestureDetector gestureDetector;
-    private ImageView longImg,shortImg,typeBgImg,backImg,moreImg;
+    private ImageView showImg,typeBgImg,backImg,moreImg;
     private RelativeLayout relativeLayout;
     private RelativeLayout controllerRl;
     private Boolean isShow = false;
     private AudioManager audioManager;
     public static final String KEY_URL = "url";
     public static final String KEY_TITLE = "title";
+    private ProgressDialog progressDialog;
     /**
      * 最大声音
      */
@@ -83,8 +89,7 @@ public class Z_VideoDetailsActivity extends C_AbsBaseActivity implements View.On
         titleTv = byView(R.id.video_details_title_tv);
         netTv = byView(R.id.video_details_net_tv);
         cacheTv = byView(R.id.video_details_cache_tv);
-        longImg = byView(R.id.video_details_long_img);
-        shortImg = byView(R.id.video_details_short_img);
+        showImg = byView(R.id.video_details_short_img);
         typeBgImg =byView(R.id.video_details_type_img);
         relativeLayout = byView(R.id.video_details_rl);
         controllerRl = byView(R.id.video_details_controller_rl);
@@ -112,20 +117,48 @@ public class Z_VideoDetailsActivity extends C_AbsBaseActivity implements View.On
         videoView.setFocusable(true);
         videoView.start();
 
-        backImg.setOnClickListener(this);
-        moreImg.setOnClickListener(this);
-
         // AudioManager音量管理类
         audioManager = (AudioManager) getSystemService(this.AUDIO_SERVICE);
         maxVolume = audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
 
-        // 显示缓存进度和网速
-        showCacheAndNet();
-
         // 手势监听
         gestureDetector = new GestureDetector(this, new MyGestureListener() );
 
+        // 缓存中显示dialog
+        progressDialog= new ProgressDialog(this);
+        progressDialog.setMessage("缓存中...");
+        progressDialog.show();
+
+        // 显示缓存进度和网速
+        showCacheAndNet();
+
         payBtn.setOnClickListener(this);
+        backImg.setOnClickListener(this);
+        moreImg.setOnClickListener(this);
+
+        // 检测当前网络状态
+        ConnectivityManager mConnectivity = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        TelephonyManager mTelephony = (TelephonyManager) this.getSystemService(TELEPHONY_SERVICE);
+        //检查网络连接
+        netState(mConnectivity);
+
+    }
+
+    /**
+     * 检测当前页网络状态
+     * @param mConnectivity
+     */
+    private void netState(ConnectivityManager mConnectivity) {
+        NetworkInfo info = mConnectivity.getActiveNetworkInfo();
+        if (info == null) {
+            Toast.makeText(this, "当前无网络连接", Toast.LENGTH_SHORT).show();
+        } else {
+            if (info.getType() == ConnectivityManager.TYPE_WIFI) {
+                Toast.makeText(this, "当前为wifi连接", Toast.LENGTH_SHORT).show();
+            } else if (info.getType() == ConnectivityManager.TYPE_MOBILE) {
+                Toast.makeText(this, "当前为移动网络连接", Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 
     /**
@@ -152,6 +185,7 @@ public class Z_VideoDetailsActivity extends C_AbsBaseActivity implements View.On
                     case MediaPlayer.MEDIA_INFO_BUFFERING_END:
                         cacheTv.setVisibility(View.GONE);
                         netTv.setVisibility(View.GONE);
+                        progressDialog.dismiss();
                         mp.start();
                         break;
                     //正在缓冲
@@ -203,12 +237,15 @@ public class Z_VideoDetailsActivity extends C_AbsBaseActivity implements View.On
                 finish();
                 break;
             case R.id.video_details_more_img:
-                Toast.makeText(this, "该功能尚待优化", Toast.LENGTH_SHORT).show();
+                // 弹出popupMenu
+                PopupMenu popupMenu = new PopupMenu(Z_VideoDetailsActivity.this,v);
+                popupMenu.getMenuInflater().inflate(R.menu.menu_video_details, popupMenu.getMenu());
+                popupMenu.show();
                 break;
             case  R.id.video_details_btn:
                 Intent intent=new Intent(this,NormalActivity.class);
                 startActivity(intent);
-                finish();
+//                finish();
                 Log.d("qwe", "支付");
                 break;
         }
@@ -261,20 +298,13 @@ public class Z_VideoDetailsActivity extends C_AbsBaseActivity implements View.On
         }
 
         /**
-         * 双击
+         * 双击切换横竖屏
          */
         @Override
         public boolean onDoubleTap(MotionEvent e) {
-//            if (mLayout == VideoView.VIDEO_LAYOUT_ZOOM)
-//                mLayout = VideoView.VIDEO_LAYOUT_ORIGIN;
-//            else
-//                mLayout++;
-//            if (videoView != null)
-//                videoView.setVideoLayout(mLayout, 0);
             int screenOri = getRequestedOrientation();
-
             if (screenOri == ActivityInfo.SCREEN_ORIENTATION_PORTRAIT){
-                // 当前为竖屏
+                // 当前为竖屏,获取videoView的宽高
                 vWidth = videoView.getMeasuredWidth();
                 vHeight = videoView.getMeasuredHeight();
                 setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
@@ -294,7 +324,7 @@ public class Z_VideoDetailsActivity extends C_AbsBaseActivity implements View.On
     private class MyGestureListener extends GestureDetector.SimpleOnGestureListener {
 
         /**
-         * 双击
+         * 双击切换横竖屏
          */
         @Override
         public boolean onDoubleTap(MotionEvent e) {
@@ -328,7 +358,6 @@ public class Z_VideoDetailsActivity extends C_AbsBaseActivity implements View.On
         @Override
         public void handleMessage(Message msg) {
             controllerRl.setVisibility(View.GONE);
-//            relativeLayout.setVisibility(View.GONE);
         }
     };
 
@@ -358,10 +387,10 @@ public class Z_VideoDetailsActivity extends C_AbsBaseActivity implements View.On
         audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, index, 0);
 
         // 变更进度条
-        ViewGroup.LayoutParams lp = shortImg.getLayoutParams();
+        ViewGroup.LayoutParams lp = showImg.getLayoutParams();
         lp.width = findViewById(R.id.video_details_long_img).getLayoutParams().width
                 * index / maxVolume;
-        shortImg.setLayoutParams(lp);
+        showImg.setLayoutParams(lp);
     }
 
     /**
@@ -389,9 +418,9 @@ public class Z_VideoDetailsActivity extends C_AbsBaseActivity implements View.On
             lpa.screenBrightness = 0.01f;
         getWindow().setAttributes(lpa);
 
-        ViewGroup.LayoutParams lp = shortImg.getLayoutParams();
+        ViewGroup.LayoutParams lp = showImg.getLayoutParams();
         lp.width = (int) (findViewById(R.id.video_details_long_img).getLayoutParams().width * lpa.screenBrightness);
-        shortImg.setLayoutParams(lp);
+        showImg.setLayoutParams(lp);
     }
 
     /**
@@ -422,11 +451,11 @@ public class Z_VideoDetailsActivity extends C_AbsBaseActivity implements View.On
             gestureDetector = new GestureDetector(this, new ShowOrHideGestureListener() );
             // 横屏时隐藏状态栏
             //定义全屏参数  去掉电量栏
-            int flag=WindowManager.LayoutParams.FLAG_FULLSCREEN;
+//            int flag=WindowManager.LayoutParams.FLAG_FULLSCREEN;
             //获得当前窗体对象
-            Window window=Z_VideoDetailsActivity.this.getWindow();
+//            Window window=Z_VideoDetailsActivity.this.getWindow();
             //设置当前窗体为全屏显示
-            window.setFlags(flag, flag);
+//            window.setFlags(flag, flag);
             titleTv.setVisibility(View.GONE);
 
             // 横屏设置宽高为屏幕的宽高
@@ -434,6 +463,7 @@ public class Z_VideoDetailsActivity extends C_AbsBaseActivity implements View.On
             int width = windowManager.getDefaultDisplay().getWidth();
             int height = windowManager.getDefaultDisplay().getHeight();
 
+            // 重新设置宽高
             ViewGroup.LayoutParams lp = videoView.getLayoutParams();
             lp.width = width;
             lp.height = height;

@@ -13,11 +13,9 @@ import com.fuqianla.paysdk.FuQianLaPay;
 import com.fuqianla.paysdk.bean.FuQianLaResult;
 
 /**
- * Created by siqi on 16/3/31.
- * <p>
  * 商户APP根据自身需要，可自定义创建交易通道(Activity样式)
- *支付平台的界面
- * @author siqi
+ * 支付平台的界面
+ * @author 赵玲琳
  */
 public class CustomPayActivity extends Activity implements View.OnClickListener {
 

@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.GestureDetector;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -17,9 +19,7 @@ import com.fuqianla.paysdk.FuQianLaPay;
 import com.fuqianla.paysdk.bean.FuQianLaResult;
 
 /**
- * Created by siqi on 16/3/30.
- *
- * @author siqi
+ * @author 赵玲琳
  * 订单页面
  */
 public class NormalActivity extends Activity implements View.OnClickListener {
@@ -30,6 +30,8 @@ public class NormalActivity extends Activity implements View.OnClickListener {
     private Button btnPay;
 
     private String jdToken = "";
+
+    private GestureDetector gestureDetector;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,10 +46,14 @@ public class NormalActivity extends Activity implements View.OnClickListener {
         tvDetails = (TextView) findViewById(R.id.tv_details);
         btnPay.setOnClickListener(this);
 
-//        etCommodity.setText("正常模式-商品名称");
-//        etDetails.setText("正常模式-支付详情");
         etAmount.setText("0.01");
+
+
+        myGestureListener();
+
     }
+
+
 
     @Override
     public void onClick(View v) {
@@ -97,4 +103,59 @@ public class NormalActivity extends Activity implements View.OnClickListener {
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
+
+    private void myGestureListener() {
+        gestureDetector = new GestureDetector(this, new GestureDetector.OnGestureListener() {
+            @Override
+            public boolean onDown(MotionEvent e) {
+                return false;
+            }
+
+            @Override
+            public void onShowPress(MotionEvent e) {
+
+            }
+
+            @Override
+            public boolean onSingleTapUp(MotionEvent e) {
+                return false;
+            }
+
+            @Override
+            public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
+                Log.d("NormalActivity", "e2.getX()-e1.getX():" + (e2.getX() - e1.getX()));
+                if (e2.getX() - e1.getX()>50){
+                    finish();
+                }
+                return true;
+            }
+
+            @Override
+            public void onLongPress(MotionEvent e) {
+
+            }
+
+            @Override
+            public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+                if (e2.getX() - e1.getX()>50){
+                    finish();
+                }
+                return true;
+            }
+        });
+    }
+
+
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        return gestureDetector.onTouchEvent(event);
+    }
+
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        gestureDetector.onTouchEvent(ev);
+        return super.dispatchTouchEvent(ev);
+    }
+
 }
