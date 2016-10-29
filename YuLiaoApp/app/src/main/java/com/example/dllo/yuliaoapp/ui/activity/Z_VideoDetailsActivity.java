@@ -20,15 +20,17 @@ import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.dllo.yuliaoapp.R;
+import com.example.dllo.yuliaoapp.tools.C_ScreenSizeUtil;
+import com.example.dllo.yuliaoapp.tools.Z_UniverImageLoaderUtils;
 import com.example.dllo.yuliaoapp.tools.z_pay.NormalActivity;
 
 import io.vov.vitamio.MediaPlayer;
@@ -43,19 +45,22 @@ import io.vov.vitamio.widget.VideoView;
  */
 public class Z_VideoDetailsActivity extends C_AbsBaseActivity implements View.OnClickListener {
 
-    private TextView titleTv,netTv,cacheTv;
+    private TextView titleTv,netTv,cacheTv,authorTv;
     private VideoView videoView;
     private MediaController mediaController;
-    private String url,title;
+    private String url,title,photo,author;
     private GestureDetector gestureDetector;
-    private ImageView showImg,typeBgImg,backImg,moreImg;
+    private ImageView showImg,typeBgImg,backImg,moreImg,phptoImg;
     private RelativeLayout relativeLayout;
     private RelativeLayout controllerRl;
     private Boolean isShow = false;
     private AudioManager audioManager;
     public static final String KEY_URL = "url";
     public static final String KEY_TITLE = "title";
+    public static final String KEY_PHOTO= "photo";
+    public static final String KEY_AUTHOR = "author";
     private ProgressDialog progressDialog;
+    private LinearLayout topicLl;
     /**
      * 最大声音
      */
@@ -96,6 +101,9 @@ public class Z_VideoDetailsActivity extends C_AbsBaseActivity implements View.On
         backImg =byView(R.id.vide_details_back_img);
         moreImg = byView(R.id.video_details_more_img);
         payBtn = byView(R.id.video_details_btn);
+        authorTv = byView(R.id.video_details_author_tv);
+        phptoImg = byView(R.id.video_details_photo_img);
+        topicLl = byView(R.id.video_details_topic_ll);
     }
 
     @Override
@@ -107,7 +115,25 @@ public class Z_VideoDetailsActivity extends C_AbsBaseActivity implements View.On
             Bundle bundle = intent.getExtras();
             url = bundle.getString(KEY_URL);
             title = bundle.getString(KEY_TITLE);
+            photo = bundle.getString(KEY_PHOTO);
+            author = bundle.getString(KEY_AUTHOR);
+            Log.d("asdasd", photo);
         }
+        authorTv.setText(author);
+
+        ViewGroup.LayoutParams layoutParams = phptoImg.getLayoutParams();
+        layoutParams.height = C_ScreenSizeUtil.getScreenSize(this, C_ScreenSizeUtil.ScreenState.HEIGHT)/12;
+        layoutParams.width =  C_ScreenSizeUtil.getScreenSize(this, C_ScreenSizeUtil.ScreenState.HEIGHT) / 20;
+        phptoImg.setLayoutParams(layoutParams);
+
+
+//        new Thread(new Runnable() {
+//            @Override
+//            public void run() {
+                Z_UniverImageLoaderUtils.loadImage(photo,phptoImg);
+//            }
+//        }).start();
+
 
         // 视频控制器
         mediaController = new MediaController(this);
@@ -115,7 +141,6 @@ public class Z_VideoDetailsActivity extends C_AbsBaseActivity implements View.On
         titleTv.setText(title);
         videoView.setVideoURI(Uri.parse(url));
         videoView.setFocusable(true);
-        videoView.start();
 
         // AudioManager音量管理类
         audioManager = (AudioManager) getSystemService(this.AUDIO_SERVICE);
@@ -137,26 +162,24 @@ public class Z_VideoDetailsActivity extends C_AbsBaseActivity implements View.On
         moreImg.setOnClickListener(this);
 
         // 检测当前网络状态
-        ConnectivityManager mConnectivity = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        TelephonyManager mTelephony = (TelephonyManager) this.getSystemService(TELEPHONY_SERVICE);
-        //检查网络连接
-        netState(mConnectivity);
-
+        netState();
     }
 
     /**
-     * 检测当前页网络状态
-     * @param mConnectivity
+     * 检测当前网络状态
      */
-    private void netState(ConnectivityManager mConnectivity) {
+    private void netState() {
+        // 网络连接管理
+        ConnectivityManager mConnectivity = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        // 网络连接状态
         NetworkInfo info = mConnectivity.getActiveNetworkInfo();
         if (info == null) {
-            Toast.makeText(this, "当前无网络连接", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "当前无网络连接,请连接网络", Toast.LENGTH_SHORT).show();
         } else {
             if (info.getType() == ConnectivityManager.TYPE_WIFI) {
                 Toast.makeText(this, "当前为wifi连接", Toast.LENGTH_SHORT).show();
             } else if (info.getType() == ConnectivityManager.TYPE_MOBILE) {
-                Toast.makeText(this, "当前为移动网络连接", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "当前为移动网络连接,连接WIFI节省流量", Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -180,6 +203,7 @@ public class Z_VideoDetailsActivity extends C_AbsBaseActivity implements View.On
                         cacheTv.setVisibility(View.VISIBLE);
                         netTv.setVisibility(View.VISIBLE);
                         mp.pause();
+                        videoView.pause();
                         break;
                     //缓冲结束
                     case MediaPlayer.MEDIA_INFO_BUFFERING_END:
@@ -187,6 +211,7 @@ public class Z_VideoDetailsActivity extends C_AbsBaseActivity implements View.On
                         netTv.setVisibility(View.GONE);
                         progressDialog.dismiss();
                         mp.start();
+                        videoView.start();
                         break;
                     //正在缓冲
                     case MediaPlayer.MEDIA_INFO_DOWNLOAD_RATE_CHANGED:
@@ -319,7 +344,7 @@ public class Z_VideoDetailsActivity extends C_AbsBaseActivity implements View.On
     }
 
     /**
-     * 手势监听
+     * 竖屏手势监听
      */
     private class MyGestureListener extends GestureDetector.SimpleOnGestureListener {
 
@@ -349,6 +374,21 @@ public class Z_VideoDetailsActivity extends C_AbsBaseActivity implements View.On
             return true;
         }
 
+        @Override
+        public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+            if (e2.getX() - e1.getX()>50){
+                finish();
+            }
+            return true;
+        }
+
+        @Override
+        public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
+            if (e2.getX() - e1.getX()>50){
+                finish();
+            }
+            return true;
+        }
     }
 
     /**
@@ -440,6 +480,7 @@ public class Z_VideoDetailsActivity extends C_AbsBaseActivity implements View.On
             lp.width = vWidth;
             videoView.setLayoutParams(lp);
 
+            topicLl.setVisibility(View.VISIBLE);
             titleTv.setVisibility(View.VISIBLE);
             relativeLayout.setVisibility(View.VISIBLE);
 
@@ -457,6 +498,7 @@ public class Z_VideoDetailsActivity extends C_AbsBaseActivity implements View.On
             //设置当前窗体为全屏显示
 //            window.setFlags(flag, flag);
             titleTv.setVisibility(View.GONE);
+            topicLl.setVisibility(View.GONE);
 
             // 横屏设置宽高为屏幕的宽高
             WindowManager windowManager = (WindowManager) this.getSystemService(this.WINDOW_SERVICE);
