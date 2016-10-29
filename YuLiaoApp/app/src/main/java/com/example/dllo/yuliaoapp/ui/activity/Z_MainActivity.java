@@ -21,6 +21,7 @@ import android.widget.Toast;
 
 import com.example.dllo.yuliaoapp.R;
 import com.example.dllo.yuliaoapp.tools.L_QrCodeUtils;
+import com.example.dllo.yuliaoapp.ui.activity.map.L_GaodeActivity;
 import com.example.dllo.yuliaoapp.ui.activity.map.L_QrCodeActivity;
 import com.example.dllo.yuliaoapp.ui.fragment.Z_ChatFragment;
 import com.example.dllo.yuliaoapp.ui.fragment.Z_MapFragment;
@@ -102,6 +103,14 @@ public class Z_MainActivity extends C_AbsBaseActivity {
 
 
                 startActivityForResult(new Intent(Z_MainActivity.this, CaptureActivity.class), 0);
+            }
+        });
+        mapImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Z_MainActivity.this,L_GaodeActivity.class);
+                startActivity(intent);
+
             }
         });
 

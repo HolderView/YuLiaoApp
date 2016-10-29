@@ -20,6 +20,7 @@ import com.example.dllo.yuliaoapp.R;
 public abstract class C_AbsBaseActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         if (!io.vov.vitamio.LibsChecker.checkVitamioLibs(this))
             return;

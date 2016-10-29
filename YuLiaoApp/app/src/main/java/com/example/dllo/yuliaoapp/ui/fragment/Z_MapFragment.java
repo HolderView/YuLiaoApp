@@ -13,6 +13,7 @@ import com.google.gson.Gson;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
+import java.text.SimpleDateFormat;
 
 import okhttp3.Call;
 import okhttp3.FormBody;
@@ -36,8 +37,6 @@ public class Z_MapFragment extends C_AbsBaseFragment{
     private TextView timeTv;
     private TextView nowweaTv;
     private TextView windTv;
-    private TextView morningTv;
-    private TextView nightTv;
     private TextView airsum;
     private TextView airqualityTv;
     private TextView todayDetailTv;
@@ -55,9 +54,8 @@ public class Z_MapFragment extends C_AbsBaseFragment{
     private TextView fiveCalendar;
     private TextView fiveDetail;
     private TextView fiveTemper;
-    private TextView sixCalendar;
-    private TextView sixDetail;
-    private TextView sixTemper;
+    private TextView presentTime;
+
 
     public static Z_MapFragment newInstance() {
 
@@ -78,8 +76,7 @@ public class Z_MapFragment extends C_AbsBaseFragment{
         timeTv = byView(R.id.fragment_wheather_time_tv);
         nowweaTv = byView(R.id.z_fragment_map_weather_nowwea_tv);
         windTv = byView(R.id.l_fragment_wheather_wind_tv);
-        morningTv = byView(R.id.fragment_wheather_morning_tv);
-        nightTv = byView(R.id.fragment_wheather_night_tv);
+        presentTime = byView(R.id.z_fragment_map_presenttime_tv);
         airsum = byView(R.id.z_fragment_map_weather_airsum_tv);
         airqualityTv = byView(R.id.z_fragment_map_weather_airquality_tv);
         todayDetailTv = byView(R.id.z_fragment_map_weather_todaydetail_tv);
@@ -97,11 +94,8 @@ public class Z_MapFragment extends C_AbsBaseFragment{
         fiveCalendar = byView(R.id.z_fragment_map_weather_five_calendar_tv);
         fiveDetail = byView(R.id.z_fragment_map_weather_fivedetail_tv);
         fiveTemper = byView(R.id.z_fragment_map_weather_five_temper_tv);
-        sixCalendar = byView(R.id.z_fragment_map_weather_six_calendar_tv);
-        sixDetail = byView(R.id.z_fragment_map_weather_sixdetail_tv);
-        sixTemper = byView(R.id.z_fragment_map_weather_six_temper_tv);
 
-        Log.d("Z_MapFragment", WEATHERURLSTART + strUrl + appKey);
+
     }
 
     @Override
@@ -128,11 +122,21 @@ public class Z_MapFragment extends C_AbsBaseFragment{
                 Gson gson = new Gson();
                 L_WeatherBean bean = gson.fromJson((String) response,L_WeatherBean.class);
 
-                timeTv.setText(bean.getResult().getData().getRealtime().getDataUptime()+"更新");
+                String time = String.valueOf(bean.getResult().getData().getRealtime().getDataUptime());
+
+                SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+
+                long times = Long.valueOf(time);
+
+                String finaltimes = sdf.format(times);
+
+
+
+
+                presentTime.setText(bean.getResult().getData().getRealtime().getWeather().getTemperature()+"℃");
+                timeTv.setText(bean.getResult().getData().getRealtime().getTime()+"发布");
                 nowweaTv.setText(bean.getResult().getData().getRealtime().getWeather().getInfo());
                 windTv.setText(bean.getResult().getData().getRealtime().getWind().getDirect()+bean.getResult().getData().getRealtime().getWind().getPower());
-                morningTv.setText(bean.getResult().getData().getWeather().get(0).getInfo().getNight().get(2));
-                nightTv.setText(bean.getResult().getData().getWeather().get(0).getInfo().getDay().get(2));
                 airsum.setText(bean.getResult().getData().getPm25().getPm25().getCurPm());
                 airqualityTv.setText(bean.getResult().getData().getPm25().getPm25().getQuality());
                 todayDetailTv.setText(bean.getResult().getData().getWeather().get(0).getInfo().getDay().get(1));

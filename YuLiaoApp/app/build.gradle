@@ -35,4 +35,5 @@ dependencies {
     compile files('libs/alipaySDK.jar')
     compile files('libs/fuqianla2_2_1.jar')
     compile project(':libzxing')
+    compile files('libs/AMap3DMap_4.1.0_AMapNavi_1.9.3_AMapSearch_3.5.0_AMapLocation_3.0.0_20161018.jar')
 }

@@ -89,7 +89,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="20dp"
                             android:layout_marginTop="20dp"
-                            android:src="@mipmap/ic_launcher" />
+                            android:src="@mipmap/l_map_sun" />
 
                         <TextView
                             android:id="@+id/z_fragment_map_weather_nowwea_tv"
@@ -112,10 +112,22 @@
 
 
                     </LinearLayout>
+                    <TextView
+                        android:id="@+id/z_fragment_map_presenttime_tv"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:text="7℃"
+                        android:textSize="50dp"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        />
+
+
 
                     <LinearLayout
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:orientation="vertical">
 
@@ -134,7 +146,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="right"
-                            android:layout_marginTop="5dp"
+                            android:layout_marginTop="15dp"
                             android:layout_marginRight="10dp"
                             android:src="@mipmap/l_doubleone_mainl" />
 
@@ -146,52 +158,33 @@
                             android:layout_marginTop="5dp"
                             android:orientation="horizontal">
 
-                            <TextView
-                                android:id="@+id/fragment_wheather_morning_tv"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="10"
-                                android:textSize="30sp"
-                                android:textColor="@android:color/white"/>
 
-                            <TextView
-                                android:id="@+id/fragment_wheather_space_tv"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="~"
-                                android:textSize="35sp"
-                                android:textColor="@android:color/white"/>
 
-                            <TextView
-                                android:id="@+id/fragment_wheather_night_tv"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="18"
-                                android:textSize="30sp"
-                                android:textColor="@android:color/white"/>
 
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="℃"
-                                android:textSize="25sp"
-                                android:textColor="@android:color/white"/>
+
+
+
+
 
 
                         </LinearLayout>
 
                         <LinearLayout
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="right"
+                            android:layout_height="match_parent"
+
                             android:layout_marginRight="10dp"
                             android:layout_marginTop="20dp"
-                            android:orientation="horizontal">
+                            android:orientation="horizontal"
+                            android:layout_gravity="right|bottom"
+                            android:gravity="bottom"
+                            android:layout_marginBottom="20dp"
+                            >
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="空气质量指数:"
+                                android:text="空气指数:"
                                 android:textColor="@android:color/white"/>
 
                             <TextView
@@ -268,7 +261,9 @@
                                 android:layout_height="wrap_content"
                                 android:text="10/21"
                                 android:textSize="15sp"
-                                android:textColor="@android:color/white"/>
+                                android:textColor="@android:color/white"
+                                android:layout_marginBottom="10dp"
+                                />
                             <TextView
                                 android:id="@+id/z_fragment_map_weather_today_temper_tv"
                                 android:layout_width="wrap_content"
@@ -317,7 +312,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="0dp"
                             android:layout_marginLeft="15dp"
-                            android:layout_marginRight="15dp">
+                            android:layout_marginRight="15dp"
+                            android:layout_marginBottom="10dp">
                             <TextView
                                 android:id="@+id/z_fragment_map_weather_tomorrow_calendar_tv"
                                 android:layout_width="wrap_content"
@@ -358,23 +354,29 @@
                         >
                          <LinearLayout
                             android:layout_width="0dp"
-                            android:layout_weight="1"
+                            android:layout_weight="2"
                             android:layout_height="wrap_content"
                             android:orientation="horizontal">
-                            <TextView
-                                android:id="@+id/z_fragment_map_weather_three_calendar_tv"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="5dp"
-                                android:text="10/23"
-                                android:textColor="@android:color/white"/>
-                            <TextView
-                                android:id="@+id/z_fragment_map_weather_weekthree_tv"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="5dp"
-                                android:text="周日"
-                                android:textColor="@android:color/white"/>
+                             <LinearLayout
+                                 android:layout_width="wrap_content"
+                                 android:layout_height="wrap_content"
+                                 android:orientation="vertical">
+                                 <TextView
+                                     android:id="@+id/z_fragment_map_weather_three_calendar_tv"
+                                     android:layout_width="wrap_content"
+                                     android:layout_height="wrap_content"
+                                     android:layout_marginLeft="5dp"
+                                     android:text="10/23"
+                                     android:textColor="@android:color/white"/>
+                                 <TextView
+                                     android:id="@+id/z_fragment_map_weather_weekthree_tv"
+                                     android:layout_width="wrap_content"
+                                     android:layout_height="wrap_content"
+                                     android:layout_marginLeft="5dp"
+                                     android:text="周日"
+                                     android:textColor="@android:color/white"/>
+                             </LinearLayout>
+
                         </LinearLayout>
                         <TextView
                             android:id="@+id/z_fragment_map_weather_threedetail_tv"
@@ -383,6 +385,7 @@
                             android:layout_height="wrap_content"
                             android:text="多云转晴"
                             android:textColor="@android:color/white"
+                            android:layout_gravity="center"
                             />
                         <TextView
                             android:id="@+id/z_fragment_map_weather_three_temper_tv"
@@ -393,6 +396,7 @@
                             android:gravity="right"
                             android:layout_marginRight="5dp"
                             android:textColor="@android:color/white"
+                            android:layout_gravity="center"
                             />
 
 
@@ -406,9 +410,13 @@
                         >
                         <LinearLayout
                             android:layout_width="0dp"
-                            android:layout_weight="1"
+                            android:layout_weight="2"
                             android:layout_height="wrap_content"
                             android:orientation="horizontal">
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical">
                             <TextView
                                 android:id="@+id/z_fragment_map_weather_four_calendar_tv"
                                 android:layout_width="wrap_content"
@@ -423,6 +431,7 @@
                                 android:layout_marginLeft="5dp"
                                 android:text="周日"
                                 android:textColor="@android:color/white"/>
+                            </LinearLayout>
                         </LinearLayout>
                         <TextView
                             android:id="@+id/z_fragment_map_weather_fourdetail_tv"
@@ -431,6 +440,7 @@
                             android:layout_height="wrap_content"
                             android:text="多云转晴"
                             android:textColor="@android:color/white"
+                            android:layout_gravity="center"
                             />
                         <TextView
                             android:id="@+id/z_fragment_map_weather_four_temper_tv"
@@ -441,6 +451,7 @@
                             android:gravity="right"
                             android:layout_marginRight="5dp"
                             android:textColor="@android:color/white"
+                            android:layout_gravity="center"
                             />
 
 
@@ -454,9 +465,13 @@
                         >
                         <LinearLayout
                             android:layout_width="0dp"
-                            android:layout_weight="1"
+                            android:layout_weight="2"
                             android:layout_height="wrap_content"
                             android:orientation="horizontal">
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical">
                             <TextView
                                 android:id="@+id/z_fragment_map_weather_five_calendar_tv"
 
@@ -472,6 +487,7 @@
                                 android:layout_marginLeft="5dp"
                                 android:text="周日"
                                 android:textColor="@android:color/white"/>
+                            </LinearLayout>
                         </LinearLayout>
                         <TextView
                             android:id="@+id/z_fragment_map_weather_fivedetail_tv"
@@ -480,6 +496,7 @@
                             android:layout_height="wrap_content"
                             android:text="多云转晴"
                             android:textColor="@android:color/white"
+                            android:layout_gravity="center"
                             />
                         <TextView
                             android:id="@+id/z_fragment_map_weather_five_temper_tv"
@@ -490,6 +507,7 @@
                             android:gravity="right"
                             android:layout_marginRight="5dp"
                             android:textColor="@android:color/white"
+                            android:layout_gravity="center"
                             />
 
 
@@ -501,44 +519,8 @@
                         android:orientation="horizontal"
                         android:layout_margin="10dp"
                         >
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_weight="1"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal">
-                            <TextView
-                                android:id="@+id/z_fragment_map_weather_six_calendar_tv"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="5dp"
-                                android:text="10/23"
-                                android:textColor="@android:color/white"/>
-                            <TextView
-                                android:id="@+id/z_fragment_map_weather_weeksix_tv"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="5dp"
-                                android:text="周日"
-                                android:textColor="@android:color/white"/>
-                        </LinearLayout>
-                        <TextView
-                            android:id="@+id/z_fragment_map_weather_sixdetail_tv"
-                            android:layout_weight="1"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:text="多云转晴"
-                            android:textColor="@android:color/white"
-                            />
-                        <TextView
-                            android:id="@+id/z_fragment_map_weather_six_temper_tv"
-                            android:layout_weight="1"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:text="9~15℃"
-                            android:gravity="right"
-                            android:layout_marginRight="5dp"
-                            android:textColor="@android:color/white"
-                            />
+
+
 
 
 
@@ -553,7 +535,7 @@
                     android:id="@+id/z_fragment_map_weather_airquality_level_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="空气良"
+                    android:text="空气:良"
                     android:textSize="25sp"
                     android:layout_gravity="center"
                     android:textColor="@android:color/white"
