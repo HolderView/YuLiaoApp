@@ -154,6 +154,15 @@
         <uses-library
             android:name="org.simalliance.openmobileapi"
             android:required="false" />
+
+        <meta-data
+            android:name="com.amap.api.v2.apikey"
+            android:value="37ebae226ebbd70c15e9cf8c4d91113c"/>
+
+
+        <activity android:name=".ui.activity.map.L_GaodeActivity"/>
+        <service android:name="com.amap.api.location.APSService"></service>
+
     </application>
 
 </manifest>
