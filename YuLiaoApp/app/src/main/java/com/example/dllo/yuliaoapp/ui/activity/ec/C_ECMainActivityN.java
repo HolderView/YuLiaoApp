@@ -231,6 +231,7 @@ public class C_ECMainActivityN extends C_AbsBaseActivity {
 
                 @Override
                 public void run() {
+                    
                     Toast.makeText(getApplicationContext(), "收到好友申请：+"+username, Toast.LENGTH_SHORT).show();
                 }
 
