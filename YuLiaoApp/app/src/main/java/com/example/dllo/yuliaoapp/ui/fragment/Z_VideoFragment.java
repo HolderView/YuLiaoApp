@@ -120,6 +120,7 @@ public class Z_VideoFragment extends C_AbsBaseFragment implements AdapterView.On
         bundle.putString(Z_VideoDetailsActivity.KEY_PHOTO, datas.getTopicImg());
         bundle.putString(Z_VideoDetailsActivity.KEY_AUTHOR, datas.getTopicName());
         goToActivity(Z_VideoDetailsActivity.class, bundle);
+
     }
 
     /**

@@ -1,7 +1,9 @@
 package com.example.dllo.yuliaoapp.ui.activity;
 
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
@@ -12,6 +14,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.PopupMenu;
 import android.telephony.TelephonyManager;
 import android.util.Log;
@@ -40,24 +43,25 @@ import io.vov.vitamio.widget.VideoView;
 
 /**
  * Created by dllo on 16/10/21.
+ *
  * @author 赵玲琳
- * 视频详情页
+ *         视频详情页
  */
 public class Z_VideoDetailsActivity extends C_AbsBaseActivity implements View.OnClickListener {
 
-    private TextView titleTv,netTv,cacheTv,authorTv;
+    private TextView titleTv, netTv, cacheTv, authorTv;
     private VideoView videoView;
     private MediaController mediaController;
-    private String url,title,photo,author;
+    private String url, title, photo, author;
     private GestureDetector gestureDetector;
-    private ImageView showImg,typeBgImg,backImg,moreImg,phptoImg;
+    private ImageView showImg, typeBgImg, backImg, moreImg, phptoImg;
     private RelativeLayout relativeLayout;
     private RelativeLayout controllerRl;
     private Boolean isShow = false;
     private AudioManager audioManager;
     public static final String KEY_URL = "url";
     public static final String KEY_TITLE = "title";
-    public static final String KEY_PHOTO= "photo";
+    public static final String KEY_PHOTO = "photo";
     public static final String KEY_AUTHOR = "author";
     private ProgressDialog progressDialog;
     private LinearLayout topicLl;
@@ -95,10 +99,10 @@ public class Z_VideoDetailsActivity extends C_AbsBaseActivity implements View.On
         netTv = byView(R.id.video_details_net_tv);
         cacheTv = byView(R.id.video_details_cache_tv);
         showImg = byView(R.id.video_details_short_img);
-        typeBgImg =byView(R.id.video_details_type_img);
+        typeBgImg = byView(R.id.video_details_type_img);
         relativeLayout = byView(R.id.video_details_rl);
         controllerRl = byView(R.id.video_details_controller_rl);
-        backImg =byView(R.id.vide_details_back_img);
+        backImg = byView(R.id.vide_details_back_img);
         moreImg = byView(R.id.video_details_more_img);
         payBtn = byView(R.id.video_details_btn);
         authorTv = byView(R.id.video_details_author_tv);
@@ -111,7 +115,7 @@ public class Z_VideoDetailsActivity extends C_AbsBaseActivity implements View.On
 
         // 接收跳转传的 url 和 标题
         Intent intent = getIntent();
-        if (intent != null){
+        if (intent != null) {
             Bundle bundle = intent.getExtras();
             url = bundle.getString(KEY_URL);
             title = bundle.getString(KEY_TITLE);
@@ -122,15 +126,15 @@ public class Z_VideoDetailsActivity extends C_AbsBaseActivity implements View.On
         authorTv.setText(author);
 
         ViewGroup.LayoutParams layoutParams = phptoImg.getLayoutParams();
-        layoutParams.height = C_ScreenSizeUtil.getScreenSize(this, C_ScreenSizeUtil.ScreenState.HEIGHT)/12;
-        layoutParams.width =  C_ScreenSizeUtil.getScreenSize(this, C_ScreenSizeUtil.ScreenState.HEIGHT) / 20;
+        layoutParams.height = C_ScreenSizeUtil.getScreenSize(this, C_ScreenSizeUtil.ScreenState.HEIGHT) / 12;
+        layoutParams.width = C_ScreenSizeUtil.getScreenSize(this, C_ScreenSizeUtil.ScreenState.HEIGHT) / 20;
         phptoImg.setLayoutParams(layoutParams);
 
 
 //        new Thread(new Runnable() {
 //            @Override
 //            public void run() {
-                Z_UniverImageLoaderUtils.loadImage(photo,phptoImg);
+        Z_UniverImageLoaderUtils.loadImage(photo, phptoImg);
 //            }
 //        }).start();
 
@@ -147,10 +151,10 @@ public class Z_VideoDetailsActivity extends C_AbsBaseActivity implements View.On
         maxVolume = audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
 
         // 手势监听
-        gestureDetector = new GestureDetector(this, new MyGestureListener() );
+        gestureDetector = new GestureDetector(this, new MyGestureListener());
 
         // 缓存中显示dialog
-        progressDialog= new ProgressDialog(this);
+        progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("缓存中...");
         progressDialog.show();
 
@@ -179,7 +183,23 @@ public class Z_VideoDetailsActivity extends C_AbsBaseActivity implements View.On
             if (info.getType() == ConnectivityManager.TYPE_WIFI) {
                 Toast.makeText(this, "当前为wifi连接", Toast.LENGTH_SHORT).show();
             } else if (info.getType() == ConnectivityManager.TYPE_MOBILE) {
-                Toast.makeText(this, "当前为移动网络连接,连接WIFI节省流量", Toast.LENGTH_SHORT).show();
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setTitle("播放");
+                builder.setIcon(R.mipmap.video);
+                builder.setMessage("当前为移动网络,确定使用移动网络播放么?");
+                builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        videoView.start();
+                    }
+                });
+                builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        videoView.pause();
+                    }
+                });
+
             }
         }
     }
@@ -253,22 +273,23 @@ public class Z_VideoDetailsActivity extends C_AbsBaseActivity implements View.On
 
     /**
      * 点击事件
+     *
      * @param v
      */
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.vide_details_back_img:
                 finish();
                 break;
             case R.id.video_details_more_img:
                 // 弹出popupMenu
-                PopupMenu popupMenu = new PopupMenu(Z_VideoDetailsActivity.this,v);
+                PopupMenu popupMenu = new PopupMenu(Z_VideoDetailsActivity.this, v);
                 popupMenu.getMenuInflater().inflate(R.menu.menu_video_details, popupMenu.getMenu());
                 popupMenu.show();
                 break;
-            case  R.id.video_details_btn:
-                Intent intent=new Intent(this,NormalActivity.class);
+            case R.id.video_details_btn:
+                Intent intent = new Intent(this, NormalActivity.class);
                 startActivity(intent);
 //                finish();
                 Log.d("qwe", "支付");
@@ -279,25 +300,24 @@ public class Z_VideoDetailsActivity extends C_AbsBaseActivity implements View.On
     /**
      * 横屏手势处理
      */
-    private class ShowOrHideGestureListener extends GestureDetector.SimpleOnGestureListener{
+    private class ShowOrHideGestureListener extends GestureDetector.SimpleOnGestureListener {
         // 点击 标题栏显示/隐藏
         @Override
         public boolean onDown(MotionEvent e) {
-            if (isShow == false){
+            if (isShow == false) {
                 relativeLayout.setVisibility(View.GONE);
 
                 isShow = true;
-            }else {
+            } else {
                 relativeLayout.setVisibility(View.VISIBLE);
-//                // 定时3s隐藏
-//                Handler handler = new Handler();
-//                handler.postDelayed(new Runnable() {
-//
-//                    @Override
-//                    public void run() {
-//                        relativeLayout.setVisibility(View.GONE); //view是要隐藏的控件
-//                    }
-//                }, 3000);  //3000毫秒后执行
+                // 定时3s隐藏
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        relativeLayout.setVisibility(View.GONE); //view是要隐藏的控件
+                    }
+                }, 3000);  //3000毫秒后执行
                 isShow = false;
             }
             return super.onDown(e);
@@ -328,7 +348,7 @@ public class Z_VideoDetailsActivity extends C_AbsBaseActivity implements View.On
         @Override
         public boolean onDoubleTap(MotionEvent e) {
             int screenOri = getRequestedOrientation();
-            if (screenOri == ActivityInfo.SCREEN_ORIENTATION_PORTRAIT){
+            if (screenOri == ActivityInfo.SCREEN_ORIENTATION_PORTRAIT) {
                 // 当前为竖屏,获取videoView的宽高
                 vWidth = videoView.getMeasuredWidth();
                 vHeight = videoView.getMeasuredHeight();
@@ -361,7 +381,7 @@ public class Z_VideoDetailsActivity extends C_AbsBaseActivity implements View.On
 //                videoView.setVideoLayout(mLayout, 0);
             int screenOri = getRequestedOrientation();
 
-            if (screenOri == ActivityInfo.SCREEN_ORIENTATION_PORTRAIT){
+            if (screenOri == ActivityInfo.SCREEN_ORIENTATION_PORTRAIT) {
                 // 当前为竖屏
                 vWidth = videoView.getMeasuredWidth();
                 vHeight = videoView.getMeasuredHeight();
@@ -376,7 +396,7 @@ public class Z_VideoDetailsActivity extends C_AbsBaseActivity implements View.On
 
         @Override
         public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
-            if (e2.getX() - e1.getX()>50){
+            if (e2.getX() - e1.getX() > 50) {
                 finish();
             }
             return true;
@@ -384,7 +404,7 @@ public class Z_VideoDetailsActivity extends C_AbsBaseActivity implements View.On
 
         @Override
         public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
-            if (e2.getX() - e1.getX()>50){
+            if (e2.getX() - e1.getX() > 50) {
                 finish();
             }
             return true;
@@ -465,6 +485,7 @@ public class Z_VideoDetailsActivity extends C_AbsBaseActivity implements View.On
 
     /**
      * 横竖屏监听
+     *
      * @param newConfig
      */
     @Override
@@ -485,11 +506,11 @@ public class Z_VideoDetailsActivity extends C_AbsBaseActivity implements View.On
             relativeLayout.setVisibility(View.VISIBLE);
 
             // 竖屏手势处理
-            gestureDetector = new GestureDetector(this, new MyGestureListener() );
+            gestureDetector = new GestureDetector(this, new MyGestureListener());
         }
-        if (ori == Configuration.ORIENTATION_LANDSCAPE){
+        if (ori == Configuration.ORIENTATION_LANDSCAPE) {
             // 横屏手势处理
-            gestureDetector = new GestureDetector(this, new ShowOrHideGestureListener() );
+            gestureDetector = new GestureDetector(this, new ShowOrHideGestureListener());
             // 横屏时隐藏状态栏
             //定义全屏参数  去掉电量栏
 //            int flag=WindowManager.LayoutParams.FLAG_FULLSCREEN;
