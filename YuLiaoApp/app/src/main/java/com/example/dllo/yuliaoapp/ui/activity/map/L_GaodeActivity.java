@@ -2,6 +2,7 @@ package com.example.dllo.yuliaoapp.ui.activity.map;
 
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
+import android.app.Activity;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -41,6 +42,7 @@ import com.amap.api.services.core.SuggestionCity;
 import com.amap.api.services.poisearch.PoiResult;
 import com.amap.api.services.poisearch.PoiSearch;
 import com.example.dllo.yuliaoapp.R;
+import com.example.dllo.yuliaoapp.tools.C_ScreenSizeUtil;
 import com.example.dllo.yuliaoapp.tools.L_MapUtils;
 import com.example.dllo.yuliaoapp.ui.activity.C_AbsBaseActivity;
 
@@ -52,7 +54,9 @@ import java.util.List;
  * 高德地图MapActivity
  * @author:L
  */
-public class L_GaodeActivity extends AppCompatActivity implements View.OnClickListener, LocationSource, AMapLocationListener, PoiSearch.OnPoiSearchListener, AMap.OnMapClickListener, AMap.OnMarkerClickListener, AMap.OnInfoWindowClickListener, AMap.InfoWindowAdapter {
+public class L_GaodeActivity extends AppCompatActivity implements View.OnClickListener, LocationSource, AMap.OnMapClickListener, AMap.OnMarkerClickListener, AMap.OnInfoWindowClickListener, AMap.InfoWindowAdapter, AMapLocationListener, PoiSearch.OnPoiSearchListener {
+
+
 
     private AMap aMap;
     private MapView mapView;
@@ -73,7 +77,7 @@ public class L_GaodeActivity extends AppCompatActivity implements View.OnClickLi
     private Marker detailMarker;
     private Marker mlastMarker;
     private PoiSearch poiSearch;
-        private myPoiOverlay poiOverlay;// poi图层
+    private myPoiOverlay poiOverlay;// poi图层
     private List<PoiItem> poiItems;// poi数据
 
     private RelativeLayout mPoiDetail;
@@ -96,6 +100,8 @@ public class L_GaodeActivity extends AppCompatActivity implements View.OnClickLi
     private Boolean isBig = true;
     private View searchView;
     private TextView searchButton;
+    private int windowX;
+    private int windowY;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -114,11 +120,16 @@ public class L_GaodeActivity extends AppCompatActivity implements View.OnClickLi
         //主按钮添加点击事件
         imageviewstart = (ImageView) findViewById(R.id.imageview8);
         imageviewstart.setOnClickListener(this);
-        GpsImg = (ImageView) findViewById(R.id.imageview2);
+
         mLocationErrText = (TextView) findViewById(R.id.location_errInfo_text);
-        searchView = LayoutInflater.from(this).inflate(R.layout.l_map_popwindow_search, null);
-        popupWindow = new PopupWindow();
-        searchButton = (TextView) searchView.findViewById(R.id.btn_search);
+        mPoiName = (TextView)findViewById(R.id.poi_name);
+        mPoiAddress = (TextView)findViewById(R.id.poi_address);
+        mPoiDetail = (RelativeLayout)findViewById(R.id.poi_detail);
+//        searchView = LayoutInflater.from(this).inflate(R.layout.l_map_popwindow_search, null);
+//        popupWindow = new PopupWindow();
+        GpsImg = (ImageView) findViewById(R.id.imageview2);
+        searchButton = (TextView) findViewById(R.id.btn_search);
+        mSearchText = (EditText)findViewById(R.id.input_edittext);
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -144,7 +155,7 @@ public class L_GaodeActivity extends AppCompatActivity implements View.OnClickLi
      */
     private void setUpMap() {
         aMap.setLocationSource(this);// 设置定位监听
-        aMap.getUiSettings().setMyLocationButtonEnabled(false);// 设置默认定位按钮是否显示
+        aMap.getUiSettings().setMyLocationButtonEnabled(true);// 设置默认定位按钮是否显示
         aMap.setMyLocationEnabled(true);// 设置为true表示显示定位层并可触发定位，false表示隐藏定位层并不可触发定位，默认是false
         // 设置定位的类型为定位模式 ，可以由定位、跟随或地图根据面向方向旋转几种
         aMap.setMyLocationType(AMap.LOCATION_TYPE_LOCATE);
@@ -318,12 +329,17 @@ public class L_GaodeActivity extends AppCompatActivity implements View.OnClickLi
      * 收回动画
      */
     private void closeAnim() {
+        windowX = C_ScreenSizeUtil.getScreenSize(this, C_ScreenSizeUtil.ScreenState.WIDTH)/3;
+        windowY = C_ScreenSizeUtil.getScreenSize(this, C_ScreenSizeUtil.ScreenState.HEIGHT)/3;
+
+
+
         //一共是7个子菜单，7个子菜单就是把90度分成6分，然后以这个为基准计算菜单的弧度。PI/2/6
-        float myroate = (float) (Math.PI / 2 / 3);
+        float myroate = (float) (-Math.PI / 2 / 3);
         for (int i = 0; i < res.length; i++) {
             //500是半径，通过三角函数计算坐标
-            float x = (float) (200 * Math.cos(myroate * i));
-            float y = (float) (200 * Math.sin(myroate * i));
+            float x = (float) (windowX * Math.cos(myroate * i));
+            float y = (float) (windowY * Math.sin(myroate * i));
 
 //使用属性动画的平移动画，将坐标从现在的位置移回到原点
             ObjectAnimator animator = ObjectAnimator.ofFloat(imgs.get(i),
@@ -348,10 +364,10 @@ public class L_GaodeActivity extends AppCompatActivity implements View.OnClickLi
      * 弹出动画
      */
     private void startAnim() {
-        float myroate = (float) (Math.PI / 2 / 3);
+        float myroate = (float) (-Math.PI / 2 / 3);
         for (int i = 0; i < res.length; i++) {
-            float x = (float) (200 * Math.cos(myroate * i));
-            float y = (float) (200 * Math.sin(myroate * i));
+            float x = (float) (windowX * Math.cos(myroate * i));
+            float y = (float) (windowY * Math.sin(myroate * i));
 
 //使用属性动画的平移动画，将坐标从原点移动到每个子菜单对应的位置
             ObjectAnimator animator = ObjectAnimator.ofFloat(imgs.get(i),
@@ -516,11 +532,11 @@ public class L_GaodeActivity extends AppCompatActivity implements View.OnClickLi
     }
 
     @Override
-    public void onPoiSearched(PoiResult poiResult, int i) {
+    public void onPoiSearched(PoiResult result, int i) {
         if (i == 1000) {
             if (poiResult != null && poiResult.getQuery() != null) {// 搜索poi的结果
                 if (poiResult.getQuery().equals(query)) {// 是否是同一条
-                    poiResult = poiResult;
+                    poiResult = result;
                     poiItems = poiResult.getPois();// 取得第一页的poiitem数据，页数从数字0开始
                     List<SuggestionCity> suggestionCities = poiResult
                             .getSearchSuggestionCitys();// 当搜索不到poiitem数据时，会返回含有搜索关键字的城市信息
@@ -700,8 +716,6 @@ public class L_GaodeActivity extends AppCompatActivity implements View.OnClickLi
             }
         }
     }
-
-
 
 
 
