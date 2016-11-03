@@ -1,65 +1,128 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/video_details_all_rl"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:id="@+id/video_details_all_rl">
+    android:layout_height="match_parent">
 
 
     <io.vov.vitamio.widget.VideoView
         android:id="@+id/video_details_videoview"
         android:layout_width="match_parent"
-        android:layout_alignParentRight="true"
+        android:layout_height="250dp"
         android:layout_alignParentLeft="true"
-        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
         android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"/>
+        android:layout_centerVertical="true" />
+
     <RelativeLayout
         android:id="@+id/video_details_rl"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/Cambridge_Blue">
+
         <ImageView
             android:id="@+id/vide_details_back_img"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="20dp"
-            android:src="@mipmap/title_back"
-            />
+            android:src="@mipmap/title_back" />
+
         <TextView
-            android:id="@+id/video_details_title_tv"
+            android:id="@+id/video_details_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="标题"
             android:layout_alignTop="@id/vide_details_back_img"
             android:layout_toRightOf="@id/vide_details_back_img"
-            android:textSize="20sp"
             android:maxLength="20"
-            />
+            android:text="视频详情"
+            android:textSize="20sp" />
+
         <ImageView
             android:id="@+id/video_details_more_img"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_margin="20dp"
-            android:src="@mipmap/title_more"/>
+            android:src="@mipmap/title_more" />
     </RelativeLayout>
 
+    <TextView
+        android:id="@+id/video_details_title_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/video_details_rl"
+        android:text="视频标题"
+        android:textSize="20sp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="20dp"/>
+
+    <LinearLayout
+        android:id="@+id/video_details_topic_ll"
+        android:layout_width="match_parent"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/video_details_title_tv"
+        android:orientation="horizontal">
+        <ImageView
+            android:id="@+id/video_details_photo_img"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/video_details_author_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:layout_margin="10dp"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_marginTop="10dp"
+        android:id="@+id/video_details_ll"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/video_details_videoview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/dashanglittle"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="喜欢该视频请打赏"/>
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/video_details_btn"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/video_details_ll"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="打赏"/>
 
     <TextView
         android:id="@+id/video_details_cache_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignTop="@id/video_details_videoview"
-        android:textColor="#e6ff01"/>
+        android:textColor="#e6ff01"
+        />
+
     <TextView
         android:id="@+id/video_details_net_tv"
-        android:layout_toRightOf="@id/video_details_cache_tv"
-        android:layout_alignTop="@id/video_details_videoview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="#04fa00"/>
+        android:layout_alignTop="@id/video_details_videoview"
+        android:layout_toRightOf="@id/video_details_cache_tv"
+        android:textColor="#04fa00" />
+
     <RelativeLayout
-        android:id="@+id/video_details_fl"
+        android:id="@+id/video_details_controller_rl"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
@@ -85,8 +148,7 @@
                 android:id="@+id/video_details_long_img"
                 android:layout_width="70dp"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                />
+                android:layout_gravity="center" />
 
             <ImageView
                 android:id="@+id/video_details_short_img"
@@ -97,6 +159,4 @@
                 android:src="@mipmap/hengxian" />
         </FrameLayout>
     </RelativeLayout>
-
-
 </RelativeLayout>

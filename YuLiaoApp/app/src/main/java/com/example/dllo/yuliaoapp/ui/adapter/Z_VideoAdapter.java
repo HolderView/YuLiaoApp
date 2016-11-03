@@ -38,18 +38,12 @@ public class Z_VideoAdapter extends BaseAdapter {
     private VideoViewHolder videoViewHolder;
     private Z_VideoBean.视频Bean videoBean;
 
-    Map<Integer, Boolean> isPlay;
-
     public Z_VideoAdapter(Context context) {
         this.context = context;
     }
 
     public void setDatas(List<Z_VideoBean.视频Bean> datas) {
         this.datas = datas;
-        isPlay = new HashMap<>();
-        for (int i = 0; i < datas.size(); i++) {
-            isPlay.put(i, false);
-        }
         notifyDataSetChanged();
     }
 

@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    >
+
+    <TextView
+        android:id="@+id/beijing_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="北京"
+        android:textSize="20sp"
+        android:gravity="center"
+        android:textColor="#fff"
+        />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#999"
+        />
+    <TextView
+        android:id="@+id/shanghai_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="上海"
+        android:textSize="20sp"
+        android:gravity="center"
+        android:textColor="#fff"
+        />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#999"
+        />
+    <TextView
+        android:id="@+id/nanjing_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="南京"
+        android:textSize="20sp"
+        android:gravity="center"
+        android:textColor="#fff"
+        />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#999"
+        />
+    <TextView
+        android:id="@+id/guangzhou_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="广州"
+        android:textSize="20sp"
+        android:gravity="center"
+        android:textColor="#fff"
+        />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#999"
+        />
+    <TextView
+        android:id="@+id/hangzhou_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="杭州"
+        android:textSize="20sp"
+        android:gravity="center"
+        android:textColor="#fff"
+        />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#999"
+        />
+
+
+
+
+
+
+
+
+</LinearLayout>

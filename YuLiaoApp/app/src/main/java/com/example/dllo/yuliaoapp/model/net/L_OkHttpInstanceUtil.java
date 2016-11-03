@@ -16,34 +16,35 @@ import java.util.Set;
 
 import okhttp3.Call;
 import okhttp3.Callback;
+import okhttp3.FormBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import okhttp3.RequestBody;
 import okhttp3.Response;
 
 /**
  * Created by Yu on 16/10/26.
  * OkHttp封装单例类
  */
-public class OkHttpInstanceUtil {
+public class L_OkHttpInstanceUtil {
 
-    private static OkHttpInstanceUtil mInstance;
+    private static L_OkHttpInstanceUtil mInstance;
     private OkHttpClient mOkHttpClient;
     private Handler mDelivery;
     private Gson mGson;
 
-
-    private OkHttpInstanceUtil() {
+    private L_OkHttpInstanceUtil() {
         mOkHttpClient = new OkHttpClient();
         //cookie enabled
         mDelivery = new Handler(Looper.getMainLooper());
         mGson = new Gson();
     }
 
-    public static OkHttpInstanceUtil getInstance() {
+    public static L_OkHttpInstanceUtil getInstance() {
         if (mInstance == null) {
-            synchronized (OkHttpInstanceUtil.class) {
+            synchronized (L_OkHttpInstanceUtil.class) {
                 if (mInstance == null) {
-                    mInstance = new OkHttpInstanceUtil();
+                    mInstance = new L_OkHttpInstanceUtil();
                 }
             }
         }
@@ -64,6 +65,7 @@ public class OkHttpInstanceUtil {
         Response execute = call.execute();
         return execute;
     }
+
 
     /**
      * 同步的Get请求
@@ -91,6 +93,58 @@ public class OkHttpInstanceUtil {
     }
 
 
+    /**
+     * 同步的Post请求
+     *
+     * @param url
+     * @param params post的参数
+     * @return
+     */
+    private Response _post(String url, Param... params) throws IOException {
+        Request request = buildPostRequest(url, params);
+        Response response = mOkHttpClient.newCall(request).execute();
+        return response;
+    }
+
+
+    /**
+     * 同步的Post请求
+     *
+     * @param url
+     * @param params post的参数
+     * @return 字符串
+     */
+    private String _postAsString(String url, Param... params) throws IOException {
+        Response response = _post(url, params);
+        return response.body().string();
+    }
+
+    /**
+     * 异步的post请求
+     *
+     * @param url
+     * @param callback
+     * @param params
+     */
+    private void _postAsyn(String url, final ResultCallback callback, Param... params) {
+        Request request = buildPostRequest(url, params);
+        deliveryResult(callback, request);
+    }
+
+    /**
+     * 异步的post请求
+     *
+     * @param url
+     * @param callback
+     * @param params
+     */
+    private void _postAsyn(String url, final ResultCallback callback, Map<String, String> params) {
+        Param[] paramsArr = map2Params(params);
+        Request request = buildPostRequest(url, paramsArr);
+        deliveryResult(callback, request);
+    }
+
+
     //*************对外公布的方法************
 
 
@@ -103,29 +157,29 @@ public class OkHttpInstanceUtil {
         return getInstance()._getAsString(url);
     }
 
+
     public static void getAsyn(String url, ResultCallback callback) {
         getInstance()._getAsyn(url, callback);
     }
 
+    public static Response post(String url, Param... params) throws IOException {
+        return getInstance()._post(url, params);
+    }
+
+    public static String postAsString(String url, Param... params) throws IOException {
+        return getInstance()._postAsString(url, params);
+    }
+
+    public static void postAsyn(String url, final ResultCallback callback, Param... params) {
+        getInstance()._postAsyn(url, callback, params);
+    }
+
+
+    public static void postAsyn(String url, final ResultCallback callback, Map<String, String> params) {
+        getInstance()._postAsyn(url, callback, params);
+    }
 
     //****************************
-
-
-    private String guessMimeType(String path) {
-        FileNameMap fileNameMap = URLConnection.getFileNameMap();
-        String contentTypeFor = fileNameMap.getContentTypeFor(path);
-        if (contentTypeFor == null) {
-            contentTypeFor = "application/octet-stream";
-        }
-        return contentTypeFor;
-    }
-
-
-    private Param[] validateParam(Param[] params) {
-        if (params == null)
-            return new Param[0];
-        else return params;
-    }
 
     private Param[] map2Params(Map<String, String> params) {
         if (params == null) return new Param[0];
@@ -139,25 +193,20 @@ public class OkHttpInstanceUtil {
         return res;
     }
 
-
     private void deliveryResult(final ResultCallback callback, final Request request) {
         mOkHttpClient.newCall(request).enqueue(new Callback() {
+
             @Override
-            public void onFailure(final Call call, final IOException e) {
+            public void onFailure(Call call, IOException e) {
                 sendFailedStringCallback(request, e, callback);
             }
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
-
                 try {
                     final String string = response.body().string();
-                    if (callback.mType == String.class) {
-                        sendSuccessResultCallback(string, callback);
-                    } else {
-                        Object o = mGson.fromJson(string, callback.mType);
-                        sendSuccessResultCallback(o, callback);
-                    }
+
+                    sendSuccessResultCallback(string, callback);
 
 
                 } catch (IOException e) {
@@ -166,7 +215,6 @@ public class OkHttpInstanceUtil {
                 {
                     sendFailedStringCallback(response.request(), e, callback);
                 }
-
             }
 
         });
@@ -193,22 +241,23 @@ public class OkHttpInstanceUtil {
         });
     }
 
-
-    public  abstract class ResultCallback<T> {
-        Type mType;
-
-        public ResultCallback() {
-            mType = getSuperclassTypeParameter(getClass());
+    private Request buildPostRequest(String url, Param[] params) {
+        if (params == null) {
+            params = new Param[0];
         }
-
-        Type getSuperclassTypeParameter(Class<?> subclass) {
-            Type superclass = subclass.getGenericSuperclass();
-            if (superclass instanceof Class) {
-                throw new RuntimeException("Missing type parameter.");
-            }
-            ParameterizedType parameterized = (ParameterizedType) superclass;
-            return $Gson$Types.canonicalize(parameterized.getActualTypeArguments()[0]);
+        FormBody.Builder builder = new FormBody.Builder();
+        for (Param param : params) {
+            builder.add(param.key, param.value);
         }
+        RequestBody requestBody = builder.build();
+        return new Request.Builder()
+                .url(url)
+                .post(requestBody)
+                .build();
+    }
+
+
+    public static abstract class ResultCallback<T> {
 
         public abstract void onError(Request request, Exception e);
 
@@ -227,8 +276,6 @@ public class OkHttpInstanceUtil {
         String key;
         String value;
     }
-
-
 
 
 }
