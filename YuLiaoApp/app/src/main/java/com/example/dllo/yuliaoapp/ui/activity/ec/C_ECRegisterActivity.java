@@ -43,6 +43,9 @@ public class C_ECRegisterActivity extends C_AbsBaseActivity {
                     String u= (String) msg.obj;
                     Toast.makeText(C_ECRegisterActivity.this, u, Toast.LENGTH_SHORT).show();
                     break;
+                case 203:
+                    String o= (String) msg.obj;
+                    Toast.makeText(C_ECRegisterActivity.this, o, Toast.LENGTH_SHORT).show();
             }
             return false;
         }
@@ -89,7 +92,7 @@ public class C_ECRegisterActivity extends C_AbsBaseActivity {
                 String userName=mEtUserNum.getText().toString().trim();
                 String password=mEtPassword.getText().toString().trim();
                 String passwordConfirm=mEtPasswordConfirm.getText().toString().trim();
-                if (password.equals(passwordConfirm)){
+                if (password.equals(passwordConfirm)&&!password.isEmpty()){
                     try {
                         EMClient.getInstance().createAccount(userName,password);
                         mDialog.dismiss();
@@ -105,6 +108,11 @@ public class C_ECRegisterActivity extends C_AbsBaseActivity {
                         handler.sendMessage(message);
                         //此处不可以设置toast  利用handler传回主线程 然后进行toast
                     }
+                }else if (!password.isEmpty()||!userName.isEmpty()){
+                    mDialog.dismiss();
+                    message.what=203;
+                    message.obj="用户名或密码不能为空";
+                    handler.sendMessage(message);
                 }else {
                     mDialog.dismiss();
                     message.what=202;
