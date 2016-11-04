@@ -1,6 +1,7 @@
 package com.example.dllo.yuliaoapp.ui.activity.ec;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -29,6 +30,27 @@ public class C_ECMainActivity extends C_AbsBaseActivity {
     private Button mBtnFriends;
 
     @Override
+    protected void initData(Bundle savedInstanceState) {
+        /**
+         * 实现实时监听服务器状态的接口
+         */
+        EMClient.getInstance().addConnectionListener(new MyConnectionListener());
+        mTvUserId.setText(EMClient.getInstance().getCurrentUser());
+        //退出登录
+        signOut();
+        //与某个id聊天
+        signChat();
+        //跳转到好友列表页面
+        mBtnFriends.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(C_ECMainActivity.this,C_ECFriendListActivity.class));
+            }
+        });
+
+    }
+
+    @Override
     protected int setLayout() {
         //判断sdk是否登录成功过 并没有退出和被踢 否则跳转到登录界面
         if (!EMClient.getInstance().isLoggedInBefore()) {
@@ -47,27 +69,7 @@ public class C_ECMainActivity extends C_AbsBaseActivity {
         mBtnFriends=byView(R.id.btn_ecmain_friends);
     }
 
-    @Override
-    protected void initData() {
-        /**
-         * 实现实时监听服务器状态的接口
-         */
-        EMClient.getInstance().addConnectionListener(new MyConnectionListener());
-        mTvUserId.setText(EMClient.getInstance().getCurrentUser());
-        //退出登录
-        signOut();
-        //与某个id聊天
-        signChat();
-        //跳转到好友列表页面
-        mBtnFriends.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(C_ECMainActivity.this,C_ECFriendListActivity.class));
-            }
-        });
 
-
-    }
 
     /**
      * 开始聊天

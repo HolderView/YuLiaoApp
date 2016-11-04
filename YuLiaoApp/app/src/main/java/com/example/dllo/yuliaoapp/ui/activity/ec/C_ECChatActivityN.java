@@ -3,6 +3,7 @@ package com.example.dllo.yuliaoapp.ui.activity.ec;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -57,19 +58,7 @@ public class C_ECChatActivityN extends C_AbsBaseActivity {
     }
 
     @Override
-    protected int setLayout() {
-        return R.layout.c_activity_ec_chat;
-    }
-
-    @Override
-    protected void initViews() {
-        listView = (ListView) this.findViewById(R.id.listView);
-        btn_send = (Button) this.findViewById(R.id.btn_send);
-        et_content = (EditText) this.findViewById(R.id.et_content);
-    }
-
-    @Override
-    protected void initData() {
+    protected void initData(Bundle savedInstanceState) {
         toChatUsername = this.getIntent().getStringExtra("username");
         TextView tv_toUsername = (TextView) this.findViewById(R.id.tv_toUsername);
         tv_toUsername.setText(toChatUsername);
@@ -93,6 +82,20 @@ public class C_ECChatActivityN extends C_AbsBaseActivity {
         });
         EMClient.getInstance().chatManager().addMessageListener(msgListener);
     }
+
+    @Override
+    protected int setLayout() {
+        return R.layout.c_activity_ec_chat;
+    }
+
+    @Override
+    protected void initViews() {
+        listView = (ListView) this.findViewById(R.id.listView);
+        btn_send = (Button) this.findViewById(R.id.btn_send);
+        et_content = (EditText) this.findViewById(R.id.et_content);
+    }
+
+
 
     protected void getAllMessage() {
         // 获取当前conversation对象

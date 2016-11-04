@@ -43,25 +43,8 @@ public class C_ECLoginActivityN extends C_AbsBaseActivity {
     private String currentPassword;
 
     @Override
-    protected int setLayout() {
-        // 如果登录成功过，直接进入主页面
-        if (EMClient.getInstance().isLoggedInBefore()) {
-            autoLogin = true;
-            startActivity(new Intent(C_ECLoginActivityN.this, C_ECMainActivityN.class));
-            finish();
-        }
-        return R.layout.c_activity_ec_login;
-    }
-
-    @Override
-    protected void initViews() {
-        usernameEditText = (EditText) findViewById(R.id.username);
-        passwordEditText = (EditText) findViewById(R.id.password);
-    }
-
-    @Override
-    protected void initData() {
-// 如果用户名改变，清空密码
+    protected void initData(Bundle savedInstanceState) {
+        // 如果用户名改变，清空密码
         usernameEditText.addTextChangedListener(new TextWatcher() {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
@@ -79,6 +62,25 @@ public class C_ECLoginActivityN extends C_AbsBaseActivity {
             }
         });
     }
+
+    @Override
+    protected int setLayout() {
+        // 如果登录成功过，直接进入主页面
+        if (EMClient.getInstance().isLoggedInBefore()) {
+            autoLogin = true;
+            startActivity(new Intent(C_ECLoginActivityN.this, C_ECMainActivityN.class));
+            finish();
+        }
+        return R.layout.c_activity_ec_login;
+    }
+
+    @Override
+    protected void initViews() {
+        usernameEditText = (EditText) findViewById(R.id.username);
+        passwordEditText = (EditText) findViewById(R.id.password);
+    }
+
+
 
 
     /**

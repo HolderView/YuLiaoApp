@@ -367,4 +367,11 @@
     <string name="bdpay">百度钱包</string>
     <string name="unionpay">银联支付</string>
     <string name="jdpay">京东钱包</string>
+    <!--贪吃蛇-->
+    <string name="mode_ready">Snake\nPress Start To Play</string>
+    <string name="mode_pause">Paused\nPress Start To Resume</string>
+    <string name="mode_lose_prefix">Game Over\nScore: </string>
+    <string name="mode_lose_suffix">\nPress Start To Play</string>
+    <string name="button_start">Start Game!</string>
+    <string name="snake_layout_text_text"/>
 </resources>

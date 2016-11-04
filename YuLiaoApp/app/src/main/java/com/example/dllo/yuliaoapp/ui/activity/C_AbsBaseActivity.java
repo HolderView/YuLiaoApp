@@ -33,14 +33,16 @@ public abstract class C_AbsBaseActivity extends AppCompatActivity {
 //        window.setStatusBarColor(Color.parseColor("#00000000"));
         setContentView(setLayout());
         initViews();
-        initData();
+        initData(savedInstanceState);
     }
+
+    protected abstract void initData(Bundle savedInstanceState);
 
     protected abstract int setLayout();
 
     protected abstract void initViews();
 
-    protected abstract void initData();
+    
 
     protected <T extends View> T byView(int resId) {
         return (T) findViewById(resId);

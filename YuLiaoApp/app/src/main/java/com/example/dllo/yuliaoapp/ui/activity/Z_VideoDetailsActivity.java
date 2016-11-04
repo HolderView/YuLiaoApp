@@ -87,32 +87,7 @@ public class Z_VideoDetailsActivity extends C_AbsBaseActivity implements View.On
     private Button payBtn;
 
     @Override
-    protected int setLayout() {
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-        return R.layout.z_activity_video_details;
-    }
-
-    @Override
-    protected void initViews() {
-        videoView = byView(R.id.video_details_videoview);
-        titleTv = byView(R.id.video_details_title_tv);
-        netTv = byView(R.id.video_details_net_tv);
-        cacheTv = byView(R.id.video_details_cache_tv);
-        showImg = byView(R.id.video_details_short_img);
-        typeBgImg = byView(R.id.video_details_type_img);
-        relativeLayout = byView(R.id.video_details_rl);
-        controllerRl = byView(R.id.video_details_controller_rl);
-        backImg = byView(R.id.vide_details_back_img);
-        moreImg = byView(R.id.video_details_more_img);
-        payBtn = byView(R.id.video_details_btn);
-        authorTv = byView(R.id.video_details_author_tv);
-        phptoImg = byView(R.id.video_details_photo_img);
-        topicLl = byView(R.id.video_details_topic_ll);
-    }
-
-    @Override
-    protected void initData() {
-
+    protected void initData(Bundle savedInstanceState) {
         // 接收跳转传的 url 和 标题
         Intent intent = getIntent();
         if (intent != null) {
@@ -168,6 +143,32 @@ public class Z_VideoDetailsActivity extends C_AbsBaseActivity implements View.On
         // 检测当前网络状态
         netState();
     }
+
+    @Override
+    protected int setLayout() {
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        return R.layout.z_activity_video_details;
+    }
+
+    @Override
+    protected void initViews() {
+        videoView = byView(R.id.video_details_videoview);
+        titleTv = byView(R.id.video_details_title_tv);
+        netTv = byView(R.id.video_details_net_tv);
+        cacheTv = byView(R.id.video_details_cache_tv);
+        showImg = byView(R.id.video_details_short_img);
+        typeBgImg = byView(R.id.video_details_type_img);
+        relativeLayout = byView(R.id.video_details_rl);
+        controllerRl = byView(R.id.video_details_controller_rl);
+        backImg = byView(R.id.vide_details_back_img);
+        moreImg = byView(R.id.video_details_more_img);
+        payBtn = byView(R.id.video_details_btn);
+        authorTv = byView(R.id.video_details_author_tv);
+        phptoImg = byView(R.id.video_details_photo_img);
+        topicLl = byView(R.id.video_details_topic_ll);
+    }
+
+
 
     /**
      * 检测当前网络状态

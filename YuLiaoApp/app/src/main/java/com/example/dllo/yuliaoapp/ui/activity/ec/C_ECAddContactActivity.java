@@ -2,6 +2,7 @@ package com.example.dllo.yuliaoapp.ui.activity.ec;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -19,23 +20,9 @@ import com.hyphenate.chat.EMClient;
  */
 public class C_ECAddContactActivity extends C_AbsBaseActivity {
     private ProgressDialog progressDialog;
-    @Override
-    protected int setLayout() {
-        return R.layout.c_activity_ec_add_contact;
-    }
 
     @Override
-    protected void initViews() {
-
-    }
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        startActivity(new Intent(this, C_ECMainActivityN.class));
-        finish();
-    }
-    @Override
-    protected void initData() {
+    protected void initData(Bundle savedInstanceState) {
         final EditText et_username = (EditText) this.findViewById(R.id.et_username);
         Button btn_add = (Button) this.findViewById(R.id.btn_add);
         btn_add.setOnClickListener(new View.OnClickListener() {
@@ -55,6 +42,23 @@ public class C_ECAddContactActivity extends C_AbsBaseActivity {
 
         });
     }
+
+    @Override
+    protected int setLayout() {
+        return R.layout.c_activity_ec_add_contact;
+    }
+
+    @Override
+    protected void initViews() {
+
+    }
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        startActivity(new Intent(this, C_ECMainActivityN.class));
+        finish();
+    }
+
     /**
      * 添加contact
      *

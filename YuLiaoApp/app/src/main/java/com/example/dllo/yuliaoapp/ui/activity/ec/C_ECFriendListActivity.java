@@ -1,5 +1,6 @@
 package com.example.dllo.yuliaoapp.ui.activity.ec;
 
+import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -22,19 +23,9 @@ import java.util.List;
 public class C_ECFriendListActivity extends C_AbsBaseActivity {
     private EditText mEtAddFriends;
     private Button mBtnAddFriends;
-    @Override
-    protected int setLayout() {
-        return R.layout.c_activity_friend_list;
-    }
 
     @Override
-    protected void initViews() {
-        mEtAddFriends=byView(R.id.et_ecfriends);
-        mBtnAddFriends=byView(R.id.btn_ecfriends_add);
-    }
-
-    @Override
-    protected void initData() {
+    protected void initData(Bundle savedInstanceState) {
         try {
             List<String> usernames= EMClient.getInstance().contactManager().getAllContactsFromServer();
             Log.d("C_ECFriendListActivity", "usernames.size():" + usernames.size());
@@ -83,6 +74,18 @@ public class C_ECFriendListActivity extends C_AbsBaseActivity {
                 Log.d("qqq", s);
             }
         });
-
     }
+
+    @Override
+    protected int setLayout() {
+        return R.layout.c_activity_friend_list;
+    }
+
+    @Override
+    protected void initViews() {
+        mEtAddFriends=byView(R.id.et_ecfriends);
+        mBtnAddFriends=byView(R.id.btn_ecfriends_add);
+    }
+
+
 }

@@ -3,6 +3,7 @@ package com.example.dllo.yuliaoapp.ui.activity.ec;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -45,6 +46,18 @@ public class C_ECMainActivityN extends C_AbsBaseActivity {
     private ECMainVpAdapter adapter=new ECMainVpAdapter(getSupportFragmentManager());
 
     @Override
+    protected void initData(Bundle savedInstanceState) {
+        /**
+         * 绑定Fragment
+         */
+        initVp();
+        /**
+         * 实现实时监听服务器状态的接口
+         */
+        EMClient.getInstance().addConnectionListener(new MyConnectionListener());
+    }
+
+    @Override
     protected int setLayout() {
         //注册联系人变动监听
         EMClient.getInstance().contactManager().setContactListener(new MyContactListener());
@@ -60,18 +73,7 @@ public class C_ECMainActivityN extends C_AbsBaseActivity {
 
     }
 
-    @Override
-    protected void initData() {
-        /**
-         * 绑定Fragment
-         */
-        initVp();
-        /**
-         * 实现实时监听服务器状态的接口
-         */
-        EMClient.getInstance().addConnectionListener(new MyConnectionListener());
 
-    }
 
     /**
      * viewPager 4个页面Fragment

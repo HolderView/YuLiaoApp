@@ -61,26 +61,8 @@ public class Z_MainActivity extends C_AbsBaseActivity {
     private LinearLayout mLSnake;
 
 
-
-
-
     @Override
-    protected int setLayout() {
-        return R.layout.z_activity_main;
-    }
-
-    @Override
-    protected void initViews() {
-        mainVp = byView(R.id.main_vp);
-        mainTl = byView(R.id.main_tl);
-        qrcodeImg = byView(R.id.z_activity_main_l_qrcode_img);
-        mapImg = byView(R.id.z_activity_main_l_map_img);
-        mL2048=byView(R.id.z_activity_mail_c_game_2048);
-        mLSnake=byView(R.id.z_activity_mail_c_game_snake);
-    }
-
-    @Override
-    protected void initData() {
+    protected void initData(Bundle savedInstanceState) {
         fragments = new ArrayList<>();
         fragments.add(Z_MapFragment.newInstance());
         fragments.add(Z_ChatFragment.newInstance());
@@ -99,6 +81,23 @@ public class Z_MainActivity extends C_AbsBaseActivity {
         DrawerControl();
         initGame();
     }
+
+    @Override
+    protected int setLayout() {
+        return R.layout.z_activity_main;
+    }
+
+    @Override
+    protected void initViews() {
+        mainVp = byView(R.id.main_vp);
+        mainTl = byView(R.id.main_tl);
+        qrcodeImg = byView(R.id.z_activity_main_l_qrcode_img);
+        mapImg = byView(R.id.z_activity_main_l_map_img);
+        mL2048=byView(R.id.z_activity_mail_c_game_2048);
+        mLSnake=byView(R.id.z_activity_mail_c_game_snake);
+    }
+
+
 
     /**
      * 去往游戏界面

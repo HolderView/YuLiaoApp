@@ -1,6 +1,7 @@
 package com.example.dllo.yuliaoapp.ui.activity.game;
 
 import android.content.DialogInterface;
+import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.widget.TextView;
 
@@ -15,6 +16,12 @@ public class C_2048_Activity extends C_AbsBaseActivity implements Game2048Layout
     private Game2048Layout mGame2048Layout;
 
     private TextView mScore;
+
+    @Override
+    protected void initData(Bundle savedInstanceState) {
+        mGame2048Layout.setOnGame2048Listener(this);
+    }
+
     @Override
     protected int setLayout() {
         return R.layout.c_activity_2048;
@@ -27,10 +34,7 @@ public class C_2048_Activity extends C_AbsBaseActivity implements Game2048Layout
 
     }
 
-    @Override
-    protected void initData() {
-        mGame2048Layout.setOnGame2048Listener(this);
-    }
+
 
     @Override
     public void onScoreChange(int score) {
