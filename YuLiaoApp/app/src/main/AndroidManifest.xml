@@ -75,6 +75,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <!--2048-->
+        <activity android:name=".ui.activity.game.C_2048_Activity"/>
+        <!--贪吃蛇-->
+        <activity android:name=".ui.activity.game.C_Snake_Activity"/>
         <!--登录-->
         <activity android:name=".ui.activity.ec.C_ECLoginActivity"/>
         <!--环信主页面-->

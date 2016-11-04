@@ -10,17 +10,17 @@
         android:orientation="vertical">
 
 
-    <android.support.v4.view.ViewPager
-        android:id="@+id/main_vp"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"/>
+        <android.support.v4.view.ViewPager
+            android:id="@+id/main_vp"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
 
-    <android.support.design.widget.TabLayout
-        android:id="@+id/main_tl"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@android:color/white"/>
+        <android.support.design.widget.TabLayout
+            android:id="@+id/main_tl"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/white" />
     </LinearLayout>
 
 
@@ -49,6 +49,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:orientation="vertical">
 
                 <LinearLayout
@@ -61,23 +62,67 @@
                     <ImageView
                         android:id="@+id/z_activity_main_l_qrcode_img"
                         android:layout_width="0dp"
-                        android:layout_weight="1"
                         android:layout_height="wrap_content"
-                        android:src="@mipmap/l_qrcode"/>
+                        android:layout_weight="1"
+                        android:src="@mipmap/l_qrcode" />
 
                     <ImageView
                         android:id="@+id/z_activity_main_l_map_img"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@mipmap/l_map_icon"/>
-
-
-
+                        android:src="@mipmap/l_map_icon" />
                 </LinearLayout>
 
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:src="@mipmap/game" />
 
+                <LinearLayout
+                    android:id="@+id/z_activity_mail_c_game_2048"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
 
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/ten_dp"
+                        android:src="@mipmap/gridding" />
 
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:padding="@dimen/ten_dp"
+                        android:text="2048"
+                        android:textColor="@android:color/holo_red_light"
+                        android:textSize="24sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/z_activity_mail_c_game_snake"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <ImageView
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/ten_dp"
+                        android:src="@mipmap/snake" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:padding="@dimen/ten_dp"
+                        android:text="贪吃蛇"
+                        android:textColor="#ffee00"
+                        android:textSize="24sp" />
+                </LinearLayout>
 
 
             </LinearLayout>
@@ -86,8 +131,6 @@
 
 
     </LinearLayout>
-
-
 
 
 </android.support.v4.widget.DrawerLayout>

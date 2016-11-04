@@ -17,10 +17,13 @@ import android.support.v4.view.ViewPager;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.example.dllo.yuliaoapp.R;
 import com.example.dllo.yuliaoapp.tools.L_QrCodeUtils;
+import com.example.dllo.yuliaoapp.ui.activity.game.C_2048_Activity;
+import com.example.dllo.yuliaoapp.ui.activity.game.C_Snake_Activity;
 import com.example.dllo.yuliaoapp.ui.activity.map.L_GaodeActivity;
 import com.example.dllo.yuliaoapp.ui.activity.map.L_QrCodeActivity;
 import com.example.dllo.yuliaoapp.ui.fragment.Z_ChatFragment;
@@ -54,6 +57,8 @@ public class Z_MainActivity extends C_AbsBaseActivity {
     private ImageView mapImg;
 
     private MultiFormatReader multiFormatReader;
+    private LinearLayout mL2048;
+    private LinearLayout mLSnake;
 
 
 
@@ -70,6 +75,8 @@ public class Z_MainActivity extends C_AbsBaseActivity {
         mainTl = byView(R.id.main_tl);
         qrcodeImg = byView(R.id.z_activity_main_l_qrcode_img);
         mapImg = byView(R.id.z_activity_main_l_map_img);
+        mL2048=byView(R.id.z_activity_mail_c_game_2048);
+        mLSnake=byView(R.id.z_activity_mail_c_game_snake);
     }
 
     @Override
@@ -78,7 +85,7 @@ public class Z_MainActivity extends C_AbsBaseActivity {
         fragments.add(Z_MapFragment.newInstance());
         fragments.add(Z_ChatFragment.newInstance());
         fragments.add(Z_VideoFragment.newInstance());
-        fragments.add(Z_PersonFragment.newInstance());
+        //fragments.add(Z_PersonFragment.newInstance());
 
         VpSetAdapter();
         mainTl.setupWithViewPager(mainVp);
@@ -87,9 +94,28 @@ public class Z_MainActivity extends C_AbsBaseActivity {
         mainTl.getTabAt(1).setText(getResources().getString(R.string.chat)).setIcon(R.drawable.selector_chat);
         mainTl.getTabAt(0).setText(getResources().getString(R.string.map)).setIcon(R.drawable.selector_map);
         mainTl.getTabAt(2).setText(getResources().getString(R.string.video)).setIcon(R.drawable.selector_video);
-        mainTl.getTabAt(3).setText(getResources().getString(R.string.person)).setIcon(R.drawable.selector_person);
-
+        //mainTl.getTabAt(3).setText(getResources().getString(R.string.person)).setIcon(R.drawable.selector_person);
+        mainVp.setOffscreenPageLimit(3);
         DrawerControl();
+        initGame();
+    }
+
+    /**
+     * 去往游戏界面
+     */
+    private void initGame() {
+        mL2048.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goTo(Z_MainActivity.this, C_2048_Activity.class);
+            }
+        });
+        mLSnake.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goTo(Z_MainActivity.this, C_Snake_Activity.class);
+            }
+        });
     }
 
     /**
