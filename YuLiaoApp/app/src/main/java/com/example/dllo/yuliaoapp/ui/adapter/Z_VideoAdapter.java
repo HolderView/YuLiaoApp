@@ -17,6 +17,7 @@ import android.widget.VideoView;
 import com.example.dllo.yuliaoapp.R;
 import com.example.dllo.yuliaoapp.model.bean.Z_VideoBean;
 import com.example.dllo.yuliaoapp.tools.C_ScreenSizeUtil;
+import com.example.dllo.yuliaoapp.tools.Z_UniverImageLoaderUtils;
 import com.squareup.picasso.Picasso;
 
 import java.util.Collection;
@@ -77,14 +78,19 @@ public class Z_VideoAdapter extends BaseAdapter {
         videoViewHolder.videoTopicNameTv.setText(videoBean.getTopicName());
         videoViewHolder.videoTitleTv.setText(videoBean.getTitle());
         // 加载图片
-        Picasso.with(context).load(videoBean.getCover())
-                .resize(C_ScreenSizeUtil.getScreenSize(context, C_ScreenSizeUtil.ScreenState.WIDTH)
-                        , C_ScreenSizeUtil.getScreenSize(context, C_ScreenSizeUtil.ScreenState.HEIGHT) / 3)
-                .into(videoViewHolder.videoImg);
-        Picasso.with(context).load(videoBean.getTopicImg())
-                .resize(C_ScreenSizeUtil.getScreenSize(context, C_ScreenSizeUtil.ScreenState.WIDTH)/12
-                        , C_ScreenSizeUtil.getScreenSize(context, C_ScreenSizeUtil.ScreenState.HEIGHT) / 20)
-                .into(videoViewHolder.videoTopicImg);
+        // 获取图片宽高并重新设置宽高
+        ViewGroup.LayoutParams layoutParams = videoViewHolder.videoImg.getLayoutParams();
+        layoutParams.width = C_ScreenSizeUtil.getScreenSize(context, C_ScreenSizeUtil.ScreenState.WIDTH);
+        layoutParams.height = C_ScreenSizeUtil.getScreenSize(context, C_ScreenSizeUtil.ScreenState.HEIGHT)/3;
+        videoViewHolder.videoImg.setLayoutParams(layoutParams);
+        Z_UniverImageLoaderUtils.loadImage(videoBean.getCover(),videoViewHolder.videoImg);
+
+        ViewGroup.LayoutParams lp = videoViewHolder.videoTopicImg.getLayoutParams();
+        lp.width = C_ScreenSizeUtil.getScreenSize(context, C_ScreenSizeUtil.ScreenState.WIDTH)/12;
+        lp.height = C_ScreenSizeUtil.getScreenSize(context, C_ScreenSizeUtil.ScreenState.HEIGHT)/20;
+        videoViewHolder.videoTopicImg.setLayoutParams(lp);
+        Z_UniverImageLoaderUtils.loadImage(videoBean.getTopicImg(),videoViewHolder.videoTopicImg);
+
         return convertView;
     }
 
