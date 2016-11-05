@@ -26,6 +26,7 @@ import com.example.dllo.yuliaoapp.ui.activity.game.C_2048_Activity;
 import com.example.dllo.yuliaoapp.ui.activity.game.C_Snake_Activity;
 import com.example.dllo.yuliaoapp.ui.activity.map.L_GaodeActivity;
 import com.example.dllo.yuliaoapp.ui.activity.map.L_QrCodeActivity;
+import com.example.dllo.yuliaoapp.ui.activity.map.QrcodeJsonActivity;
 import com.example.dllo.yuliaoapp.ui.fragment.Z_ChatFragment;
 import com.example.dllo.yuliaoapp.ui.fragment.Z_MapFragment;
 import com.example.dllo.yuliaoapp.ui.fragment.Z_PersonFragment;
@@ -159,7 +160,11 @@ public class Z_MainActivity extends C_AbsBaseActivity {
             if (bundle != null) {
                 String sResult = bundle.getString("result");
 //                tv_ScanResult.setText(sResult);
-                Toast.makeText(this, sResult, Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(Z_MainActivity.this, QrcodeJsonActivity.class);
+                intent.putExtra("wb",sResult);
+                startActivity(intent);
+
+
 
             } else {
                 uriStr = data.getDataString();
@@ -207,7 +212,7 @@ public class Z_MainActivity extends C_AbsBaseActivity {
      * L-doing
      */
 
-    Handler mHandler = new Handler() {
+    Handler mHandler =  new Handler() {
 
         @Override
         public void handleMessage(Message msg) {
