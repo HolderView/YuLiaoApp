@@ -60,10 +60,6 @@ public class Z_MainActivity extends C_AbsBaseActivity {
     private LinearLayout mL2048;
     private LinearLayout mLSnake;
 
-
-
-
-
     @Override
     protected int setLayout() {
         return R.layout.z_activity_main;
@@ -127,7 +123,6 @@ public class Z_MainActivity extends C_AbsBaseActivity {
             @Override
             public void onClick(View v) {
 
-
                 startActivityForResult(new Intent(Z_MainActivity.this, CaptureActivity.class), 0);
             }
         });
@@ -136,16 +131,8 @@ public class Z_MainActivity extends C_AbsBaseActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(Z_MainActivity.this,L_GaodeActivity.class);
                 startActivity(intent);
-
             }
         });
-
-
-
-
-
-
-
     }
 
     @Override

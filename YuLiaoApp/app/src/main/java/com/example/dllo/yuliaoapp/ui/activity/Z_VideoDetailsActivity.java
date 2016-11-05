@@ -54,8 +54,8 @@ public class Z_VideoDetailsActivity extends C_AbsBaseActivity implements View.On
     private MediaController mediaController;
     private String url, title, photo, author;
     private GestureDetector gestureDetector;
-    private ImageView showImg, typeBgImg, backImg, moreImg, phptoImg;
-    private RelativeLayout relativeLayout;
+    private ImageView showImg, typeBgImg, backImg, phptoImg;
+    private RelativeLayout relativeLayout,detailsRl;
     private RelativeLayout controllerRl;
     private Boolean isShow = false;
     private AudioManager audioManager;
@@ -83,7 +83,6 @@ public class Z_VideoDetailsActivity extends C_AbsBaseActivity implements View.On
     private int mLayout = VideoView.VIDEO_LAYOUT_ZOOM;
     private int vWidth;
     private int vHeight;
-
     private Button payBtn;
 
     @Override
@@ -103,11 +102,12 @@ public class Z_VideoDetailsActivity extends C_AbsBaseActivity implements View.On
         relativeLayout = byView(R.id.video_details_rl);
         controllerRl = byView(R.id.video_details_controller_rl);
         backImg = byView(R.id.vide_details_back_img);
-        moreImg = byView(R.id.video_details_more_img);
+//        moreImg = byView(R.id.video_details_more_img);
         payBtn = byView(R.id.video_details_btn);
         authorTv = byView(R.id.video_details_author_tv);
         phptoImg = byView(R.id.video_details_photo_img);
         topicLl = byView(R.id.video_details_topic_ll);
+        detailsRl = byView(R.id.video_details_all_rl);
     }
 
     @Override
@@ -126,18 +126,11 @@ public class Z_VideoDetailsActivity extends C_AbsBaseActivity implements View.On
         authorTv.setText(author);
 
         ViewGroup.LayoutParams layoutParams = phptoImg.getLayoutParams();
-        layoutParams.height = C_ScreenSizeUtil.getScreenSize(this, C_ScreenSizeUtil.ScreenState.HEIGHT) / 12;
+        layoutParams.height = C_ScreenSizeUtil.getScreenSize(this, C_ScreenSizeUtil.ScreenState.WIDTH) / 12;
         layoutParams.width = C_ScreenSizeUtil.getScreenSize(this, C_ScreenSizeUtil.ScreenState.HEIGHT) / 20;
         phptoImg.setLayoutParams(layoutParams);
 
-
-//        new Thread(new Runnable() {
-//            @Override
-//            public void run() {
         Z_UniverImageLoaderUtils.loadImage(photo, phptoImg);
-//            }
-//        }).start();
-
 
         // 视频控制器
         mediaController = new MediaController(this);
@@ -146,8 +139,10 @@ public class Z_VideoDetailsActivity extends C_AbsBaseActivity implements View.On
         videoView.setVideoURI(Uri.parse(url));
         videoView.setFocusable(true);
 
-        // AudioManager音量管理类
+        // AudioManager 音频管理器
+        // 初始化音量控制
         audioManager = (AudioManager) getSystemService(this.AUDIO_SERVICE);
+        // 最大系统音量
         maxVolume = audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
 
         // 手势监听
@@ -163,7 +158,6 @@ public class Z_VideoDetailsActivity extends C_AbsBaseActivity implements View.On
 
         payBtn.setOnClickListener(this);
         backImg.setOnClickListener(this);
-        moreImg.setOnClickListener(this);
 
         // 检测当前网络状态
         netState();
@@ -282,16 +276,10 @@ public class Z_VideoDetailsActivity extends C_AbsBaseActivity implements View.On
             case R.id.vide_details_back_img:
                 finish();
                 break;
-            case R.id.video_details_more_img:
-                // 弹出popupMenu
-                PopupMenu popupMenu = new PopupMenu(Z_VideoDetailsActivity.this, v);
-                popupMenu.getMenuInflater().inflate(R.menu.menu_video_details, popupMenu.getMenu());
-                popupMenu.show();
-                break;
             case R.id.video_details_btn:
                 Intent intent = new Intent(this, NormalActivity.class);
                 startActivity(intent);
-//                finish();
+                finish();
                 Log.d("qwe", "支付");
                 break;
         }
@@ -306,18 +294,10 @@ public class Z_VideoDetailsActivity extends C_AbsBaseActivity implements View.On
         public boolean onDown(MotionEvent e) {
             if (isShow == false) {
                 relativeLayout.setVisibility(View.GONE);
-
+                detailsRl.setSystemUiVisibility(View.INVISIBLE);
                 isShow = true;
             } else {
-                relativeLayout.setVisibility(View.VISIBLE);
-                // 定时3s隐藏
-                Handler handler = new Handler();
-                handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        relativeLayout.setVisibility(View.GONE); //view是要隐藏的控件
-                    }
-                }, 3000);  //3000毫秒后执行
+                relativeLayout.setVisibility(View.GONE);
                 isShow = false;
             }
             return super.onDown(e);
@@ -367,18 +347,11 @@ public class Z_VideoDetailsActivity extends C_AbsBaseActivity implements View.On
      * 竖屏手势监听
      */
     private class MyGestureListener extends GestureDetector.SimpleOnGestureListener {
-
         /**
          * 双击切换横竖屏
          */
         @Override
         public boolean onDoubleTap(MotionEvent e) {
-//            if (mLayout == VideoView.VIDEO_LAYOUT_ZOOM)
-//                mLayout = VideoView.VIDEO_LAYOUT_ORIGIN;
-//            else
-//                mLayout++;
-//            if (videoView != null)
-//                videoView.setVideoLayout(mLayout, 0);
             int screenOri = getRequestedOrientation();
 
             if (screenOri == ActivityInfo.SCREEN_ORIENTATION_PORTRAIT) {
@@ -388,6 +361,7 @@ public class Z_VideoDetailsActivity extends C_AbsBaseActivity implements View.On
                 setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
             } else if (screenOri == ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE) {
                 // 当前是横屏  设置方向为竖屏
+                relativeLayout.setVisibility(View.GONE);
                 setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
             }
 
@@ -423,11 +397,11 @@ public class Z_VideoDetailsActivity extends C_AbsBaseActivity implements View.On
 
     /**
      * 滑动改变声音大小
-     *
      * @param percent
      */
     private void onVolumeSlide(float percent) {
         if (volume == -1) {
+            // 获取当前音量
             volume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
             if (volume < 0)
                 volume = 0;
@@ -470,6 +444,7 @@ public class Z_VideoDetailsActivity extends C_AbsBaseActivity implements View.On
             typeBgImg.setImageResource(R.mipmap.light);
             controllerRl.setVisibility(View.VISIBLE);
         }
+        // screenBrightness 屏幕亮度
         WindowManager.LayoutParams lpa = getWindow().getAttributes();
         lpa.screenBrightness = brightness + percent;
         if (lpa.screenBrightness > 1.0f)
@@ -496,6 +471,7 @@ public class Z_VideoDetailsActivity extends C_AbsBaseActivity implements View.On
         // 获取屏幕方向
         int ori = newConfig.orientation;
         if (ori == Configuration.ORIENTATION_PORTRAIT) {
+
             ViewGroup.LayoutParams lp = videoView.getLayoutParams();
             lp.height = vHeight;
             lp.width = vWidth;
@@ -505,19 +481,20 @@ public class Z_VideoDetailsActivity extends C_AbsBaseActivity implements View.On
             titleTv.setVisibility(View.VISIBLE);
             relativeLayout.setVisibility(View.VISIBLE);
 
+            detailsRl.setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);
+
             // 竖屏手势处理
             gestureDetector = new GestureDetector(this, new MyGestureListener());
         }
         if (ori == Configuration.ORIENTATION_LANDSCAPE) {
+
+
+            // 横屏隐藏状态栏
+            detailsRl.setSystemUiVisibility(View.SYSTEM_UI_FLAG_FULLSCREEN);
+//            getWindow().setFlags(WindowManager.LayoutParams. FLAG_FULLSCREEN ,
+//                    WindowManager.LayoutParams. FLAG_FULLSCREEN);
             // 横屏手势处理
             gestureDetector = new GestureDetector(this, new ShowOrHideGestureListener());
-            // 横屏时隐藏状态栏
-            //定义全屏参数  去掉电量栏
-//            int flag=WindowManager.LayoutParams.FLAG_FULLSCREEN;
-            //获得当前窗体对象
-//            Window window=Z_VideoDetailsActivity.this.getWindow();
-            //设置当前窗体为全屏显示
-//            window.setFlags(flag, flag);
             titleTv.setVisibility(View.GONE);
             topicLl.setVisibility(View.GONE);
 
@@ -525,7 +502,6 @@ public class Z_VideoDetailsActivity extends C_AbsBaseActivity implements View.On
             WindowManager windowManager = (WindowManager) this.getSystemService(this.WINDOW_SERVICE);
             int width = windowManager.getDefaultDisplay().getWidth();
             int height = windowManager.getDefaultDisplay().getHeight();
-
             // 重新设置宽高
             ViewGroup.LayoutParams lp = videoView.getLayoutParams();
             lp.width = width;

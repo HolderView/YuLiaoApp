@@ -37,13 +37,13 @@
             android:text="视频详情"
             android:textSize="20sp" />
 
-        <ImageView
-            android:id="@+id/video_details_more_img"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_margin="20dp"
-            android:src="@mipmap/title_more" />
+        <!--<ImageView-->
+            <!--android:id="@+id/video_details_more_img"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_alignParentRight="true"-->
+            <!--android:layout_margin="20dp"-->
+            <!--android:src="@mipmap/title_more" />-->
     </RelativeLayout>
 
     <TextView
