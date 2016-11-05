@@ -20,7 +20,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="15dp"
                 android:layout_weight="1"
-                android:src="@mipmap/l_drawer_mainl"
+                android:src="@mipmap/l_menu_icon_lx"
                 />
 
 
@@ -29,6 +29,8 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="5">
+
+
 
 
 
@@ -41,6 +43,15 @@
                     android:layout_centerInParent="true"
                     android:textColor="@android:color/white"
                     />
+                <ImageView
+                    android:id="@+id/l_fragment_map_dingwei_img"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/l_dingwei_icon_lx"
+                    android:layout_toLeftOf="@id/l_fragment_wheather_place_tv"
+                    android:layout_alignBottom="@id/l_fragment_wheather_place_tv"
+                    />
+
             </RelativeLayout>
 
 
@@ -52,7 +63,7 @@
                 android:layout_marginRight="15dp"
                 android:layout_marginTop="15dp"
                 android:layout_weight="1"
-                android:src="@mipmap/l_share_mainl" />
+                android:src="@mipmap/l_share_icon_lx" />
         </LinearLayout>
 
         <ScrollView
@@ -78,6 +89,7 @@
                         android:textSize="80dp"
                         android:layout_gravity="center"
                         android:gravity="center"
+                        android:textColor="#fff"
                         />
 
 

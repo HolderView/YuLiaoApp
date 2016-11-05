@@ -66,7 +66,7 @@ public class L_GaodeActivity extends AppCompatActivity implements View.OnClickLi
     private ImageView GpsImg;
 
     private TextView mLocationErrText;
-    private boolean isPop = false;
+    private static boolean isPop = false;
 
 
     private PoiResult poiResult; // poi返回的结果
@@ -304,7 +304,6 @@ public class L_GaodeActivity extends AppCompatActivity implements View.OnClickLi
                 break;
             case R.id.imageview7:
                 if (isPop == false) {
-
                     popupWindow.setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
                     popupWindow.setWidth(ViewGroup.LayoutParams.WRAP_CONTENT);
                     popupWindow.setOutsideTouchable(false);
@@ -364,7 +363,7 @@ public class L_GaodeActivity extends AppCompatActivity implements View.OnClickLi
      * 弹出动画
      */
     private void startAnim() {
-        float myroate = (float) (-Math.PI / 2 / 3);
+        float myroate = (float) (- Math.PI / 2 / 3);
         for (int i = 0; i < res.length; i++) {
             float x = (float) (windowX * Math.cos(myroate * i));
             float y = (float) (windowY * Math.sin(myroate * i));
@@ -534,8 +533,8 @@ public class L_GaodeActivity extends AppCompatActivity implements View.OnClickLi
     @Override
     public void onPoiSearched(PoiResult result, int i) {
         if (i == 1000) {
-            if (poiResult != null && poiResult.getQuery() != null) {// 搜索poi的结果
-                if (poiResult.getQuery().equals(query)) {// 是否是同一条
+            if (result != null && result.getQuery() != null) {// 搜索poi的结果
+                if (result.getQuery().equals(query)) {// 是否是同一条
                     poiResult = result;
                     poiItems = poiResult.getPois();// 取得第一页的poiitem数据，页数从数字0开始
                     List<SuggestionCity> suggestionCities = poiResult
@@ -575,12 +574,12 @@ public class L_GaodeActivity extends AppCompatActivity implements View.OnClickLi
                         showSuggestCity(suggestionCities);
                     } else {
                         L_MapUtils.show(L_GaodeActivity.this,
-                                "不可以");
+                                "对不起没有搜索到相关数据");
                     }
                 }
             } else {
                 L_MapUtils
-                        .show(L_GaodeActivity.this,"不可以");
+                        .show(L_GaodeActivity.this,"对不起没有搜索到相关数据");
             }
         }
 

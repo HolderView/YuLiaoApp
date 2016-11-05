@@ -8,14 +8,20 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.amap.api.location.AMapLocation;
+import com.amap.api.location.AMapLocationClient;
+import com.amap.api.location.AMapLocationClientOption;
+import com.amap.api.location.AMapLocationListener;
 import com.example.dllo.yuliaoapp.R;
 import com.example.dllo.yuliaoapp.model.bean.L_WeatherBean;
 import com.example.dllo.yuliaoapp.model.net.L_OkHttpInstanceUtil;
+import com.example.dllo.yuliaoapp.ui.app.C_MyApp;
 import com.google.gson.Gson;
 
 import java.io.UnsupportedEncodingException;
@@ -52,6 +58,36 @@ public class Z_MapFragment extends C_AbsBaseFragment implements View.OnClickList
 
     private LineChartView lineChart;
 
+    private String siteStr;
+    //声明AMapLocationClient类对象
+    public AMapLocationClient mLocationClient = null;
+
+    //声明定位回调监听器
+    public AMapLocationListener mLocationListener = new AMapLocationListener() {
+        @Override
+        public void onLocationChanged(AMapLocation aMapLocation) {
+
+            if (aMapLocation != null) {
+                if (aMapLocation.getErrorCode() == 0) {
+//可在其中解析amapLocation获取相应内容。
+                    siteStr = aMapLocation.getCity();
+                }else {
+                    //定位失败时，可通过ErrCode（错误码）信息来确定失败的原因，errInfo是错误信息，详见错误码表。
+                    Log.e("AmapError","location Error, ErrCode:"
+                            + aMapLocation.getErrorCode() + ", errInfo:"
+                            + aMapLocation.getErrorInfo());
+                }
+            }
+
+        }
+    };
+    //声明AMapLocationClientOption对象
+    public AMapLocationClientOption mLocationOption = null;
+
+
+
+
+
     private String WEATHERURLSTART = "http://op.juhe.cn/onebox/weather/query?cityname=";
     private String cityname = "大连市";
     private String appKey = "&key=525119bb600fc0297952b6beaae30634";
@@ -79,8 +115,8 @@ public class Z_MapFragment extends C_AbsBaseFragment implements View.OnClickList
     private TextView presentTime;
     private L_WeatherBean bean;
     private Gson gson;
-    private String[] date;
-    private int[] weather;
+    private List<String> date = new ArrayList<>();
+    private List<Integer> weather = new ArrayList<>();
     private TextView chuanyiTv;
     private TextView chuanyiconTv;
     private TextView ganmaoTv;
@@ -105,6 +141,14 @@ public class Z_MapFragment extends C_AbsBaseFragment implements View.OnClickList
     private TextView guangzhouTv;
     private TextView nanjingTv;
     private TextView hangzhouTv;
+    private ImageView siteImg;
+
+
+
+
+
+
+
 
 
     public static Z_MapFragment newInstance() {
@@ -162,6 +206,7 @@ public class Z_MapFragment extends C_AbsBaseFragment implements View.OnClickList
         weekThree = byView(R.id.z_fragment_map_weather_weekthree_tv);
         weekFour = byView(R.id.z_fragment_map_weather_weekfour_tv);
         weekFive = byView(R.id.z_fragment_map_weather_weekfive_tv);
+        siteImg =byView(R.id.l_fragment_map_dingwei_img);
 
 
         popview = LayoutInflater.from(context).inflate(R.layout.l_popupwindow_place,null);
@@ -174,11 +219,14 @@ public class Z_MapFragment extends C_AbsBaseFragment implements View.OnClickList
         nanjingTv = (TextView) popview.findViewById(R.id.nanjing_tv);
         guangzhouTv = (TextView) popview.findViewById(R.id.guangzhou_tv);
         hangzhouTv = (TextView) popview.findViewById(R.id.hangzhou_tv);
+
+
         beijingTv.setOnClickListener(this);
         shanghaiTv.setOnClickListener(this);
         nanjingTv.setOnClickListener(this);
         guangzhouTv.setOnClickListener(this);
         hangzhouTv.setOnClickListener(this);
+        siteImg.setOnClickListener(this);
 
 
 
@@ -186,6 +234,7 @@ public class Z_MapFragment extends C_AbsBaseFragment implements View.OnClickList
 
     @Override
     protected void initDatas() {
+
         placeTv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -201,20 +250,32 @@ public class Z_MapFragment extends C_AbsBaseFragment implements View.OnClickList
         });
 
 
+
+
+        //初始化定位
+        mLocationClient = new AMapLocationClient(C_MyApp.applicationContext);
+//设置定位回调监听
+        mLocationClient.setLocationListener(mLocationListener);
+        //初始化AMapLocationClientOption对象
+        mLocationOption = new AMapLocationClientOption();
+        //设置定位模式为AMapLocationMode.Hight_Accuracy，高精度模式。
+        mLocationOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Hight_Accuracy);
+
+        //给定位客户端对象设置定位参数
+        mLocationClient.setLocationOption(mLocationOption);
+//启动定位
+        mLocationClient.startLocation();
         weatherForecast();
-
-
-
-
-
 
     }
 
     private void weatherForecast() {
-        try {
-            strUrl = URLDecoder.decode(cityname, "UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
+        if (cityname!=null) {
+            try {
+                strUrl = URLDecoder.decode(cityname, "UTF-8");
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
         }
 
         L_OkHttpInstanceUtil.getAsyn(WEATHERURLSTART + strUrl + appKey, new L_OkHttpInstanceUtil.ResultCallback() {
@@ -326,52 +387,63 @@ public class Z_MapFragment extends C_AbsBaseFragment implements View.OnClickList
                 String finaltimes8 = sdf.format(finaltimesx8);
 
 
-                //X轴的标注
-                date = new String[]{String.valueOf(finaltimes1),
-                        String.valueOf(finaltimes2),
-                        String.valueOf(finaltimes3),
-                        String.valueOf(finaltimes4),
-                        String.valueOf(finaltimes5),
-                        String.valueOf(finaltimes6),
-                        String.valueOf(finaltimes7),
-                        String.valueOf(finaltimes8),
-                };
 
 
-                //图表的数据点
-                weather = new int[]{Integer.parseInt(bean.getResult().getData().getF3h().getTemperature().get(0).getJb()),
-                        Integer.parseInt(bean.getResult().getData().getF3h().getTemperature().get(1).getJb()),
-                        Integer.parseInt(bean.getResult().getData().getF3h().getTemperature().get(2).getJb()),
-                        Integer.parseInt(bean.getResult().getData().getF3h().getTemperature().get(3).getJb()),
-                        Integer.parseInt(bean.getResult().getData().getF3h().getTemperature().get(4).getJb()),
-                        Integer.parseInt(bean.getResult().getData().getF3h().getTemperature().get(5).getJb()),
-                        Integer.parseInt(bean.getResult().getData().getF3h().getTemperature().get(6).getJb()),
-                        Integer.parseInt(bean.getResult().getData().getF3h().getTemperature().get(7).getJb())
-                };
-                lineChartView();
+                date.add(finaltimes1);
+                date.add(finaltimes2);
+                date.add(finaltimes3);
+                date.add(finaltimes4);
+                date.add(finaltimes5);
+                date.add(finaltimes6);
+                date.add(finaltimes7);
+                date.add(finaltimes8);
+
+
+
+
+//                //X轴的标注
+//                date = new String[]{String.valueOf(finaltimes1),
+//                        String.valueOf(finaltimes2),
+//                        String.valueOf(finaltimes3),
+//                        String.valueOf(finaltimes4),
+//                        String.valueOf(finaltimes5),
+//                        String.valueOf(finaltimes6),
+//                        String.valueOf(finaltimes7),
+//                        String.valueOf(finaltimes8),
+//                };
+                for (int i = 0; i <8; i++) {
+                    weather.add(Integer.parseInt(bean.getResult().getData().getF3h().getTemperature().get(i).getJb()));
+                }
+
+
+//                //图表的数据点
+//                weather = new int[]{Integer.parseInt(bean.getResult().getData().getF3h().getTemperature().get(0).getJb()),
+//                        Integer.parseInt(bean.getResult().getData().getF3h().getTemperature().get(1).getJb()),
+//                        Integer.parseInt(bean.getResult().getData().getF3h().getTemperature().get(2).getJb()),
+//                        Integer.parseInt(bean.getResult().getData().getF3h().getTemperature().get(3).getJb()),
+//                        Integer.parseInt(bean.getResult().getData().getF3h().getTemperature().get(4).getJb()),
+//                        Integer.parseInt(bean.getResult().getData().getF3h().getTemperature().get(5).getJb()),
+//                        Integer.parseInt(bean.getResult().getData().getF3h().getTemperature().get(6).getJb()),
+//                        Integer.parseInt(bean.getResult().getData().getF3h().getTemperature().get(7).getJb())
+//                };
+                getAxisXLables();//获取x轴的标注
+                getAxisPoints();//获取坐标点
+                initLineChart();//初始化
             }
         });
     }
 
 
-    private List<PointValue> mPointValues = new ArrayList<PointValue>();
-    private List<AxisValue> mAxisXValues = new ArrayList<AxisValue>();
+    List<PointValue> mPointValues = new ArrayList<PointValue>();
+    List<AxisValue> mAxisXValues = new ArrayList<AxisValue>();
 
-
-    private void lineChartView() {
-        getAxisXLables();//获取x轴的标注
-        getAxisPoints();//获取坐标点
-        initLineChart();//初始化
-
-
-    }
 
     /**
      * 设置X 轴的显示
      */
     private void getAxisXLables() {
         for (int i = 0; i < 8; i++) {
-            mAxisXValues.add(new AxisValue(i).setLabel(date[i]));
+            mAxisXValues.add(new AxisValue(i).setLabel(date.get(i)));
         }
 
     }
@@ -381,7 +453,7 @@ public class Z_MapFragment extends C_AbsBaseFragment implements View.OnClickList
      */
     private void getAxisPoints() {
         for (int i = 0; i < 8; i++) {
-            mPointValues.add(new PointValue(i, weather[i]));
+            mPointValues.add(new PointValue(i, weather.get(i)));
 
         }
     }
@@ -422,7 +494,7 @@ public class Z_MapFragment extends C_AbsBaseFragment implements View.OnClickList
 
 
         //设置行为属性，支持缩放、滑动以及平移
-        lineChart.setInteractive(true);
+        lineChart.setInteractive(false);
         lineChart.setZoomType(ZoomType.HORIZONTAL);
         lineChart.setMaxZoom((float) 2);//最大方法比例
         lineChart.setContainerScrollEnabled(true, ContainerScrollType.HORIZONTAL);
@@ -435,6 +507,7 @@ public class Z_MapFragment extends C_AbsBaseFragment implements View.OnClickList
         v.left = 0;
         v.right = 7;
         lineChart.setCurrentViewport(v);
+
     }
 
 
@@ -444,32 +517,71 @@ public class Z_MapFragment extends C_AbsBaseFragment implements View.OnClickList
             case R.id.beijing_tv:
                 placeTv.setText("北京市");
                 cityname = "北京市";
+                weather.clear();
+                Toast.makeText(context, "weather.size():" + weather.size(), Toast.LENGTH_SHORT).show();
+                date.clear();
+                mAxisXValues.clear();
+                mPointValues.clear();
                 weatherForecast();
+
                 popupWindow.dismiss();
+
                 break;
             case R.id.shanghai_tv:
                 placeTv.setText("上海市");
                 cityname = "上海";
+                weather.clear();
+                date.clear();
+                mAxisXValues.clear();
+                mPointValues.clear();
                 weatherForecast();
+
                 popupWindow.dismiss();
             break;
             case R.id.nanjing_tv:
                 placeTv.setText("南京市");
                 cityname = "南京";
+                weather.clear();
+                date.clear();
+                mAxisXValues.clear();
+                mPointValues.clear();
                 weatherForecast();
+
                 popupWindow.dismiss();
             break;
             case R.id.guangzhou_tv:
                 placeTv.setText("广州市");
                 cityname = "广州";
+                weather.clear();
+                date.clear();
+                mAxisXValues.clear();
+                mPointValues.clear();
                 weatherForecast();
+
                 popupWindow.dismiss();
                 break;
             case R.id.hangzhou_tv:
                 placeTv.setText("杭州市");
                 cityname = "北京市";
+                weather.clear();
+                date.clear();
                 weatherForecast();
+                mAxisXValues.clear();
+                mPointValues.clear();
                 popupWindow.dismiss();
+                break;
+            case  R.id.l_fragment_map_dingwei_img:
+                //给定位客户端对象设置定位参数
+                mLocationClient.setLocationOption(mLocationOption);
+//启动定位
+                mLocationClient.startLocation();
+                placeTv.setText(siteStr);
+                cityname = siteStr;
+                weather.clear();
+                date.clear();
+                weatherForecast();
+                mAxisXValues.clear();
+                mPointValues.clear();
                 break;
 
 
