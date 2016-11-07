@@ -4,13 +4,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
 
-import com.google.gson.Gson;
-import com.google.gson.internal.$Gson$Types;
-
 import java.io.IOException;
-import java.lang.reflect.ParameterizedType;
-import java.lang.reflect.Type;
-import java.net.CookieManager;
 import java.util.Map;
 import java.util.Set;
 
@@ -24,6 +18,8 @@ import okhttp3.Response;
 
 /**
  * Created by dllo on 16/10/24.
+ * 封装的OkHttp
+ * @author 赵玲琳
  */
 public class Z_OkHttpClientManagerUtils {
 
@@ -52,8 +48,6 @@ public class Z_OkHttpClientManagerUtils {
         }
         return instance;
     }
-
-
 
     /**
      * 同步get请求

@@ -1,11 +1,8 @@
 package com.example.dllo.yuliaoapp.ui.fragment;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Message;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -22,12 +19,7 @@ import com.google.gson.Gson;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.OkHttpClient;
 import okhttp3.Request;
-import okhttp3.Response;
 
 /**
  * Created by dllo on 16/10/19.
@@ -39,10 +31,7 @@ public class Z_VideoFragment extends C_AbsBaseFragment implements AdapterView.On
 
     private ListView videoListView;
     private Z_VideoAdapter z_videoAdapter;
-    private OkHttpClient okHttpClient;
-
     private RefreshLayout refreshLayout;
-
     private List<Z_VideoBean.视频Bean> datas;
     private List<Z_VideoBean.视频Bean> refreshDatas;
     private List<Z_VideoBean.视频Bean> loadDatas;
@@ -72,8 +61,6 @@ public class Z_VideoFragment extends C_AbsBaseFragment implements AdapterView.On
     protected void initDatas() {
         z_videoAdapter = new Z_VideoAdapter(context);
         videoListView.setAdapter(z_videoAdapter);
-
-        okHttpClient = new OkHttpClient();
 
         datas = new ArrayList<>();
         refreshDatas = new ArrayList<>();

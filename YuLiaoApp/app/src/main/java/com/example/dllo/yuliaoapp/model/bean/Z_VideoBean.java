@@ -5,6 +5,7 @@ import java.util.List;
 /**
  * Created by dllo on 16/10/19.
  * 视频页实体类
+ * @author 赵玲琳
  */
 public class Z_VideoBean  {
 
