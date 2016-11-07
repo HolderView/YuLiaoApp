@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -67,6 +68,8 @@ public class L_GaodeActivity extends AppCompatActivity implements View.OnClickLi
 
     private TextView mLocationErrText;
     private static boolean isPop = false;
+    private GestureDetector gestureDetector;
+
 
 
     private PoiResult poiResult; // poi返回的结果
@@ -137,6 +140,7 @@ public class L_GaodeActivity extends AppCompatActivity implements View.OnClickLi
                 doSearchQuery();
             }
         });
+
     }
 
     /**
@@ -147,6 +151,7 @@ public class L_GaodeActivity extends AppCompatActivity implements View.OnClickLi
             aMap = mapView.getMap();
             setUpMap();
         }
+
 
     }
 
@@ -303,18 +308,7 @@ public class L_GaodeActivity extends AppCompatActivity implements View.OnClickLi
                 aMap.setMapType(AMap.MAP_TYPE_NORMAL);// 矢量地图模式
                 break;
             case R.id.imageview7:
-                if (isPop == false) {
-                    popupWindow.setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
-                    popupWindow.setWidth(ViewGroup.LayoutParams.WRAP_CONTENT);
-                    popupWindow.setOutsideTouchable(false);
-                    popupWindow.setContentView(searchView);
-                    popupWindow.showAsDropDown(imageviewstart);
-
-                    isPop = true;
-                } else {
-                    popupWindow.dismiss();
-                    isPop = false;
-                }
+                finish();
                 break;
             default:
                 Toast.makeText(L_GaodeActivity.this, "Click" + view.getId(), Toast.LENGTH_SHORT).show();

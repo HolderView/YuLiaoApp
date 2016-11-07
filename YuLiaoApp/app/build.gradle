@@ -38,4 +38,12 @@ dependencies {
     compile project(':libzxing')
     compile files('libs/AMap3DMap_4.1.0_AMapNavi_1.9.3_AMapSearch_3.5.0_AMapLocation_3.0.0_20161018.jar')
     compile files('libs/hellocharts-library-1.5.8.jar')
+    compile files('libs/MobCommons-2016.1102.1128.jar')
+    compile files('libs/MobTools-2016.1102.1128.jar')
+    compile files('libs/ShareSDK-Core-2.7.9.jar')
+    compile files('libs/ShareSDK-QQ-2.7.9.jar')
+    compile files('libs/ShareSDK-SinaWeibo-2.7.9.jar')
+    compile files('libs/ShareSDK-Wechat-2.7.9.jar')
+    compile files('libs/ShareSDK-Wechat-Core-2.7.9.jar')
+    compile files('libs/ShareSDK-Wechat-Moments-2.7.9.jar')
 }
