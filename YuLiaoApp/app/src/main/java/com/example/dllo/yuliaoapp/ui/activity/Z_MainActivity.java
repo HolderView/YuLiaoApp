@@ -2,7 +2,10 @@ package com.example.dllo.yuliaoapp.ui.activity;
 
 
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -14,6 +17,8 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.DrawerLayout;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
@@ -27,6 +32,7 @@ import com.example.dllo.yuliaoapp.ui.activity.game.C_Snake_Activity;
 import com.example.dllo.yuliaoapp.ui.activity.map.L_GaodeActivity;
 import com.example.dllo.yuliaoapp.ui.activity.map.L_QrCodeActivity;
 import com.example.dllo.yuliaoapp.ui.activity.map.QrcodeJsonActivity;
+import com.example.dllo.yuliaoapp.ui.app.C_MyApp;
 import com.example.dllo.yuliaoapp.ui.fragment.Z_ChatFragment;
 import com.example.dllo.yuliaoapp.ui.fragment.Z_MapFragment;
 import com.example.dllo.yuliaoapp.ui.fragment.Z_PersonFragment;
@@ -57,14 +63,18 @@ public class Z_MainActivity extends C_AbsBaseActivity {
     private ImageView qrcodeImg;
     private ImageView mapImg;
 
+    private DrawerReceiver drawerReceiver;
     private MultiFormatReader multiFormatReader;
     private LinearLayout mL2048;
     private LinearLayout mLSnake;
+    private static DrawerLayout mainDl;
+    private static LinearLayout mainLl;
 
 
 
     @Override
     protected void initData(Bundle savedInstanceState) {
+        DrawerControl();
         fragments = new ArrayList<>();
         fragments.add(Z_MapFragment.newInstance());
         fragments.add(Z_ChatFragment.newInstance());
@@ -80,8 +90,42 @@ public class Z_MainActivity extends C_AbsBaseActivity {
         mainTl.getTabAt(2).setText(getResources().getString(R.string.video)).setIcon(R.drawable.selector_video);
         //mainTl.getTabAt(3).setText(getResources().getString(R.string.person)).setIcon(R.drawable.selector_person);
         mainVp.setOffscreenPageLimit(3);
-        DrawerControl();
+
+
         initGame();
+        initTl();
+    }
+
+
+    /**
+     * TabLayout的操作细节选项
+     */
+    private void initTl() {
+        mainTl.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                if (tab.getPosition() == 0){
+                    mainDl.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+                }else {
+                    mainDl.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+                }
+                mainVp.setCurrentItem(tab.getPosition(),false);
+
+            }
+
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
+
+
     }
 
     @Override
@@ -97,6 +141,8 @@ public class Z_MainActivity extends C_AbsBaseActivity {
         mapImg = byView(R.id.z_activity_main_l_map_img);
         mL2048=byView(R.id.z_activity_mail_c_game_2048);
         mLSnake=byView(R.id.z_activity_mail_c_game_snake);
+        mainDl = byView(R.id.z_activity_main_Dl);
+        mainLl = byView(R.id.newsLl);
     }
 
 
@@ -124,6 +170,12 @@ public class Z_MainActivity extends C_AbsBaseActivity {
      */
 
     private void DrawerControl() {
+        drawerReceiver = new DrawerReceiver();
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(Z_MapFragment.OPEN_DRAWER);
+        registerReceiver(drawerReceiver,intentFilter);
+
+
         qrcodeImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -230,6 +282,7 @@ public class Z_MainActivity extends C_AbsBaseActivity {
      * 双击退出程序
      */
     private void exit() {
+        Log.d("XXX", "推");
         if (!isExit) {
             isExit = true;
             Toast.makeText(getApplicationContext(), "再按一次退出程序",
@@ -242,4 +295,30 @@ public class Z_MainActivity extends C_AbsBaseActivity {
         }
     }
 
+    public class DrawerReceiver extends BroadcastReceiver{
+
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            mainDl.openDrawer(mainLl);
+
+        }
+    }
+
+    public static void openDrawer(){
+
+        mainDl.openDrawer(mainLl);
+
+    }
+
+
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.d("ddd", "drawerReceiver:" + drawerReceiver);
+//        if (drawerReceiver!=null){
+//            unregisterReceiver(drawerReceiver);
+//        }
+    }
 }

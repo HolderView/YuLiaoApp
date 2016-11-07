@@ -16,6 +16,15 @@ public class QrcodeJsonActivity extends C_AbsBaseActivity {
     private WebView QrcodeWb;
 
 
+
+
+
+    @Override
+    protected void initViews() {
+        QrcodeWb = byView(R.id.l_qrcode_activity_wb);
+
+    }
+
     @Override
     protected void initData(Bundle savedInstanceState) {
         Intent intent = getIntent();
@@ -55,11 +64,7 @@ public class QrcodeJsonActivity extends C_AbsBaseActivity {
         return R.layout.l_qrcode_activity;
     }
 
-    @Override
-    protected void initViews() {
-        QrcodeWb = byView(R.id.l_qrcode_activity_wb);
 
-    }
 
     
 }
