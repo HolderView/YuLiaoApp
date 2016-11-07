@@ -1,6 +1,7 @@
 package com.example.dllo.yuliaoapp.ui.activity.map;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 
@@ -15,6 +16,7 @@ public class QrcodeJsonActivity extends C_AbsBaseActivity {
     private WebView QrcodeWb;
 
 
+
     @Override
     protected int setLayout() {
         return R.layout.l_qrcode_activity;
@@ -27,7 +29,7 @@ public class QrcodeJsonActivity extends C_AbsBaseActivity {
     }
 
     @Override
-    protected void initData() {
+    protected void initData(Bundle savedInstanceState) {
         Intent intent = getIntent();
        String strurl =  intent.getStringExtra("wb");
         QrcodeWb.loadUrl(strurl);
