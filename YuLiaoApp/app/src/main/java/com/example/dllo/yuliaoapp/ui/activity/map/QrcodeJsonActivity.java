@@ -1,6 +1,7 @@
 package com.example.dllo.yuliaoapp.ui.activity.map;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 
@@ -16,20 +17,9 @@ public class QrcodeJsonActivity extends C_AbsBaseActivity {
 
 
     @Override
-    protected int setLayout() {
-        return R.layout.l_qrcode_activity;
-    }
-
-    @Override
-    protected void initViews() {
-        QrcodeWb = byView(R.id.l_qrcode_activity_wb);
-
-    }
-
-    @Override
-    protected void initData() {
+    protected void initData(Bundle savedInstanceState) {
         Intent intent = getIntent();
-       String strurl =  intent.getStringExtra("wb");
+        String strurl =  intent.getStringExtra("wb");
         QrcodeWb.loadUrl(strurl);
         WebSettings set = QrcodeWb.getSettings();
 //
@@ -37,7 +27,7 @@ public class QrcodeJsonActivity extends C_AbsBaseActivity {
 //
 //
         // 让WebView能够执行javaScript
-          set.setJavaScriptEnabled(true);
+        set.setJavaScriptEnabled(true);
         // 让JavaScript可以自动打开windows
         set.setJavaScriptCanOpenWindowsAutomatically(true);
         // 设置缓存
@@ -58,8 +48,18 @@ public class QrcodeJsonActivity extends C_AbsBaseActivity {
         // 设置默认字体大小
         set.setDefaultFontSize(12);
 
+    }
 
+    @Override
+    protected int setLayout() {
+        return R.layout.l_qrcode_activity;
+    }
 
+    @Override
+    protected void initViews() {
+        QrcodeWb = byView(R.id.l_qrcode_activity_wb);
 
     }
+
+    
 }

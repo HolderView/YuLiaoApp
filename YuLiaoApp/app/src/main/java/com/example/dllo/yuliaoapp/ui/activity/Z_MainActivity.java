@@ -61,13 +61,7 @@ public class Z_MainActivity extends C_AbsBaseActivity {
     private LinearLayout mL2048;
     private LinearLayout mLSnake;
 
-<<<<<<< HEAD
-=======
-    @Override
-    protected int setLayout() {
-        return R.layout.z_activity_main;
-    }
->>>>>>> feature/Z
+
 
     @Override
     protected void initData(Bundle savedInstanceState) {

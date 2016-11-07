@@ -137,13 +137,10 @@
             android:name="com.fuqianla.paysdk.app.FuQianLaActivity"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
-<<<<<<< HEAD
 
         <activity android:name=".ui.activity.map.QrcodeJsonActivity"/>
 
 
-=======
->>>>>>> feature/Z
         <meta-data
             android:name="ONEPAY_APPKEY"
             android:value="bm5ZHRTdvb89KYD1B6xg0Q" />
@@ -163,7 +160,6 @@
             android:value="37ebae226ebbd70c15e9cf8c4d91113c"/>
         <activity android:name=".ui.activity.map.L_GaodeActivity"/>
         <service android:name="com.amap.api.location.APSService"></service>
-<<<<<<< HEAD
 
 
     </application>
@@ -192,7 +188,5 @@
 
 
 
-=======
-    </application>
->>>>>>> feature/Z
+
 </manifest>
