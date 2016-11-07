@@ -289,6 +289,12 @@ public class Z_MapFragment extends C_AbsBaseFragment implements View.OnClickList
             @Override
             public void onClick(View v) {
                 L_DataCleanManager.clearAllCache(context);
+                try {
+                    datanum = L_DataCleanManager.getTotalCacheSize(context);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                clearnumTv.setText(datanum);
                 Toast.makeText(context, "清除缓存", Toast.LENGTH_SHORT).show();
             }
         });

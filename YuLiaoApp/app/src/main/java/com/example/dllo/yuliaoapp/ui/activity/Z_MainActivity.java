@@ -70,6 +70,13 @@ public class Z_MainActivity extends C_AbsBaseActivity {
     private static DrawerLayout mainDl;
     private static LinearLayout mainLl;
 
+<<<<<<< HEAD
+=======
+    @Override
+    protected int setLayout() {
+        return R.layout.z_activity_main;
+    }
+>>>>>>> feature/天气优化
 
 
     @Override
@@ -128,10 +135,7 @@ public class Z_MainActivity extends C_AbsBaseActivity {
 
     }
 
-    @Override
-    protected int setLayout() {
-        return R.layout.z_activity_main;
-    }
+
 
     @Override
     protected void initViews() {
