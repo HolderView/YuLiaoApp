@@ -99,7 +99,6 @@ public class Z_VideoDetailsActivity extends C_AbsBaseActivity implements View.On
         relativeLayout = byView(R.id.video_details_rl);
         controllerRl = byView(R.id.video_details_controller_rl);
         backImg = byView(R.id.vide_details_back_img);
-//        moreImg = byView(R.id.video_details_more_img);
         payBtn = byView(R.id.video_details_btn);
         authorTv = byView(R.id.video_details_author_tv);
         phptoImg = byView(R.id.video_details_photo_img);
@@ -151,12 +150,13 @@ public class Z_VideoDetailsActivity extends C_AbsBaseActivity implements View.On
 
         // 显示缓存进度和网速
         showCacheAndNet();
+        // 检测当前网络状态
+        netState();
 
         payBtn.setOnClickListener(this);
         backImg.setOnClickListener(this);
 
-        // 检测当前网络状态
-        netState();
+
     }
 
 
@@ -487,11 +487,8 @@ public class Z_VideoDetailsActivity extends C_AbsBaseActivity implements View.On
         }
         if (ori == Configuration.ORIENTATION_LANDSCAPE) {
 
-
             // 横屏隐藏状态栏
-            detailsRl.setSystemUiVisibility(View.SYSTEM_UI_FLAG_FULLSCREEN);
-//            getWindow().setFlags(WindowManager.LayoutParams. FLAG_FULLSCREEN ,
-//                    WindowManager.LayoutParams. FLAG_FULLSCREEN);
+            detailsRl.setSystemUiVisibility(View.INVISIBLE);
             // 横屏手势处理
             gestureDetector = new GestureDetector(this, new ShowOrHideGestureListener());
             titleTv.setVisibility(View.GONE);

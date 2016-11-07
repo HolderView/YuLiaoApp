@@ -8,6 +8,8 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 
 /**
  * Created by dllo on 16/10/27.
+ * 封装的UniverLoader
+ * @author 赵玲琳
  */
 public class Z_UniverImageLoaderUtils {
 
